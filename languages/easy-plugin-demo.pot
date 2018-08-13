@@ -1,0 +1,1250 @@
+# Copyright (C) 2018 Mike Howard
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Plugin Demo 1.0\n"
+"Report-Msgid-Bugs-To: https://mikesplugins.co.uk/\n"
+"POT-Creation-Date: 2018-08-13 22:10:19+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: WP-Translations (http://wp-translations.org/)\n"
+"Language-Team: WP-Translations <wpt@wp-translations.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.4\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: easy-plugin-demo.php:123 easy-plugin-demo.php:135
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: easy-plugin-demo.php:306
+msgid ""
+"<strong>Nice!</strong> More than 15 demo sites have been registered using "
+"Easy Plugin Demo!"
+msgstr ""
+
+#: easy-plugin-demo.php:310
+msgid ""
+"Would you <strong>please</strong> do us a favor and leave a 5 star rating "
+"on WordPress.org? It only takes a minute and it <strong>really "
+"helps</strong> to keep us motivated towards continued development and "
+"support. <a href=\"%1$s\" target=\"_blank\">Sure thing, you deserve it!</a>"
+msgstr ""
+
+#: includes/admin/admin-pages.php:32
+msgid "EPD Settings"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Easy Plugin Demo"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:35
+msgid "General"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:37
+msgid "<strong>Page Settings</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:40
+msgid ""
+"<strong>Submissions Page</strong> - The selected page should contain the "
+"shortcode <code>[kbs_submit]</code> and will be the page that your "
+"customers use to submit their %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:44
+msgid ""
+"<strong>%1$s</strong> - The selected page should contain the shortcode "
+"<code>[kbs_tickets]</code> and will be the page that customers can use view "
+"and manage their %2$s, including submitting replies."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:57
+#: includes/admin/settings/contextual-help.php:180
+msgid "<strong>%s Settings</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:60
+msgid ""
+"<strong>Sequential %s Numbers?</strong> - Enable sequential ticket numbers "
+"instead of WordPress post ID's."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:64
+msgid ""
+"<strong>Sequential Starting Number</strong> - Enter the number that should "
+"be used as the first sequential %s number."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:68
+msgid ""
+"<strong>Prefix for %1$s ID's</strong> - Enter what you would like your %2$s "
+"ID's to be prefixed with."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:73
+msgid ""
+"<strong>Suffix for %1$s ID's</strong> - Enter what you would like your %2$s "
+"ID's to be suffixed with."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:78
+msgid ""
+"<strong>Hide Closed %s?</strong> - By default when you view the admin %2$s "
+"screen, the <code>All</code> view includes all %2$s with all stauses. With "
+"this option enabled, closed %3$s will not be displayed unless you click the "
+"Closed view."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:84
+msgid ""
+"<strong>Re-open %1$s</strong> - By enabling this option, a customer will be "
+"able to add a reply to a %2$s that is closed. When adding the reply, the "
+"%2$s will be reopened unless the customer also checks the <strong>This %2$s "
+"can be closed</strong> option within the reply form. By default, this "
+"option is not enabled."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:89
+msgid "<strong>Submission Settings</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:92
+msgid ""
+"<strong>Enforce SSL for Submissions?</strong> - If selected, the %1$s "
+"submission page must be presented securely via HTTPS. A valid SSL "
+"certificate is required."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:96
+msgid ""
+"<strong>Disable Guest Submissions?</strong> - Whether or not a guest user "
+"can submit a %1$s. If selected, the customer must be logged in."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:99
+msgid ""
+"<strong>Show Register / Login Form?</strong> - If <strong>Disable Guest "
+"Submissions?</strong> is enabled, you can select to display the login form, "
+"registration form, or both if the customer is not logged in."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:101
+msgid ""
+"<strong>Submit Label</strong> - Enter the text you would like displayed on "
+"the %1$s submission forms submit button."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:105
+msgid ""
+"<strong>Reply Label</strong> - Enter the text you would like displayed on "
+"the %1$s Reply form submit button."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:109
+msgid ""
+"<strong>Allow File Uploads</strong> - Enter the number of files a customer "
+"can upload when submitting a %1$s. Set to <code>0</code> to disable file "
+"uploads. You will need to add a File Upload field to your submission form "
+"if enabling file uploads."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:113
+msgid ""
+"<strong>Allowed File Types</strong> - Enter the file extensions that a "
+"customer can upload when submitting a %1$s. Seperate each file extension "
+"with a comma. If a customer attempts to upload a file with an extension "
+"that is not listed, they will receive an error."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:117
+msgid "<strong>Agent Settings</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:120
+msgid ""
+"<strong>Administrators are Agents?</strong> - Select this option if users "
+"with the WordPress Administrator role should be seen as agents. If not "
+"enabled, users with the Administrator role will not be able to create or "
+"view any %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:124
+msgid ""
+"<strong>Restritct Agent %1$s View?</strong> - Enabling this option will "
+"result in Support Workers not being able to view %2$s that are assigned to "
+"other agents. The only %2$s they will be able to view will be those that "
+"are assigned to them, or those that are not assigned to any agent."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:129
+msgid ""
+"<strong>Multiple Agents per %1$s?</strong> - Enabling this option allows "
+"for multiple support workers to be assigned to a ticket. All assigned "
+"agents will be able to work on the %2$s and, if configured, will also "
+"receive all relevant notifications regarding the %2$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:134
+msgid ""
+"<strong>Display Agent Status?</strong> - If selected, customers will be "
+"able to see an indicator that shows whether the agent assigned to their "
+"%1$s is actively online or not when looking at their %1$s details."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:138
+msgid ""
+"<strong>Auto Assign new %1$s</strong> - You can automatically assign an "
+"agent to a new %2$s submitted via a submission form. Disable, or choose to "
+"auto assign to an agent with the least amount of active %3$s, or a random "
+"agent."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:144
+msgid ""
+"<strong>Auto Assign on Access?</strong> - Unassigned %1$s can be "
+"automatically assigned to agents on access. Can be useful in stopping "
+"agents selectively choosing which %1$s to work on."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:148
+msgid "<strong>Service Levels</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:151
+msgid ""
+"<strong>Enable SLA Tracking?</strong> - Select this option to enable "
+"Service Level tracking on all %s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:155
+msgid ""
+"<strong>Target Response Time</strong> - Select the time within which you "
+"are targeting an initial response to new %s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:158
+msgid ""
+"<strong>Warn if within</strong> - Enter the number of hours before the "
+"target response time is due to expire that a warning should be displayed if "
+"no initial response has been provided."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:161
+msgid ""
+"<strong>Target Resolution Time</strong> - Select the time within which you "
+"expecting to resolve %s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:164
+msgid ""
+"<strong>Warn if within</strong> - Enter the number of hours before the "
+"target resolution time is due to expire that a warning should be displayed "
+"if the %s remains open."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:168
+msgid ""
+"<strong>Define Support Hours?</strong> - Select to enable support hours. "
+"You can then enter the days and times that your business is available to "
+"work on support %s. Target response and resolution times take into "
+"consideration your working hours."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:183
+msgid ""
+"<strong>Restrict %1$s</strong> - If selected then each newly created "
+"article, by default, will have the <strong>Restrict Access</strong> option "
+"enabled meaning that only logged in users can access. This option can be "
+"adjusted per individual %2$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:188
+msgid ""
+"<strong>Show Register / Login Form?</strong> - Select to display the login "
+"form, registration form, or both if the customer is not logged in and they "
+"attempt to access a restricted %s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:192
+msgid ""
+"<strong>Hide Restricted %1$s</strong> - Select to hide restricted %1$s from "
+"archives if the user is logged out. They are always hidden from website "
+"search results."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:196
+msgid ""
+"<strong>Restricted Ajax Search</strong> - If selected, restricted %1$s will "
+"be hidden from ajax search results - i.e on the %2$s submission form."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:201
+msgid ""
+"<strong>Number of Results from Ajax</strong> - Enter the number of results "
+"you want an ajax search to return - i.e on the %1$s submission form."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:205
+msgid ""
+"<strong>Search Excerpt Length</strong> - Enter the number of characters "
+"that should be displayed from a %1$s during an ajax search. Enter "
+"<code>0</code> if you do not want an excerpt to be displayed."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:209
+msgid "<strong>Restricted Content Notices</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:212
+msgid ""
+"<strong>Single %1$s</strong> - Enter the text that is displayed to a user "
+"when they attempt to access a restricted %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:222
+msgid "Emails"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:224
+msgid "<strong>Email Settings</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:226
+msgid ""
+"<strong>From Name</strong> - Enter the name you want KB Support generated "
+"emails to come from."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:227
+msgid ""
+"<strong>From Email</strong> - Enter the email address KB Support generated "
+"emails should come from."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:228
+msgid ""
+"<strong>Email Template</strong> - Select <code>Default Template</code> to "
+"send formatted or basic HTML emails, or select plain text only (no "
+"formatting)."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:229
+msgid ""
+"<strong>Logo</strong> - Upload your logo and it will appear at the top of "
+"all KB Support generated HTML emails."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:230
+msgid ""
+"<strong>Attach Files</strong> - This setting determines how files are "
+"inserted into emails when using the <code>{ticket_files}</code> or "
+"<code>{reply_files}</code> email tags."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:231
+msgid ""
+"When enabled, the files will be attached to the email. Otherwise, the files "
+"will be listed within the content as links to view, or download, the files "
+"online"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:233
+msgid ""
+"<strong>Copy Company Contact</strong> - Enabling this option will copy in "
+"the primary company contact to all customer emails that are sent in "
+"relation to %s associated with the company."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:235
+msgid ""
+"<strong>Copy Participants</strong> - Enabling this option will ensure that "
+"all email communication relating to a %1$s is also sent to all of the "
+"participants of the %1$s. This option is only visible when <code>Enable "
+"Participants?</code> is enabled within the %2$s settings tab."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:238
+msgid "<strong>%s Logged</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:239
+msgid ""
+"<em>Adjust the settings for emails that are sent to a customer when they "
+"have logged a %1$s via a submission form.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:241
+msgid ""
+"<strong>Disable this Email</strong> - Select to stop emails being sent to "
+"the customer when they have logged a %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:244
+msgid ""
+"<strong>Email Subject</strong> - Enter the subject for the email sent to "
+"customers when a %1$s is logged by them."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:247
+msgid ""
+"<strong>Email Heading</strong> - Enter the heading to be displayed at the "
+"top of the email content for the email sent to customers when a %1$s is "
+"logged by them."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:250
+msgid ""
+"<strong>Content</strong> - Enter the content of the email that is sent to a "
+"customer when they have logged a %1$s. A list of email tags you can use are "
+"displayed under the textarea."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:254
+msgid "<strong>Reply Added</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:255
+msgid ""
+"<em>Adjust the settings for emails that are sent to a customer when a "
+"Support Worker adds a reply to their %1$s.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:257
+msgid ""
+"<strong>Disable this Email</strong> - Select to stop emails being sent to "
+"the customer when they receive a reply to their %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:260
+msgid ""
+"<strong>Email Subject</strong> - Enter the subject for the email sent to "
+"customers when a Support Worker has added a reply to their %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:263
+msgid ""
+"<strong>Email Heading</strong> - Enter the heading to be displayed at the "
+"top of the email content for the email sent to customers when a reply is "
+"added to their %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:266
+msgid ""
+"<strong>Content</strong> - Enter the content of the email that is sent to a "
+"customer when they receive a reply to their %1$s. A list of email tags you "
+"can use are displayed under the textarea."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:270
+msgid "<strong>%1$s Closed</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:271
+msgid ""
+"<em>Adjust the settings for emails that are sent to a customer when a "
+"Support Worker closes their %1$s.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:273
+msgid ""
+"<strong>Disable this Email</strong> - Select to stop emails being sent to "
+"the customer when their %1$s is closed."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:276
+msgid ""
+"<strong>Email Subject</strong> - Enter the subject for the email sent to "
+"customers when a Support Worker has closed their %1$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:279
+msgid ""
+"<strong>Email Heading</strong> - Enter the heading to be displayed at the "
+"top of the email content for the email sent to customers when a their %1$s "
+"is closed."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:282
+msgid ""
+"<strong>Content</strong> - Enter the content of the email that is sent to a "
+"customer when their %1$s is closed. A list of email tags you can use are "
+"displayed under the textarea."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:286
+msgid "<strong>Notifications</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:287
+msgid ""
+"<em>Adjust the settings for emails that are sent to Support Workers when a "
+"new %1$s is logged or a reply is received.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:289
+msgid ""
+"<strong>Disable Notifications</strong> - Select to stop emails being sent "
+"to Support Workers when a new %1$s is logged."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:292
+msgid ""
+"<strong>%1$s Notification Subject</strong> - Enter the subject for the "
+"email sent to Support Workers when a new %2$s is logged."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:296
+msgid ""
+"<strong>%1$s Notification</strong> - Enter the content of the email that is "
+"sent to Support Workers when a %2$s is submitted from the a customer. A "
+"list of email tags you can use are displayed under the textarea."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:300
+msgid ""
+"<strong>Reply Notification Subject</strong> - Enter the subject for the "
+"email sent to Support Workers a new reply is added to an existing %2$s."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:301
+msgid ""
+"<strong>%1$s Reply Notification</strong> - Enter the content of the email "
+"that is sent to Support Workers when a %2$s reply is received from the "
+"customer. A list of email tags you can use are displayed under the textarea."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:305
+msgid ""
+"<strong>%1$s Notification Emails</strong> - Enter a list of email addresses "
+"(one per line) that should be notified when a new %2$s is logged by a "
+"customer. Enter <code>%3$s</code> to include the assigned agent's email "
+"address."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:310
+msgid ""
+"<strong>Assignment Notices</strong> - If enabled, agents will receive email "
+"notifications when a %s is assigned to them."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:313
+msgid ""
+"<strong>Agent Assignment Subject</strong> - Enter the subject for the email "
+"sent to Support Workers when a %s is assigned to them."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:316
+msgid ""
+"<strong>Agent Assigned Notification</strong> - Enter the content of the "
+"email that is sent to Support Workers when a %s is assigned to them. A list "
+"of email tags you can use are displayed under the textarea."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:326
+msgid "Compliance"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:328
+msgid "<strong>Privacy Policy</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:329
+msgid "<em>Use these options to specify your requirements for GDPR.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:331
+msgid ""
+"<strong>Agree to Privacy Policy?</strong> - Select this option to insert a "
+"field into your %1$s submission form that customers must select to indicate "
+"they have read and agreed to your Privacy Policy. Your <a "
+"href=\"%2$s\">privacy policy</a> is <a href=\"%2$s\">defined here</a>."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:332
+msgid ""
+"<strong>Agree to Privacy Policy Label</strong> - This is the label that "
+"will accompany the checkbox for privacy policy agreement."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:333
+msgid ""
+"<strong>Agree to Privacy Policy Description</strong> - Optionally enter a "
+"description to be displayed below the <em>Agree to Privacy Policy</em> "
+"field."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:334
+msgid ""
+"<strong>%1$s</strong> - Select the action you want taken with regards to "
+"customer data that is stored within their %2$s when you action their "
+"request to anonymize or erase their data from your site."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:336
+msgid "<strong>Terms and Conditions</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:337
+msgid ""
+"<em>You may choose to display a terms and conditions agreement field on "
+"your %1$s submission forms. You can define the settings here.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:339
+msgid ""
+"<strong>Agree to Terms</strong> - Select this option to insert a field into "
+"your %1$s submission form that customers must select to indicate they have "
+"read and agreed to your Terms and Conditions."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:340
+msgid ""
+"<strong>Agree to Terms Label</strong> - This is the label that will "
+"accompany the checkbox for terms agreement."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:341
+msgid ""
+"<strong>Agree to Terms Description</strong> - Optionally enter a "
+"description to be displayed below the <em>Agree to Terms</em> field."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:342
+msgid ""
+"<strong>Terms Heading</strong> - Enter a heading that will appear at the "
+"top of the Terms and Conditions pop-up window."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:343
+msgid "<strong>Agreement Text</strong> - Enter your Terms and Conditions here."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:351
+msgid "Styles"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:353
+msgid ""
+"<strong>Disable Styles</strong> - Select this option to stop KB Support "
+"loading its CSS style sheet. All default formatting of forms, fields and "
+"all other elements will be inherited from your currently active theme."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:361
+msgid "Extensions"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:363
+msgid ""
+"The configuration settings for any KB Support extensions you have installed "
+"are controlled here."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:372
+msgid "Licenses"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:375
+msgid ""
+"If you have any of the KB Support <a target=\"blank\" href=\"%s\">premium "
+"extensions</a> installed, you should enter their license keys here to "
+"ensure you receive the latest product updates."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:385
+msgid "Misc"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:387
+msgid "<strong>Misc Settings</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:390
+msgid ""
+"<strong>Display Credit?</strong> - Enable this option to give credit for "
+"this free plugin by displaying <code>Powered by KB Support</code> on the KB "
+"Support front end pages."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:393
+msgid ""
+"<strong>Remove Data on Uninstall?</strong> - Select to remove all KB "
+"Support data when the plugin is uninstalled. All %1$s, %2$s, Submission "
+"Forms, Customers and settings will be permanently deleted."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:398
+msgid "<strong>Google reCaptcha</strong>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:399
+msgid ""
+"<em>If you want to use a Google reCaptcha within your %1$s submission form, "
+"you'll need to enter the settings here.</em>"
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:401
+msgid ""
+"<strong>Site Key</strong> - Enter your Google reCaptcha site key here "
+"otherwise your reCaptcha field will not work."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:402
+msgid ""
+"<strong>Secret</strong> - Enter your Google reCaptcha secret here otherwise "
+"your reCaptcha field will not work."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:403
+msgid ""
+"<strong>reCaptcha Theme</strong> - Select a theme for your reCaptcha that "
+"fits in best with your website."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:404
+msgid "<strong>reCaptcha Type</strong> - Choose between a reCaptcha image or audio."
+msgstr ""
+
+#: includes/admin/settings/contextual-help.php:405
+msgid ""
+"<strong>reCaptcha Size</strong> - Select a compact or normal sized "
+"reCaptcha."
+msgstr ""
+
+#: includes/admin/settings/display-settings.php:28
+msgid "Permissions Error"
+msgstr ""
+
+#: includes/admin/settings/display-settings.php:29
+msgid "You are not allowed to update EPD options."
+msgstr ""
+
+#: includes/admin/settings/display-settings.php:41
+msgid "Settings saved."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:147
+msgid "Product Name"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:149
+msgid "Enter the name of the product you are demonstrating to users."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:153
+msgid "Default Title"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:156
+msgid "This will become the title of all new demo sites."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:160
+msgid "Allowed Themes"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:165
+msgid ""
+"Select the themes you want to be available within a demo site for "
+"activation. Note that Network Active themes will always be available."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:169
+msgid "Demo Site Theme"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:173
+msgid ""
+"Select the theme you would like activated by default on a new demo site. If "
+"you select a theme that is not network enabled and not listed within "
+"<strong>Allowed Themes</strong> above, it will be added tp the list of "
+"<strong>Allowed Themes</strong>."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:177
+msgid "Maximum Sites of User"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:183
+msgid "Enter the maximum number of sites a single user can have active at any time."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:187
+msgid "Registration Action"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:190
+msgid "Login to Admin"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:191
+msgid "Show Confirmation"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:194
+msgid ""
+"Choose whether to login a user and redirect to their blog admin, or to "
+"display a registration confirmation once they have successfully registered "
+"their demo site."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:198
+msgid "Enable Plugins"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:203
+msgid ""
+"Select the non-Network Active plugins you would like enabled when a new "
+"demo site is registered."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:207
+msgid "Delete Site After"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:211
+msgid ""
+"Select the time period for which a demo site can remain active. After this "
+"time it will be deleted."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:215
+msgid "Disable Email Confirmation"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:217
+msgid ""
+"Select to disable email confirmation to the user after successful "
+"registration."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:221
+msgid "Email From Name"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:224
+msgid "The name you want displayed on registration emails."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:228
+msgid "Email From Address"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:231
+msgid "The email address you want registration emails to be sent from."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:235
+msgid "Registration Subject"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:238
+msgid "Enter the subject of the registration email. Email tags are accepted."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:242
+msgid "Registration Content"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:245
+msgid "Enter the content of the registration email. Email tags are accepted."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:582
+msgid "The callback function used for the %s setting is missing."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:764
+msgid ""
+"Your license key expired on %s. Please <a href=\"%s\" target=\"_blank\" "
+"title=\"Renew your license key\">renew your license key</a>."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:777
+msgid ""
+"Your license key has been disabled. Please <a href=\"%s\" "
+"target=\"_blank\">contact support</a> for more information."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:789
+msgid ""
+"Invalid license. Please <a href=\"%s\" target=\"_blank\" title=\"Visit "
+"account page\">visit your account page</a> and verify it."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:802
+msgid ""
+"Your %s is not active for this URL. Please <a href=\"%s\" target=\"_blank\" "
+"title=\"Visit account page\">visit your account page</a> to manage your "
+"license key URLs."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:814
+msgid "This appears to be an invalid license key for %s."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:823
+msgid ""
+"Your license key has reached its activation limit. <a href=\"%s\">View "
+"possible upgrades</a> now."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:832
+msgid ""
+"The key you entered belongs to a bundle, please use the product specific "
+"license key."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:840
+msgid "unknown_error"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:841
+msgid ""
+"There was an error with this license key: %s. Please <a href=\"%s\">contact "
+"our support team</a>."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:862
+msgid "License key never expires."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:869
+msgid ""
+"Your license key expires soon! It expires on %s. <a href=\"%s\" "
+"target=\"_blank\" title=\"Renew license\">Renew your license key</a>."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:879
+msgid "Your license key expires on %s."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:897
+msgid "To receive updates, please enter your valid %s license key."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:910
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:985
+msgid "The following email tags can be used within email subject and content"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1055
+#: includes/site-functions.php:39
+msgid "Never"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1056
+msgid "1 Hour"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1057
+msgid "2 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1058
+msgid "3 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1059
+msgid "4 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1060
+msgid "5 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1061
+msgid "6 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1062
+msgid "7 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1063
+msgid "8 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1064
+msgid "12 Hours"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1065
+msgid "1 Day"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1066
+msgid "2 Days"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1067
+msgid "3 Days"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1068
+msgid "4 Days"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1069
+msgid "5 Days"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1070
+msgid "6 Days"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1071
+msgid "1 Week"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1072
+msgid "2 Weeks"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1073
+msgid "3 Weeks"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:1074
+msgid "4 Weeks"
+msgstr ""
+
+#: includes/admin/settings/settings-actions.php:36
+msgid "You do not have permissions to save EPD options."
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:256
+msgid "The users full name, first and last"
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:261
+msgid "The users first name"
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:266
+msgid "The name of the product being demonstrated"
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:271
+msgid "The date and time the demo site will be deleted"
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:276
+msgid "A users password for their demo site"
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:281
+msgid "A users login for their demo site"
+msgstr ""
+
+#: includes/emails/class-epd-email-tags.php:286
+msgid "The URL to a users demo site"
+msgstr ""
+
+#: includes/emails/class-epd-emails.php:164
+msgid "Default Template"
+msgstr ""
+
+#: includes/emails/class-epd-emails.php:165
+msgid "Basic HTML, no formatting"
+msgstr ""
+
+#: includes/emails/class-epd-emails.php:166
+msgid "No template, plain text only"
+msgstr ""
+
+#: includes/emails/class-epd-emails.php:277
+msgid "You cannot send email with EPD_Emails until init/admin_init has been reached"
+msgstr ""
+
+#: includes/emails/class-epd-emails.php:304
+msgid ""
+"Email from KB Support failed to send.\n"
+"Send time: %s\n"
+"To: %s\n"
+"Subject: %s\n"
+"\n"
+msgstr ""
+
+#: includes/emails/email-template.php:70
+msgid "Hey %s!"
+msgstr ""
+
+#: includes/emails/email-template.php:71
+msgid ""
+"Your %s demo site is ready and waiting for you. You can use the following "
+"information to get started..."
+msgstr ""
+
+#: includes/emails/email-template.php:73
+msgid "URL: %s"
+msgstr ""
+
+#: includes/emails/email-template.php:74
+msgid "Username: %s"
+msgstr ""
+
+#: includes/emails/email-template.php:75
+msgid "Password: %s"
+msgstr ""
+
+#: includes/emails/email-template.php:77
+msgid "Your demo site will be deleted shortly after %s."
+msgstr ""
+
+#: includes/emails/email-template.php:78
+msgid "Regards"
+msgstr ""
+
+#: includes/install.php:31
+msgid "Easy Plugin Demo requires WordPress multisite."
+msgstr ""
+
+#: includes/install.php:35
+msgid "Easy Plugin Demo must be activated network wide."
+msgstr ""
+
+#: includes/install.php:69
+msgid "Registration Completed"
+msgstr ""
+
+#: includes/install.php:115
+msgid "You're all set!"
+msgstr ""
+
+#: includes/install.php:117
+msgid "Good news {demo_first_name}, your {demo_site_name} is ready for you."
+msgstr ""
+
+#: includes/install.php:120
+msgid ""
+"You can access your demo via {demo_site_url}. Your username and password "
+"have been sent to your email address (be sure to check your junk folders if "
+"you dont's see it)."
+msgstr ""
+
+#: includes/misc-functions.php:58
+msgid "Ha! I don't think so little honey bee. No bots allowed in this Honey Pot!"
+msgstr ""
+
+#: includes/misc-functions.php:91
+msgid "Please complete all required fields."
+msgstr ""
+
+#: includes/misc-functions.php:95
+msgid "This user account cannot register any more demo sites."
+msgstr ""
+
+#: includes/register-actions.php:202
+msgid "Please Wait..."
+msgstr ""
+
+#: includes/register-functions.php:23
+msgid "Launch my Demo"
+msgstr ""
+
+#: templates/register/list-sites.php:16
+msgid "Your {demo_product_name} Demo Sites"
+msgstr ""
+
+#: templates/register/list-sites.php:17
+msgid "Expires"
+msgstr ""
+
+#: templates/register/list-sites.php:18
+msgid "Registered"
+msgstr ""
+
+#: templates/register/list-sites.php:19
+msgid "Site Name"
+msgstr ""
+
+#: templates/register/list-sites.php:20
+msgid "Actions"
+msgstr ""
+
+#: templates/register/list-sites.php:52
+msgid "Visit"
+msgstr ""
+
+#: templates/register/list-sites.php:57
+msgid "Delete"
+msgstr ""
+
+#: templates/register/register-created.php:5
+msgid "Your {demo_product_name} demo is ready!"
+msgstr ""
+
+#: templates/register/register-deleted.php:7
+msgid "The site was deleted successfully."
+msgstr ""
+
+#: templates/register/register-deleted.php:11
+msgid "The site could not be deleted."
+msgstr ""
+
+#: templates/register/register-form.php:19
+msgid "Register to Activate your Demo"
+msgstr ""
+
+#: templates/register/register-form.php:21
+msgid ""
+"You have reached the limit for how many sites you may have active at any "
+"time. You can register a new site when one of your existing sites has "
+"expired."
+msgstr ""
+
+#: templates/register/register-form.php:34
+#: templates/register/register-form.php:35
+msgid "First Name"
+msgstr ""
+
+#: templates/register/register-form.php:39
+#: templates/register/register-form.php:40
+msgid "Last Name"
+msgstr ""
+
+#: templates/register/register-form.php:44
+msgid "Email"
+msgstr ""
+
+#: templates/register/register-form.php:45
+msgid "Email Address"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/mikeyhoward1977/easy-plugin-demo"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Easily create and manage demo sites for your WordPress plugin and/or theme"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Mike Howard"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://mikesplugins.co.uk/"
+msgstr ""
+
+#. Tags of the plugin/theme
+msgid "demo, plugin, theme"
+msgstr ""

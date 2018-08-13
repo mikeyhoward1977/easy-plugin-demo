@@ -1,0 +1,19 @@
+{
+	"boss": true,
+	"curly": true,
+	"eqeqeq": true,
+	"immed": true,
+	"noarg": true,
+	"quotmark": "single",
+	"undef": false,
+	"unused": true,
+
+	"browser": true,
+
+	"globals": {
+		"_": false,
+		"Backbone": false,
+		"jQuery": false,
+		"wp": false
+	}
+}

@@ -1,0 +1,341 @@
+<?php
+/**
+ * Plugin Name: Easy Plugin Demo
+ * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
+ * Version: 1.0
+ * Date: 2 August 2018
+ * Author: Mike Howard
+ * Author URI: https://mikesplugins.co.uk/
+ * Text Domain: easy-plugin-demo
+ * Domain Path: /languages
+ * License: GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * GitHub Plugin URI: https://github.com/mikeyhoward1977/easy-plugin-demo
+ * Tags: demo, plugin, theme
+ *
+ *
+ * Easy Plugin Demo is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as 
+ * published by the Free Software Foundation.
+ * 
+ * Easy Plugin Demo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Easy Plugin Demo; if not, see https://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * @package		EPD
+ * @category	Core
+ * @author		Mike Howard
+ * @version		1.0
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) )
+	exit;
+
+if ( ! class_exists( 'Easy_Plugin_Demo' ) ) :
+/**
+ * Main Easy_Plugin_Demo Class.
+ *
+ * @since 1.0
+ */
+final class Easy_Plugin_Demo {
+	/** Singleton *************************************************************/
+
+	/**
+	 * @var		Easy_Plugin_Demo The one true Easy_Plugin_Demo
+	 * @since	1.0
+	 */
+	private static $instance;
+
+	/**
+	 * EPD Emails.
+	 *
+	 * @var		object	EPD_Emails
+	 * @since	1.0
+	 */
+	public $emails;
+
+	/**
+	 * EPD Email Tags.
+	 *
+	 * @var		object	EPD_Email_Template_Tags
+	 * @since	1.0
+	 */
+	public $email_tags;
+
+	/**
+	 * Main Easy_Plugin_Demo Instance.
+	 *
+	 * Insures that only one instance of Easy_Plugin_Demo exists in memory at any one
+	 * time. Also prevents needing to define globals all over the place.
+	 *
+	 * @since	1.0
+	 * @static
+	 * @static	var		arr		$instance
+	 * @uses	Easy_Plugin_Demo::setup_constants()	Setup the constants needed.
+	 * @uses	Easy_Plugin_Demo::includes()			Include the required files.
+	 * @uses	Easy_Plugin_Demo::load_textdomain()	Load the language files.
+	 * @see EPD()
+	 * @return	obj	Easy_Plugin_Demo	The one true Easy_Plugin_Demo
+	 */
+	public static function instance() {
+
+		if ( ! is_multisite() )	{
+			return;
+		}
+
+		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Easy_Plugin_Demo ) )	{
+			do_action( 'before_epd_init' );
+
+			self::$instance = new Easy_Plugin_Demo;
+			self::$instance->setup_constants();
+
+			add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
+
+			self::$instance->includes();
+			self::$instance->hooks();
+			self::$instance->emails     = new EPD_Emails();
+			self::$instance->email_tags = new EPD_Email_Template_Tags();
+
+			do_action( 'epd_init' );
+		}
+
+		return self::$instance;
+
+	}
+	
+	/**
+	 * Throw error on object clone.
+	 *
+	 * The whole idea of the singleton design pattern is that there is a single
+	 * object therefore, we don't want the object to be cloned.
+	 *
+	 * @since	1.0
+	 * @access	protected
+	 * @return	void
+	 */
+	public function __clone() {
+		// Cloning instances of the class is forbidden.
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'easy-plugin-demo' ), '1.0' );
+	} // __clone
+
+	/**
+	 * Disable unserializing of the class.
+	 *
+	 * @since	1.0
+	 * @access	protected
+	 * @return	void
+	 */
+	public function __wakeup() {
+		// Unserializing instances of the class is forbidden.
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'easy-plugin-demo' ), '1.0' );
+	} // __wakeup
+	
+	/**
+	 * Setup plugin constants.
+	 *
+	 * @access	private
+	 * @since	1.0
+	 * @return	void
+	 */
+	private function setup_constants()	{
+
+		if ( ! defined( 'EPD_VERSION' ) )	{
+			define( 'EPD_VERSION', '1.0' );
+		}
+
+		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
+			define( 'EPD_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+		}
+
+		if ( ! defined( 'EPD_PLUGIN_URL' ) )	{
+			define( 'EPD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+		}
+		
+		if ( ! defined( 'EPD_PLUGIN_FILE' ) )	{
+			define( 'EPD_PLUGIN_FILE', __FILE__ );
+		}
+
+	} // setup_constants
+			
+	/**
+	 * Include required files.
+	 *
+	 * @access	private
+	 * @since	1.0
+	 * @return	void
+	 */
+	private function includes()	{
+
+        global $epd_options;
+
+        require_once EPD_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';
+
+        $epd_options = epd_get_settings();
+
+		require_once EPD_PLUGIN_DIR . 'includes/ajax-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/misc-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/plugin-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/register-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/register-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
+        require_once EPD_PLUGIN_DIR . 'includes/site-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/site-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/user-actions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/user-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/emails/email-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/emails/email-template.php';
+		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-emails.php';
+		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-email-tags.php';
+
+        if ( is_admin() )   {
+            require_once EPD_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
+			require_once EPD_PLUGIN_DIR . 'includes/admin/settings/settings-actions.php';
+            require_once EPD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
+        }
+
+		require_once EPD_PLUGIN_DIR . 'includes/install.php';
+		
+	} // includes
+
+	/**
+	 * Hooks.
+	 *
+	 * @access	private
+	 * @since	1.0
+	 * @return	void
+	 */
+	private function hooks()	{
+		// Admin notices
+		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
+	} // hooks
+
+
+	/**
+	 * Load the text domain for translations.
+	 *
+	 * @access	private
+	 * @since	1.0
+	 * @return	void
+	 */
+	public function load_textdomain()	{
+
+        // Set filter for plugin's languages directory.
+		$epd_lang_dir  = dirname( plugin_basename( EPD_PLUGIN_FILE ) ) . '/languages/';
+		$epd_lang_dir  = apply_filters( 'epd_languages_directory', $epd_lang_dir );
+
+		// Traditional WordPress plugin locale filter.
+        $locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
+        $locale = apply_filters( 'plugin_locale', $locale, 'easy-plugin-demo' );
+
+        load_textdomain( 'easy-plugin-demo', WP_LANG_DIR . '/easy-plugin-demo/easy-plugin-demo-' . $locale . '.mo' );
+        load_plugin_textdomain( 'easy-plugin-demo', false, $epd_lang_dir );
+
+	} // load_textdomain
+
+/*****************************************
+ -- ADMIN NOTICES
+*****************************************/
+	/**
+     * Request 5 star rating after 15 sites have been registered via EPD.
+     *
+     * After 15 sites are registered via EPD we ask the admin for a 5 star rating on WordPress.org
+     *
+     * @since	1.0
+     * @return	void
+     */
+    public function request_wp_5star_rating() {
+
+		if ( get_current_blog_id() != get_network()->blog_id )	{
+			return;
+		}
+	
+        if ( ! current_user_can( 'manage_sites' ) )	{
+            return;
+        }
+
+        if ( epd_is_notice_dismissed( 'epd_request_wp_5star_rating' ) )   {
+            return;
+        }
+
+        $epd_registered = epd_get_registered_demo_sites_count();
+
+        if ( $epd_registered > 15 ) {
+            add_action( 'admin_notices', array( self::$instance, 'admin_wp_5star_rating_notice' ) );
+        }
+
+    } // request_wp_5star_rating
+
+	/**
+     * Admin WP Rating Request Notice
+     *
+     * @since	1.1
+     * @return	void
+    */
+    function admin_wp_5star_rating_notice() {
+        ob_start(); ?>
+
+		<script>
+		jQuery(document).ready(function ($) {
+			// Dismiss admin notices
+			$( document ).on( 'click', '.notice-epd-dismiss .notice-dismiss', function () {
+				var notice = $( this ).closest( '.notice-epd-dismiss' ).data( 'notice' );
+
+				var postData = {
+					notice : notice,
+					action : 'epd_dismiss_notice'
+				};
+
+				$.ajax({
+					type: 'POST',
+					dataType: 'json',
+					data: postData,
+					url: ajaxurl
+				});
+			});
+		});
+		</script>
+
+        <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_request_wp_5star_rating">
+            <p>
+                <?php _e( "<strong>Nice!</strong> More than 15 demo sites have been registered using Easy Plugin Demo!", 'easy-plugin-demo' ); ?>
+            </p>
+            <p>
+                <?php printf(
+                    __( 'Would you <strong>please</strong> do us a favor and leave a 5 star rating on WordPress.org? It only takes a minute and it <strong>really helps</strong> to keep us motivated towards continued development and support. <a href="%1$s" target="_blank">Sure thing, you deserve it!</a>', 'easy-plugin-demo' ),
+                    'https://wordpress.org/support/plugin/easy-plugin-demo/reviews/'
+                ); ?>
+            </p>
+        </div>
+
+        <?php echo ob_get_clean();
+    } // admin_wp_5star_rating_notice
+
+} // class Easy_Plugin_Demo
+endif;
+
+/**
+ * The main function for that returns Easy_Plugin_Demo
+ *
+ * The main function responsible for returning the one true Easy_Plugin_Demo
+ * Instance to functions everywhere.
+ *
+ * Use this function like you would a global variable, except without needing
+ * to declare the global.
+ *
+ * Example: <?php $epd = EPD(); ?>
+ *
+ * @since	1.0
+ * @return	obj		Easy_Plugin_Demo	The one true Easy_Plugin_Demo Instance.
+ */
+function EPD()	{
+	return Easy_Plugin_Demo::instance();
+} // EPD
+
+// Get EPD Running
+EPD();
