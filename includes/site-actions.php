@@ -203,7 +203,7 @@ function epd_delete_site_action()	{
 						wp_logout();
 					}
 
-					wp_delete_user( $user_id );
+					wpmu_delete_user( $user_id );
 				}
 			}
 		}
@@ -328,7 +328,7 @@ function epd_delete_expired_sites()	{
 				$user_blogs = get_blogs_of_user( $blog_user->ID );
 
 				if ( empty( $user_blogs ) )	{
-					wp_delete_user( $user_id );
+					wpmu_delete_user( $user_id );
 				}
 			}
 		}
