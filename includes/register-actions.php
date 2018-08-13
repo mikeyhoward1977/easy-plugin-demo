@@ -38,7 +38,16 @@ function epd_process_registration_action()	{
     $user = get_user_by( 'email', $data['email'] );
 
     if ( $user )    {
-        $user_id = $user->ID;
+        $user_id        = $user->ID;
+		$reset_password = sprintf(
+			'<a href="%s">%s</a>',
+			wp_lostpassword_url(),
+			apply_filters( 'epd_reset_password_string',
+				__( 'Lost your password?', 'easy-plugin-demo' )
+			)
+		);
+
+		update_user_option( $user_id, 'epd_mu_pw', $reset_password, true );
     } else  {
         $user_id = epd_create_demo_user( $data );
     }
@@ -132,7 +141,7 @@ function epd_confirm_after_registration( $blog_id, $user_id )    {
     wp_set_current_user( $user_id );
     wp_set_auth_cookie( $user_id );
 
-	$redirect_url = remove_query_arg( 'epd-registered' );
+	$redirect_url = remove_query_arg( array( 'epd-registered', 'site_id', 'epd-message', 'epd-result' ) );
 	$redirect_url = add_query_arg( array(
 		'epd-registered' => $blog_id,
 		'epd-message'    => 'created'

@@ -128,6 +128,8 @@ function epd_create_demo_site( $args = array() )	{
 
 	do_action( 'epd_create_demo_site', $site_id, $args );
 
+	delete_user_option( $user_id, 'epd_mu_pw', true );
+
 	return $site_id;
 } // epd_create_demo_site
 

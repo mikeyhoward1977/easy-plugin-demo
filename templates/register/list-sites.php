@@ -53,6 +53,11 @@ if ( is_user_logged_in() ) :
 						),
 						sprintf(
 							'<a href="%s">%s</a>',
+							esc_url( get_admin_url( $user_blog->userblog_id ) ),
+							__( 'Admin', 'easy-plugin-demo' )
+						),
+						sprintf(
+							'<a href="%s">%s</a>',
 							esc_url( $delete_url ),
 							__( 'Delete', 'easy-plugin-demo' )
 						)

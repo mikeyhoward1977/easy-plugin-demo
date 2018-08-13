@@ -377,7 +377,7 @@ function epd_email_tag_demo_site_expiration( $blog_id, $user_id ) {
 function epd_email_tag_demo_site_password( $blog_id, $user_id ) {
 	$password = get_user_option( 'epd_mu_pw', $user_id );
 
-	return ! $password ? '' : $password;
+	return $password ? $password : '';
 } // epd_email_tag_demo_site_password
 
 /**

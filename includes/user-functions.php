@@ -105,7 +105,7 @@ function epd_create_demo_user( $data = array() )	{
         return false;
     }
 
-	update_user_option( $user_id, 'epd_mu_pw', $password );
+	update_user_option( $user_id, 'epd_mu_pw', $password, true );
 
     $user_data = array();
 
