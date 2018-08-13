@@ -10,10 +10,11 @@ if ( is_user_logged_in() )	{
 	$user = get_userdata( get_current_user_id() );
 }
 
-$user_id      = $user ? $user->ID : '';
+$user_id      = $user ? $user->ID         : '';
 $firstname    = $user ? $user->first_name : '';
 $lastname     = $user ? $user->last_name  : '';
 $email        = $user ? $user->user_email : '';
+$readonly     = $user ? ' readonly'       : '';
 $can_register = $user ? epd_can_user_register( $user_id ) : true;
 
 $register_to_activate = __( 'Register to Activate your Demo', 'easy-plugin-demo' );
@@ -32,17 +33,17 @@ if ( $can_register ) :
 
 			<p>
 				<label for="epd-firstname"><?php _e( 'First Name', 'easy-plugin-demo' ); ?></label>
-				<input id="epd-firstname" class="required epd-input" type="text" name="epd_first_name" title="<?php esc_attr_e( 'First Name', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $firstname ); ?>" />
+				<input id="epd-firstname" class="required epd-input" type="text" name="epd_first_name" title="<?php esc_attr_e( 'First Name', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $firstname ); ?>"<?php echo $readonly; ?> />
 			</p>
 
 			<p>
 				<label for="epd-lastname"><?php _e( 'Last Name', 'easy-plugin-demo' ); ?></label>
-				<input id="epd-lastname" class="required epd-input" type="text" name="epd_last_name" title="<?php esc_attr_e( 'Last Name', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $lastname ); ?>" />
+				<input id="epd-lastname" class="required epd-input" type="text" name="epd_last_name" title="<?php esc_attr_e( 'Last Name', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $lastname ); ?>"<?php echo $readonly; ?> />
 			</p>
 
 			<p>
 				<label for="epd-email"><?php _e( 'Email', 'easy-plugin-demo' ); ?></label>
-				<input id="epd-email" class="required epd-input" type="email" name="epd_email" title="<?php esc_attr_e( 'Email Address', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $email ); ?>" />
+				<input id="epd-email" class="required epd-input" type="email" name="epd_email" title="<?php esc_attr_e( 'Email Address', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $email ); ?>"<?php echo $readonly; ?> />
 			</p>    
 
 			<?php do_action( 'epd_register_form_fields_before_submit' ); ?>
