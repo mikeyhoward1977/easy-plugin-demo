@@ -170,7 +170,7 @@ function epd_get_registered_settings() {
             'type'     => 'select',
             'options'  => epd_get_themes(),
             'std'      => esc_attr( $current_theme->stylesheet ),
-			'desc'     => __( 'Select the theme you would like activated by default on a new demo site. If you select a theme that is not network enabled and not listed within <strong>Allowed Themes</strong> above, it will be added tp the list of <strong>Allowed Themes</strong>.' , 'easy-plugin-demo' ),
+			'desc'     => __( 'Select the theme you would like activated by default on a new demo site. If you select a theme that is not network enabled and not listed within <strong>Allowed Themes</strong> above, it will be added to the list of <strong>Allowed Themes</strong>.' , 'easy-plugin-demo' ),
         ),
         'max_user_sites' => array(
             'id'       => 'max_user_sites',
