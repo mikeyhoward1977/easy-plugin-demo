@@ -106,7 +106,28 @@ function epd_process_registration_action()	{
 add_action( 'init', 'epd_process_registration_action' );
 
 /**
- * Auto login a user after registration.
+ * Direct a user to the new sites home page after registration.
+ *
+ * After login, redirect to the new sites home page.
+ *
+ * @since   1.0
+ * @param   int     $blog_id    The blog ID
+ * @param   int     $user_id    The user ID
+ * @return  void
+ */
+function epd_redirect_home_after_registration( $blog_id, $user_id )    {
+    switch_to_blog( $blog_id );
+    wp_set_current_user( $user_id );
+    wp_set_auth_cookie( $user_id );
+
+    $redirect_url = apply_filters( 'epd_after_registration_home_redirect_url', get_home_url( $blog_id ) );
+    wp_safe_redirect( $redirect_url );
+    exit;
+} // epd_redirect_home_after_registration
+add_action( 'epd_after_registration_home_action', 'epd_redirect_home_after_registration', 100, 2 );
+
+/**
+ * Direct a user to admin after registration.
  *
  * After login, redirect to the new sites admin.
  *
@@ -115,16 +136,16 @@ add_action( 'init', 'epd_process_registration_action' );
  * @param   int     $user_id    The user ID
  * @return  void
  */
-function epd_auto_login_after_registration( $blog_id, $user_id )    {
+function epd_redirect_admin_after_registration( $blog_id, $user_id )    {
     switch_to_blog( $blog_id );
     wp_set_current_user( $user_id );
     wp_set_auth_cookie( $user_id );
 
-    $redirect_url = apply_filters( 'epd_after_registration_login_redirect_url', get_admin_url( $blog_id ) );
+    $redirect_url = apply_filters( 'epd_after_registration_admin_redirect_url', get_admin_url( $blog_id ) );
     wp_safe_redirect( $redirect_url );
     exit;
 } // epd_auto_login_after_registration
-add_action( 'epd_after_registration_login_action', 'epd_auto_login_after_registration', 100, 2 );
+add_action( 'epd_after_registration_admin_action', 'epd_redirect_admin_after_registration', 100, 2 );
 
 /**
  * Confirmation after registration.
@@ -153,6 +174,31 @@ function epd_confirm_after_registration( $blog_id, $user_id )    {
     exit;
 } // epd_confirm_after_registration
 add_action( 'epd_after_registration_confirm_action', 'epd_confirm_after_registration', 100, 2 );
+
+/**
+ * Redirect user to selected page after registration.
+ *
+ * After login, reload the registration page and show confirmation.
+ *
+ * @since   1.0
+ * @param   int     $blog_id    The blog ID
+ * @param   int     $user_id    The user ID
+ * @return  void
+ */
+function epd_redirect_after_registration( $blog_id, $user_id )    {
+	$page         = epd_get_option( 'redirect_page', false );
+	$redirect_url = get_permalink( $page );
+
+	if ( ! $page || ! $redirect_url )	{
+		epd_redirect_home_after_registration( $blog_id, $user_id );
+	}
+
+    $redirect_url = apply_filters( 'epd_after_registration_redirect_url', $redirect_url );
+
+    wp_safe_redirect( $redirect_url );
+    exit;
+} // epd_redirect_after_registration
+add_action( 'epd_after_registration_redirect_action', 'epd_redirect_after_registration', 100, 2 );
 
 /**
  * Adds required hidden fields to registration form.

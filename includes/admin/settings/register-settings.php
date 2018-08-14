@@ -185,13 +185,9 @@ function epd_get_registered_settings() {
         'registration_action' => array(
             'id'       => 'registration_action',
             'name'     => __( 'Registration Action', 'easy-plugin-demo' ),
-            'type'     => 'select',
-            'options'  => apply_filters( 'epd_registration_actions', array(
-                'login'   => __( 'Login to Admin', 'easy-plugin-demo' ),
-                'confirm' => __( 'Show Confirmation', 'easy-plugin-demo' )
-            ) ),
+            'type'     => 'registration_actions',
             'std'      => 'login',
-			'desc'     => __( 'Choose whether to login a user and redirect to their blog admin, or to display a registration confirmation once they have successfully registered their demo site.', 'easy-plugin-demo' )
+			'desc'     => __( 'Choose where to send the user once they have successfully registered their demo site.', 'easy-plugin-demo' )
         ),
 		'enable_plugins' => array(
 			'id'       => 'enable_plugins',
@@ -291,6 +287,9 @@ function epd_save_settings( $data ) {
 
 		$epd_options[ $key ] = $value;
 	}
+
+	// Save the page redirect
+	$epd_options['redirect_page'] = isset( $data['redirect_page'] ) ? sanitize_text_field( $data['redirect_page'] ) : false;
 
 	return update_site_option( 'epd_settings', $epd_options );
 
@@ -463,6 +462,67 @@ function epd_radio_callback( $args ) {
 
 	echo $html;
 } // epd_radio_callback
+
+/**
+ * Radio Callback
+ *
+ * Renders registration action radio boxes.
+ *
+ * @since	1.0
+ * @param	array	$args	Arguments passed by the setting
+ * @return	void
+ */
+function epd_registration_actions_callback( $args ) {
+	$epd_option    = epd_get_option( $args['id'] );
+	$pages         = epd_get_pages();
+	$redirect      = epd_get_option( 'redirect_page' );
+
+	$pages_html = '<select id="epd-registration-action-page" name="epd_settings[redirect_page]">';
+
+	foreach( $pages as $page_id => $page )	{
+		$page_selected = false;
+		if ( $redirect == $page_id )	{
+			$page_selected = selected( $redirect, $page_id, false );
+		}
+		
+		$pages_html .= '<option value="' . esc_attr( $page_id ) . '"' . $page_selected . '>' . esc_html( $page ) . '</option>';
+	}
+
+	$pages_html .= '</select>';
+
+	$options = apply_filters( 'epd_registration_actions', array(
+		'confirm'  => __( 'Show Confirmation', 'easy-plugin-demo' ),
+		'home'     => __( 'Visit Home Page', 'easy-plugin-demo' ),
+		'admin'    => __( 'Login to Admin', 'easy-plugin-demo' ),
+		'redirect' => __( 'Redirect to Page', 'easy-plugin-demo' )
+	) );
+
+	$html  = '';
+	$class = epd_sanitize_html_class( $args['field_class'] );
+
+	foreach ( $options as $key => $option )	{
+		$page_drop = '';
+		$checked   = false;
+
+		if ( $epd_option && $key == $epd_option )	{
+			$checked = true;
+		} elseif ( isset( $args['std'] ) && $key == $args['std'] && ! $epd_option )	{
+			$checked = true;
+		}
+
+		if ( 'redirect' == $key )	{
+			$page_drop = ' ' . $pages_html;
+		}
+
+		$html .= '<input name="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']" id="epd_settings[' . epd_sanitize_key( $args['id'] ) . '][' . epd_sanitize_key( $key ) . ']" class="' . $class . '" type="radio" value="' . epd_sanitize_key( $key ) . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
+
+		$html .= '<label for="epd_settings[' . epd_sanitize_key( $args['id'] ) . '][' . epd_sanitize_key( $key ) . ']">' . esc_html( $option ) . '</label>' . $page_drop . '<br/>';
+	}
+
+	$html .= '<p class="description">' . apply_filters( 'epd_after_setting_output', wp_kses_post( $args['desc'] ), $args ) . '</p>';
+
+	echo $html;
+} // epd_registration_actions_callback
 
 /**
  * Text Callback
