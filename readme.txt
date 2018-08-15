@@ -12,11 +12,13 @@ Automate the provisioning and management of a demo environment to showcase your 
 
 == Description ==
 
-With Easy Plugin Demo (EPD), show casing your product has never been easier!
+With Easy Plugin Demo (EPD), showcasing your product has never been easier!
 
-EPD enables you to easily provide an individual WordPress instance for users who want to try out your plugin or theme.
+EPD enables you to easily provide an individual WordPress instance for users who want to try out your plugin or theme without making changes or adding content that is visible to other users wishing to access the demo.
 
-Simply adding the `[epd_register]` shortcode to your page is sufficient to get started once the plugin is installed and activated.
+Simply adding the `[epd_register]` shortcode to your page is sufficient to get started once the plugin is installed and activated. Once a user enters their details, a new site is created and configured per the options you define within the settings page.
+
+Once the defined lifetime period of the site has passed, it will be automatically deleted together with the associated demo user account.
 
 You can add further customizations via the plugin settings page such as:
 * Select the name for each new demo site created
@@ -24,14 +26,17 @@ You can add further customizations via the plugin settings page such as:
 * Specify the maximum number of sites a single user can register at any given time
 * Choose where to direct the user upon successful registration
 * Delete a site after a given period
-* Define a customized email message to send to the user once their registration completes
+* Send a customized email message to the user once their registration completes
 * Select which plugins should be activated for the new demo site
 
 We've also included a number of hooks and filters for further customizations by developers.
 
-**See this plugin in action**: We have a real world instance of this plugin running at [https://testdrive.kb-support.net/]('https://testdrive.kb-support.net/').
-
 **Follow this plugin on [GitHub](https://github.com/mikeyhoward1977/easy-plugin-demo)**
+
+**See this plugin in action**
+We have a real world instance of this plugin running at [https://testdrive.kb-support.net/]('https://testdrive.kb-support.net/'). Alternatively check out the brief video below which shows the user registration process.
+
+https://youtu.be/W7yVotr-FIE
 
 **Languages**
 
@@ -92,13 +97,11 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Screenshots ==
 
-1. EPD settings screen. Customize these options to suit your needs.
+1. EPD settings screen preview. Customize these options to suit your needs.
 
-2. User registration form
+2. User registration form. Fresh WordPress installation with default Twenty Seventeen theme.
 
-3. Completed registration with redirect to admin
-
-4. Completed registration with confirmation
+3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
 

@@ -117,7 +117,7 @@ function epd_get_default_registration_complete_page_text()   {
     $default_text .= __( 'Good news {demo_first_name}, your {demo_site_name} is ready for you.', 'easy-plugin-demo');
     $default_text .= '</p>';
     $default_text .= '<p>';
-    $default_text .= __( "You can access your demo via {demo_site_url}. Your username and password have been sent to your email address (be sure to check your junk folders if you dont's see it).", 'easy-plugin-demo');
+    $default_text .= __( "You can access your demo via {demo_site_url}. Your username and password have been sent to your email address (be sure to check your junk folders if you don't see it).", 'easy-plugin-demo');
     $default_text .= '</p>';
 
     $default_text = apply_filters( 'epd_default_registration_complete_page_text', $default_text );

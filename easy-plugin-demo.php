@@ -197,6 +197,7 @@ final class Easy_Plugin_Demo {
             require_once EPD_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 			require_once EPD_PLUGIN_DIR . 'includes/admin/settings/settings-actions.php';
             require_once EPD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
+			require_once EPD_PLUGIN_DIR . 'includes/admin/admin-sites.php';
         }
 
 		require_once EPD_PLUGIN_DIR . 'includes/install.php';

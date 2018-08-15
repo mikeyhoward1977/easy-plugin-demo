@@ -176,7 +176,7 @@ function epd_get_registered_settings() {
             'id'       => 'max_user_sites',
             'name'     => __( 'Maximum Sites of User', 'easy-plugin-demo' ),
             'type'     => 'number',
-            'min'      => '0',
+            'min'      => '1',
             'step'     => '1',
             'std'      => '1',
             'size'     => 'small',
