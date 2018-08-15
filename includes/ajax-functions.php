@@ -65,8 +65,12 @@ function epd_ajax_validate_registration()	{
 	foreach ( $required_fields as $required_field )	{
 		if ( empty( $_POST[ $required_field ] ) )	{
 			$error = 'required_fields';
-		} elseif ( is_email( $_POST[ $required_field ] ) && ! epd_can_user_register( $_POST[ $required_field ] ) )    {
-            $error = 'no_register';
+		} elseif ( is_email( $_POST[ $required_field ] ) )  {
+            $email = sanitize_email( $_POST[ $required_field ] );
+
+            if ( is_email_address_unsafe( $email ) || ! epd_can_user_register( $email ) )    {
+                $error = 'no_register';
+            }
         }
 
         if ( $error )	{
