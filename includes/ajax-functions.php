@@ -68,6 +68,18 @@ function epd_ajax_validate_registration()	{
 		} elseif ( is_email( $_POST[ $required_field ] ) )  {
             $email = sanitize_email( $_POST[ $required_field ] );
 
+            $limited_email_domains = get_site_option( 'limited_email_domains' );
+
+            if ( is_array( $limited_email_domains ) && ! empty( $limited_email_domains ) ) {
+
+                $limited_email_domains = array_map( 'strtolower', $limited_email_domains );
+                $emaildomain           = strtolower( substr( $email, 1 + strpos( $email, '@' ) ) );
+
+                if ( ! in_array( $emaildomain, $limited_email_domains, true ) ) {
+                    $error = 'no_register';
+                }
+            }
+
             if ( is_email_address_unsafe( $email ) || ! epd_can_user_register( $email ) )    {
                 $error = 'no_register';
             }
