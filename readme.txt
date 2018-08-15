@@ -29,6 +29,8 @@ You can add further customizations via the plugin settings page such as:
 
 We've also included a number of hooks and filters for further customizations by developers.
 
+**See this plugin in action**: We have a real world instance of this plugin running at [https://testdrive.kb-support.net/]('https://testdrive.kb-support.net/').
+
 **Follow this plugin on [GitHub](https://github.com/mikeyhoward1977/easy-plugin-demo)**
 
 **Languages**
