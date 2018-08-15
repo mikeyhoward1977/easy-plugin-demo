@@ -27,6 +27,8 @@ You can add further customizations via the plugin settings page such as:
 * Define a customized email message to send to the user once their registration completes
 * Select which plugins should be activated for the new demo site
 
+We've also included a number of hooks and filters for further customizations by developers.
+
 **Follow this plugin on [GitHub](https://github.com/mikeyhoward1977/easy-plugin-demo)**
 
 **Languages**
@@ -98,7 +100,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Changelog ==
 
-**Monday, 13th August 2018**
+**Thursday, 16th August 2018**
 
 The initial release... Enjoy :)
 
