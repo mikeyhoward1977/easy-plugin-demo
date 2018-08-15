@@ -292,3 +292,21 @@ function epd_load_front_styles_scripts()    {
 	wp_enqueue_style( 'epd-styles' );
 } // epd_load_front_styles_scripts
 add_action( 'epd_pre_registration_form', 'epd_load_front_styles_scripts' );
+
+/**
+ * Display EPD credits below the registration form.
+ *
+ * @since   1.0
+ * @return  string
+ */
+function epd_display_credits()  {
+    if ( epd_get_option( 'credits' ) ) : ?>
+        <?php $credit = sprintf(
+            __( 'This demo is powered by <a href="%s" target="_blank">Easy Plugin Demo</a> for WordPress', 'easy-plugin-demo' ),
+            'https://wordpress.org/plugins/easy-plugin-demo/'
+        ); ?>
+
+        <p style="font-size: smaller; font-style: italic; text-align: right;"><?php echo $credit; ?></p>
+    <?php endif;
+} // epd_display_credits
+add_action( 'epd_register_form_bottom', 'epd_display_credits' );

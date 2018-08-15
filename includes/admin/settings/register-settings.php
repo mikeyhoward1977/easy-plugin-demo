@@ -243,6 +243,13 @@ function epd_get_registered_settings() {
 		'email_tags_list' => array(
 			'id'       => 'email_tags_list',
 			'type'     => 'hook'
+		),
+        'credits' => array(
+			'id'       => 'credits',
+			'name'     => __( 'Give Credit', 'easy-plugin-demo' ),
+            'type'     => 'checkbox',
+            'std'      => 0,
+			'desc'     => __( 'If enabled, credit to EPD will be displayed below the registration form. We appreciate it.' , 'easy-plugin-demo' )
 		)
 	);
 
@@ -385,8 +392,7 @@ function epd_checkbox_callback( $args ) {
 	$class = epd_sanitize_html_class( $args['field_class'] );
 
 	$checked = ! empty( $epd_option ) ? checked( 1, $epd_option, false ) : '';
-	$html = '<input type="checkbox" id="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '"/>';
-	$html .= '<p class"description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
+	$html = '<input type="checkbox" id="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"' . $name . ' value="1" ' . $checked . ' class="' . $class . '"/> <label for="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
 	echo apply_filters( 'epd_after_setting_output', $html, $args );
 } // epd_checkbox_callback

@@ -58,6 +58,8 @@ if ( $can_register ) :
 		<?php do_action( 'epd_register_form_fields_bottom' ); ?>
 	</form>
 
+    <?php do_action( 'epd_register_form_bottom' ); ?>
+
 <?php else : ?>
 	<div class="epd_alert epd_alert_warn">
     	<?php echo $limit_reached; ?>
