@@ -92,7 +92,7 @@ function epd_set_new_site_defaults( $blog_id )	{
 		$default_delete = date( 'Y-m-d H:i:s', current_time( 'timestamp' ) + epd_get_default_site_lifetime() );
 	}
 
-    $allowed_themes = epd_get_option( 'allowed_themes' );
+    $allowed_themes = epd_get_option( 'allowed_themes', array() );
     $theme          = wp_get_theme( epd_get_option( 'theme' ) );
     $themes         = array();
 

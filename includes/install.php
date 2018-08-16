@@ -63,14 +63,6 @@ function epd_run_install() {
 		update_site_option( 'epd_version_upgraded_from', $current_version );
 	}
 
-    // Adds the registration completed page
-    $registration_page = wp_insert_post( array(
-        'post_content' => epd_get_default_registration_complete_page_text(),
-        'post_title'   => __( 'Registration Completed', 'easy-plugin-demo' ),
-        'post_status'  => 'publish',
-        'post_type'    => 'page'
-    ) );
-
     // Setup some default options
 	$options = array();
 
@@ -80,9 +72,7 @@ function epd_run_install() {
 
 	// Populate some default values
 	foreach( $settings as $setting ) {
-        if ( 'registration_complete' == $setting['id'] && $registration_page )    {
-            $options[ $setting['id'] ] = $registration_page;
-        } elseif ( ! empty( $setting['std'] ) ) {
+        if ( ! empty( $setting['std'] ) ) {
             if ( 'checkbox' == $setting['type'] )	{
                 $options[ $setting['id'] ] = '1';
             } else	{
@@ -104,26 +94,6 @@ function epd_run_install() {
     // Non EPD options
     update_site_option( 'registration', 'none' );
 } // epd_run_install
-
-/**
- * The registration completed page text template.
- *
- * @since   1.0
- * @return  string  Default text for registration completion page
- */
-function epd_get_default_registration_complete_page_text()   {
-    $default_text  = '<h2>' . __( "You're all set!", 'easy-plugin-demo' ) . '</h2>' . "\r\n";
-    $default_text .= '<p>';
-    $default_text .= __( 'Good news {demo_first_name}, your {demo_site_name} is ready for you.', 'easy-plugin-demo');
-    $default_text .= '</p>';
-    $default_text .= '<p>';
-    $default_text .= __( "You can access your demo via {demo_site_url}. Your username and password have been sent to your email address (be sure to check your junk folders if you don't see it).", 'easy-plugin-demo');
-    $default_text .= '</p>';
-
-    $default_text = apply_filters( 'epd_default_registration_complete_page_text', $default_text );
-
-    return $default_text;
-} // epd_get_default_registration_complete_page_text
 
 /**
  * Deactivate
