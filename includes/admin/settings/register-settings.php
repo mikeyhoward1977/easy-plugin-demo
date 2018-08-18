@@ -261,6 +261,14 @@ function epd_get_registered_settings() {
 				)
 			)
 		),
+		/** Extension Settings */
+		'extensions' => apply_filters( 'epd_settings_extensions',
+			array()
+		),
+		/** License Settings */
+		'licenses' => apply_filters( 'epd_settings_licenses',
+			array()
+		),
 		/** Misc Settings */
 		'misc' => apply_filters( 'epd_settings_general',
 			array(

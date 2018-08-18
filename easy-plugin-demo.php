@@ -192,6 +192,7 @@ final class Easy_Plugin_Demo {
 		require_once EPD_PLUGIN_DIR . 'includes/emails/email-template.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-emails.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-email-tags.php';
+		require_once EPD_PLUGIN_DIR . 'includes/class-epd-license-handler.php';
 
         if ( is_admin() )   {
             require_once EPD_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
