@@ -313,11 +313,13 @@ function epd_insert_recaptcha_script_for_registration_form()	{
 
 	ob_start(); ?>
 
-	<div class="g-recaptcha" data-sitekey="<?php echo $recaptcha['site_key']; ?>"></div>
+	<div id="epd-recaptcha">
+		<div class="g-recaptcha" data-sitekey="<?php echo $recaptcha['site_key']; ?>"></div>
+	</div>
 
 	<?php echo ob_get_clean();
 } // epd_insert_recaptcha_script_for_registration_form
-add_action( 'epd_register_form_fields_before_submit', 'epd_insert_recaptcha_script_for_registration_form' );
+add_action( 'epd_register_form_fields_before_submit', 'epd_insert_recaptcha_script_for_registration_form', 900 );
 
 /**
  * Display EPD credits below the registration form.

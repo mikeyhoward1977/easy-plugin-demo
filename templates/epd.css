@@ -87,6 +87,6 @@
 	width: 200px;
 }
 
-#epd-register-form .g-recaptcha	{
-	margin-bottom: 5px;
+#epd-recaptcha	{
+	margin-bottom: 10px;
 }
