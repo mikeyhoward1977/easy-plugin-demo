@@ -215,6 +215,9 @@ final class Easy_Plugin_Demo {
 	private function hooks()	{
 		// Admin notices
 		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
+
+		// Scripts
+		add_action( 'admin_enqueue_scripts', array( self::$instance, 'load_admin_scripts' ) );
 	} // hooks
 
 
@@ -317,6 +320,42 @@ final class Easy_Plugin_Demo {
 
         <?php echo ob_get_clean();
     } // admin_wp_5star_rating_notice
+
+/*****************************************
+ -- SCRIPTS
+*****************************************/
+	public function load_admin_scripts( $hook )	{
+
+		$load_page_hook = array( 'options-reading.php' );
+
+		if ( ! in_array( $hook, $load_page_hook ) )	{
+			return;
+		}
+
+		$js_dir        = EPD_PLUGIN_URL . 'assets/js/';
+		$suffix        = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_register_script(
+			'epd-admin-scripts',
+			$js_dir . 'admin-scripts' . $suffix . '.js',
+			array( 'jquery' ),
+			EPD_VERSION
+		);
+
+		wp_localize_script(
+			'epd-admin-scripts',
+			'epd_admin_vars',
+			apply_filters( 'epd_admin_scripts_vars',
+				array(
+					'super_admin'      => current_user_can( 'setup_network' ),
+					'primary_site'     => get_current_blog_id() == get_network()->blog_id,
+					'hide_blog_public' => epd_get_option( 'discourage_search', false )
+				)
+			)
+		);
+
+		wp_enqueue_script( 'epd-admin-scripts' );
+	} // load_admin_scripts
 
 } // class Easy_Plugin_Demo
 endif;

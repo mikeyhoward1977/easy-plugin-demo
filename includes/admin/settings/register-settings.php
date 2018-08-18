@@ -26,6 +26,7 @@ function epd_get_option( $key = '', $default = false ) {
 
 	$value = ! empty( $epd_options[ $key ] ) ? $epd_options[ $key ] : $default;
 	$value = apply_filters( 'epd_get_option', $value, $key, $default );
+
 	return apply_filters( 'epd_get_option_' . $key, $value, $key, $default );
 } // epd_get_option
 
@@ -184,6 +185,21 @@ function epd_get_registered_settings() {
 						'std'      => epd_get_default_site_lifetime(),
 						'desc'     => __( 'Select the time period for which a demo site can remain active. After this time it will be deleted.' , 'easy-plugin-demo' )
 					),
+				),
+				'config' => array(
+					'discourage_search' => array(
+						'id'       => 'discourage_search',
+						'name'     => __( 'Discourage Search Engines', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'Discourage search engines from indexing new sites.' , 'easy-plugin-demo' )
+					),
+					'disable_search' => array(
+						'id'       => 'disable_search',
+						'name'     => __( 'Disable Visibility Changes', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'std'      => 1,
+						'desc'     => __( 'Select to disable users from changing search engine visibility settiings. Does not apply to the primary site or if the current user can manage networks.' , 'easy-plugin-demo' )
+					)
 				),
 				'themes' => array(
 					'allowed_themes' => array(
@@ -533,7 +549,8 @@ function epd_get_registered_settings_sections() {
 
 	$sections = array(
 		'sites'      => apply_filters( 'epd_settings_sections_general', array(
-			'main'    => __( 'General Settings', 'easy-plugin-demo' ),
+			'main'    => __( 'General', 'easy-plugin-demo' ),
+			'config'  => __( 'Config', 'easy-plugin-demo' ),
 			'themes'  => __( 'Themes', 'easy-plugin-demo' ),
 			'plugins' => __( 'Plugins', 'easy-plugin-demo' )
 		) ),

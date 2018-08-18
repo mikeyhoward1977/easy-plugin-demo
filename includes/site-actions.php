@@ -116,7 +116,8 @@ function epd_set_new_site_defaults( $blog_id )	{
 	$args = array(
         'allowedthemes' => $themes,
 		'template'      => $theme->template,
-		'stylesheet'    => $theme->stylesheet
+		'stylesheet'    => $theme->stylesheet,
+		'blog_public'   => epd_get_option( 'discourage_search' ) ? 0 : 1
 	);
 
 	$args = apply_filters( 'epd_set_new_site_defaults', $args );
