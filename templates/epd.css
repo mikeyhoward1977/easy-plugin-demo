@@ -86,3 +86,7 @@
 	display: inline-block;
 	width: 200px;
 }
+
+#epd-register-form .g-recaptcha	{
+	margin-bottom: 5px;
+}

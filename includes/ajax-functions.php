@@ -93,6 +93,18 @@ function epd_ajax_validate_registration()	{
         }
 	}
 
+	if ( epd_use_google_recaptcha() )	{
+		$key = 'g-recaptcha-response';
+		if ( ! isset( $_POST[ $key ] ) || ! epd_validate_recaptcha( $_POST[ $key ] ) )	{
+			$error = 'recaptcha';
+			$field = 'g-recaptcha-response';
+			wp_send_json_error( array(
+				'error' => epd_get_notices( $error, true ),
+				'field' => $field
+			) );
+		}
+	}
+
 	/**
 	 * Allow plugins to perform additional form validation.
 	 *
