@@ -220,6 +220,9 @@ final class Easy_Plugin_Demo {
 
 		// Scripts
 		add_action( 'admin_enqueue_scripts', array( self::$instance, 'load_admin_scripts' ) );
+
+		// Upgrades
+        add_action( 'admin_init', array( self::$instance, 'upgrades' ) );
 	} // hooks
 
 
@@ -361,6 +364,32 @@ final class Easy_Plugin_Demo {
 
 		wp_enqueue_script( 'epd-admin-scripts' );
 	} // load_admin_scripts
+
+/*****************************************
+ -- UPGRADE PROCEDURES
+*****************************************/
+    /**
+     * Perform automatic database upgrades when necessary
+     *
+     * @since	1.0.1
+     * @return	void
+    */
+    public function upgrades() {
+
+        $did_upgrade = false;
+        $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
+
+        if ( version_compare( $epd_version, EDP_VERSION, '<' ) )	{
+            // Let us know that an upgrade has happened
+            $did_upgrade = true;
+        }
+
+        if ( $did_upgrade )	{
+            update_site_option( 'epd_version_upgraded_from', $epd_version );
+            update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EDP_VERSION ) );
+        }
+
+    } // upgrades	
 
 } // class Easy_Plugin_Demo
 endif;
