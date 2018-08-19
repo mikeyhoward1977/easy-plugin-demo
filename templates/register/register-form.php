@@ -22,7 +22,8 @@ $launch_demo_label    = epd_get_register_form_submit_label();
 $limit_reached        = __( 'You have reached the limit for how many sites you may have active at any time. You can register a new site when one of your existing sites has expired.', 'easy-plugin-demo' );
 
 if ( $can_register ) :
-	do_action( 'epd_notices' ); ?>
+	do_action( 'epd_notices' );
+	do_action( 'epd_register_form_top' ); ?>
 	<h3><?php echo $register_to_activate; ?></h3>
 	<form id="epd_register_form" class="epd_form" action="" method="post">
 		<div class="epd_alert epd_alert_error epd_hidden"></div>
