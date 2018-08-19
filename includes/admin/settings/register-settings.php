@@ -135,8 +135,9 @@ function epd_get_settings() {
 */
 function epd_get_registered_settings() {
 
-    $current_theme = wp_get_theme();
-	$network       = get_network();
+    $current_theme   = wp_get_theme();
+	$network         = get_network();
+	$welcome_example = add_query_arg( 'epd_action', 'add_welcome_example', admin_url() );
 
 	/**
 	 * 'Whitelisted' EPD settings, filters are provided for each settings
@@ -198,7 +199,19 @@ function epd_get_registered_settings() {
 						'name'     => __( 'Disable Visibility Changes', 'easy-plugin-demo' ),
 						'type'     => 'checkbox',
 						'std'      => 1,
-						'desc'     => __( 'Select to disable users from changing search engine visibility settiings. Does not apply to the primary site or if the current user can manage networks.' , 'easy-plugin-demo' )
+						'desc'     => __( 'Select to disable users from changing search engine visibility settings. Does not apply to the primary site or if the current user can manage networks.' , 'easy-plugin-demo' )
+					),
+					'hide_welcome' => array(
+						'id'       => 'hide_welcome',
+						'name'     => __( 'Hide Default Welcome', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'If enabled, the default WordPress welcome panel will be removed.' , 'easy-plugin-demo' )
+					),
+					'custom_welcome' => array(
+						'id'       => 'custom_welcome',
+						'name'     => __( 'Custom Welcome Panel', 'easy-plugin-demo' ),
+						'type'     => 'rich_editor',
+						'desc'     => __( 'Optionally enter text to create your own welcome panel when a site is registered and a user logs in. <a href="#" id="epd-welcome-example">Load example</a>.' , 'easy-plugin-demo' )
 					)
 				),
 				'themes' => array(
@@ -335,8 +348,8 @@ function epd_get_registered_settings() {
 */
 function epd_register_settings() {
 
-	if ( false == get_option( 'epd_settings' ) ) {
-		add_option( 'epd_settings' );
+	if ( false == get_site_option( 'epd_settings' ) ) {
+		add_site_option( 'epd_settings' );
 	}
 
 	foreach ( epd_get_registered_settings() as $tab => $sections ) {

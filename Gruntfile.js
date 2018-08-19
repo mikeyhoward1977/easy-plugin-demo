@@ -106,7 +106,7 @@ module.exports = function( grunt ) {
 			},
 			all: [
 				'Gruntfile.js',
-				'<%= dirs.main.js %>/admin-scripts.js'
+				'<%= dirs.main.js %>/admin-scripts.js',
 				'<%= dirs.main.js %>/epd-ajax.js'
 			]
 		},

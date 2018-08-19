@@ -180,14 +180,14 @@ final class Easy_Plugin_Demo {
 		require_once EPD_PLUGIN_DIR . 'includes/ajax-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/misc-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/plugin-functions.php';
-		require_once EPD_PLUGIN_DIR . 'includes/register-actions.php';
-		require_once EPD_PLUGIN_DIR . 'includes/register-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/register/register-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/register/register-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
-        require_once EPD_PLUGIN_DIR . 'includes/site-actions.php';
-		require_once EPD_PLUGIN_DIR . 'includes/site-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/sites/site-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/sites/site-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
-        require_once EPD_PLUGIN_DIR . 'includes/user-actions.php';
-        require_once EPD_PLUGIN_DIR . 'includes/user-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/users/user-actions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/users/user-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/email-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/email-template.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-emails.php';
@@ -199,6 +199,8 @@ final class Easy_Plugin_Demo {
 			require_once EPD_PLUGIN_DIR . 'includes/admin/settings/settings-actions.php';
             require_once EPD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
 			require_once EPD_PLUGIN_DIR . 'includes/admin/admin-sites.php';
+			require_once EPD_PLUGIN_DIR . 'includes/admin/dashboard/dashboard-functions.php';
+			require_once EPD_PLUGIN_DIR . 'includes/admin/dashboard/dashboard-actions.php';
         }
 
 		require_once EPD_PLUGIN_DIR . 'includes/install.php';
@@ -326,14 +328,17 @@ final class Easy_Plugin_Demo {
 *****************************************/
 	public function load_admin_scripts( $hook )	{
 
-		$load_page_hook = array( 'options-reading.php' );
+		$load_page_hook = array(
+			'options-reading.php',
+			'settings_page_epd-settings'
+		);
 
 		if ( ! in_array( $hook, $load_page_hook ) )	{
 			return;
 		}
 
-		$js_dir        = EPD_PLUGIN_URL . 'assets/js/';
-		$suffix        = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$js_dir = EPD_PLUGIN_URL . 'assets/js/';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_register_script(
 			'epd-admin-scripts',
