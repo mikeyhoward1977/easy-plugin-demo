@@ -11,7 +11,7 @@
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * GitHub Plugin URI: https://github.com/mikeyhoward1977/easy-plugin-demo
- * Tags: demo, plugin, theme
+ * Tags: demo, plugin, theme, multisite, wpmu
  *
  *
  * Easy Plugin Demo is free software; you can redistribute it and/or modify
@@ -379,14 +379,14 @@ final class Easy_Plugin_Demo {
         $did_upgrade = false;
         $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
 
-        if ( version_compare( $epd_version, EDP_VERSION, '<' ) )	{
+        if ( version_compare( $epd_version, EPD_VERSION, '<' ) )	{
             // Let us know that an upgrade has happened
             $did_upgrade = true;
         }
 
         if ( $did_upgrade )	{
             update_site_option( 'epd_version_upgraded_from', $epd_version );
-            update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EDP_VERSION ) );
+            update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EPD_VERSION ) );
         }
 
     } // upgrades	

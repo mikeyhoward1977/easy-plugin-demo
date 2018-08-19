@@ -1,6 +1,6 @@
 === Easy Plugin Demo ===
 Contributors: mikeyhoward1977
-Tags: multisite, wpmu, demo, plugin, plugin demo
+Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
 Tested up to: 4.9.8
 Requires PHP: 5.4
@@ -8,13 +8,13 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automate the provisioning and management of a demo environment to showcase your WordPress plugins and/or themes.
+Automate the provisioning and management of a plugin or theme demo environment to showcase your WordPress products.
 
 == Description ==
 
-With Easy Plugin Demo (EPD), showcasing your product has never been easier!
+With Easy Plugin Demo (EPD), showcasing your plugin or themes has never been easier!
 
-EPD enables you to easily provide an individual WordPress instance for users who want to try out your plugin or theme without making changes or adding content that is visible to other users wishing to access the demo.
+EPD enables you to easily provide an individual WordPress instance for users who would like to demo your plugin or theme without making changes or adding content that is visible to other users wishing to access the demo.
 
 Simply adding the `[epd_register]` shortcode to your page is sufficient to get started once the plugin is installed and activated. Once a user enters their details, a new site is created and configured per the options you define within the settings page.
 
