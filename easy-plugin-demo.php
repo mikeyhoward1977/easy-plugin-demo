@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name: Easy Plugin Demo
+ * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
  * Version: 1.0
  * Date: 2 August 2018

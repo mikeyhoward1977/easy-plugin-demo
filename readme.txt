@@ -21,6 +21,7 @@ Simply adding the `[epd_register]` shortcode to your page is sufficient to get s
 Once the defined lifetime period of the site has passed, it will be automatically deleted together with the associated demo user account.
 
 You can add further customizations via the plugin settings page such as:
+
 * Select the name for each new demo site created
 * Choose which theme should be activated for the new site by default
 * Specify the maximum number of sites a single user can register at any given time
