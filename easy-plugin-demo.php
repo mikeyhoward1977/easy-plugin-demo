@@ -3,8 +3,8 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.0
- * Date: 2 August 2018
+ * Version: 1.0.1
+ * Date: 20 August 2018
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
  * Text Domain: easy-plugin-demo
@@ -12,7 +12,7 @@
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * GitHub Plugin URI: https://github.com/mikeyhoward1977/easy-plugin-demo
- * Tags: demo, plugin, theme
+ * Tags: demo, plugin, theme, multisite, wpmu
  *
  *
  * Easy Plugin Demo is free software; you can redistribute it and/or modify
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.0' );
+			define( 'EPD_VERSION', '1.0.1' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
@@ -181,24 +181,27 @@ final class Easy_Plugin_Demo {
 		require_once EPD_PLUGIN_DIR . 'includes/ajax-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/misc-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/plugin-functions.php';
-		require_once EPD_PLUGIN_DIR . 'includes/register-actions.php';
-		require_once EPD_PLUGIN_DIR . 'includes/register-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/register/register-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/register/register-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
-        require_once EPD_PLUGIN_DIR . 'includes/site-actions.php';
-		require_once EPD_PLUGIN_DIR . 'includes/site-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/sites/site-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/sites/site-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
-        require_once EPD_PLUGIN_DIR . 'includes/user-actions.php';
-        require_once EPD_PLUGIN_DIR . 'includes/user-functions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/users/user-actions.php';
+        require_once EPD_PLUGIN_DIR . 'includes/users/user-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/email-functions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/email-template.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-emails.php';
 		require_once EPD_PLUGIN_DIR . 'includes/emails/class-epd-email-tags.php';
+		require_once EPD_PLUGIN_DIR . 'includes/class-epd-license-handler.php';
 
         if ( is_admin() )   {
             require_once EPD_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 			require_once EPD_PLUGIN_DIR . 'includes/admin/settings/settings-actions.php';
             require_once EPD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
 			require_once EPD_PLUGIN_DIR . 'includes/admin/admin-sites.php';
+			require_once EPD_PLUGIN_DIR . 'includes/admin/dashboard/dashboard-functions.php';
+			require_once EPD_PLUGIN_DIR . 'includes/admin/dashboard/dashboard-actions.php';
         }
 
 		require_once EPD_PLUGIN_DIR . 'includes/install.php';
@@ -215,6 +218,12 @@ final class Easy_Plugin_Demo {
 	private function hooks()	{
 		// Admin notices
 		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
+
+		// Scripts
+		add_action( 'admin_enqueue_scripts', array( self::$instance, 'load_admin_scripts' ) );
+
+		// Upgrades
+        add_action( 'admin_init', array( self::$instance, 'upgrades' ) );
 	} // hooks
 
 
@@ -317,6 +326,71 @@ final class Easy_Plugin_Demo {
 
         <?php echo ob_get_clean();
     } // admin_wp_5star_rating_notice
+
+/*****************************************
+ -- SCRIPTS
+*****************************************/
+	public function load_admin_scripts( $hook )	{
+
+		$load_page_hook = array(
+			'options-reading.php',
+			'settings_page_epd-settings'
+		);
+
+		if ( ! in_array( $hook, $load_page_hook ) )	{
+			return;
+		}
+
+		$js_dir = EPD_PLUGIN_URL . 'assets/js/';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_register_script(
+			'epd-admin-scripts',
+			$js_dir . 'admin-scripts' . $suffix . '.js',
+			array( 'jquery' ),
+			EPD_VERSION
+		);
+
+		wp_localize_script(
+			'epd-admin-scripts',
+			'epd_admin_vars',
+			apply_filters( 'epd_admin_scripts_vars',
+				array(
+					'super_admin'      => current_user_can( 'setup_network' ),
+					'primary_site'     => get_current_blog_id() == get_network()->blog_id,
+					'hide_blog_public' => epd_get_option( 'discourage_search', false )
+				)
+			)
+		);
+
+		wp_enqueue_script( 'epd-admin-scripts' );
+	} // load_admin_scripts
+
+/*****************************************
+ -- UPGRADE PROCEDURES
+*****************************************/
+    /**
+     * Perform automatic database upgrades when necessary
+     *
+     * @since	1.0.1
+     * @return	void
+    */
+    public function upgrades() {
+
+        $did_upgrade = false;
+        $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
+
+        if ( version_compare( $epd_version, EPD_VERSION, '<' ) )	{
+            // Let us know that an upgrade has happened
+            $did_upgrade = true;
+        }
+
+        if ( $did_upgrade )	{
+            update_site_option( 'epd_version_upgraded_from', $epd_version );
+            update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EPD_VERSION ) );
+        }
+
+    } // upgrades	
 
 } // class Easy_Plugin_Demo
 endif;

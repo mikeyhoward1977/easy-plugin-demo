@@ -290,8 +290,36 @@ function epd_load_front_styles_scripts()    {
 
 	wp_register_style( 'epd-styles', $url, array(), EPD_VERSION, 'all' );
 	wp_enqueue_style( 'epd-styles' );
+
+	// reCaptcha
+	$recaptcha = epd_use_google_recaptcha();
+
+	if ( $recaptcha )	{
+		wp_register_script(
+			'google-recaptcha',
+			'https://www.google.com/recaptcha/api.js'
+		);
+		wp_enqueue_script( 'google-recaptcha' );
+	}
 } // epd_load_front_styles_scripts
 add_action( 'epd_pre_registration_form', 'epd_load_front_styles_scripts' );
+
+function epd_insert_recaptcha_script_for_registration_form()	{
+	$recaptcha = epd_use_google_recaptcha();
+
+	if ( ! $recaptcha )	{
+		return;
+	}
+
+	ob_start(); ?>
+
+	<div id="epd-recaptcha">
+		<div class="g-recaptcha" data-sitekey="<?php echo $recaptcha['site_key']; ?>"></div>
+	</div>
+
+	<?php echo ob_get_clean();
+} // epd_insert_recaptcha_script_for_registration_form
+add_action( 'epd_register_form_fields_before_submit', 'epd_insert_recaptcha_script_for_registration_form', 900 );
 
 /**
  * Display EPD credits below the registration form.
@@ -302,7 +330,7 @@ add_action( 'epd_pre_registration_form', 'epd_load_front_styles_scripts' );
 function epd_display_credits()  {
     if ( epd_get_option( 'credits' ) ) : ?>
         <?php $credit = sprintf(
-            __( 'This demo is powered by <a href="%s" target="_blank">Easy Plugin Demo</a> for WordPress', 'easy-plugin-demo' ),
+			__( 'This demo is powered by <a href="%s" target="_blank">Easy Plugin Demo</a> for WordPress', 'easy-plugin-demo' ),
             'https://wordpress.org/plugins/easy-plugin-demo/'
         ); ?>
 

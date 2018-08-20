@@ -86,3 +86,7 @@
 	display: inline-block;
 	width: 200px;
 }
+
+#epd-recaptcha	{
+	margin-bottom: 10px;
+}

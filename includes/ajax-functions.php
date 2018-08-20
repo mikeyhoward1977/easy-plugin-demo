@@ -51,6 +51,20 @@ function epd_ajax_dismiss_admin_notice()	{
 add_action( 'wp_ajax_epd_dismiss_notice', 'epd_ajax_dismiss_admin_notice' );
 
 /**
+ * Retrieve the example welcome panel text.
+ *
+ * @since	1.0.1
+ * @return	void
+ */
+function epd_ajax_get_example_welcome_panel_text()	{
+	$welcome = epd_get_example_welcome_panel_text();
+	$welcome = $welcome;
+
+	wp_send_json_success( array( 'welcome' => $welcome ) );
+} // epd_ajax_get_example_welcome_panel_text
+add_action( 'wp_ajax_epd_example_welcome_panel_text', 'epd_ajax_get_example_welcome_panel_text' );
+
+/**
  * Validate a registration form.
  *
  * @since	1.0
@@ -91,6 +105,18 @@ function epd_ajax_validate_registration()	{
                 'field' => $required_field
             ) );
         }
+	}
+
+	if ( epd_use_google_recaptcha() )	{
+		$key = 'g-recaptcha-response';
+		if ( ! isset( $_POST[ $key ] ) || ! epd_validate_recaptcha( $_POST[ $key ] ) )	{
+			$error = 'recaptcha';
+			$field = 'g-recaptcha-response';
+			wp_send_json_error( array(
+				'error' => epd_get_notices( $error, true ),
+				'field' => $field
+			) );
+		}
 	}
 
 	/**

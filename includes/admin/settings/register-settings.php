@@ -26,6 +26,7 @@ function epd_get_option( $key = '', $default = false ) {
 
 	$value = ! empty( $epd_options[ $key ] ) ? $epd_options[ $key ] : $default;
 	$value = apply_filters( 'epd_get_option', $value, $key, $default );
+
 	return apply_filters( 'epd_get_option_' . $key, $value, $key, $default );
 } // epd_get_option
 
@@ -134,122 +135,205 @@ function epd_get_settings() {
 */
 function epd_get_registered_settings() {
 
-    $current_theme = wp_get_theme();
-	$network       = get_network();
+    $current_theme   = wp_get_theme();
+	$network         = get_network();
+	$welcome_example = add_query_arg( 'epd_action', 'add_welcome_example', admin_url() );
 
 	/**
 	 * 'Whitelisted' EPD settings, filters are provided for each settings
 	 * section to allow extensions and other plugins to add their own settings.
 	 */
 	$epd_settings = array(
-		'product' => array(
-            'id'       => 'product',
-            'name'     => __( 'Product Name', 'easy-plugin-demo' ),
-            'type'     => 'text',
-            'desc'     => __( 'Enter the name of the product you are demonstrating to users.', 'easy-plugin-demo' )
-        ),
-        'title' => array(
-            'id'       => 'title',
-            'name'     => __( 'Default Title', 'easy-plugin-demo' ),
-            'type'     => 'text',
-            'std'      => sprintf( '%s Demo', esc_attr( get_network()->site_name ) ),
-			'desc'     => __( 'This will become the title of all new demo sites.', 'easy-plugin-demo' )
-        ),
-        'allowed_themes' => array(
-            'id'       => 'allowed_themes',
-            'name'     => __( 'Allowed Themes', 'easy-plugin-demo' ),
-            'type'     => 'select',
-            'multiple' => true,
-            'options'  => epd_get_themes( false ),
-            'std'      => array(),
-			'desc'     => __( 'Select the themes you want to be available within a demo site for activation. Note that Network Active themes will always be available.' , 'easy-plugin-demo' ),
-        ),
-        'theme' => array(
-            'id'       => 'theme',
-            'name'     => __( 'Demo Site Theme', 'easy-plugin-demo' ),
-            'type'     => 'select',
-            'options'  => epd_get_themes(),
-            'std'      => esc_attr( $current_theme->stylesheet ),
-			'desc'     => __( 'Select the theme you would like activated by default on a new demo site. If you select a theme that is not network enabled and not listed within <strong>Allowed Themes</strong> above, it will be added to the list of <strong>Allowed Themes</strong>.' , 'easy-plugin-demo' ),
-        ),
-        'max_user_sites' => array(
-            'id'       => 'max_user_sites',
-            'name'     => __( 'Maximum Sites of User', 'easy-plugin-demo' ),
-            'type'     => 'number',
-            'min'      => '1',
-            'step'     => '1',
-            'std'      => '1',
-            'size'     => 'small',
-			'desc'     => __( 'Enter the maximum number of sites a single user can have active at any time.' , 'easy-plugin-demo' )
-        ),
-        'registration_action' => array(
-            'id'       => 'registration_action',
-            'name'     => __( 'Registration Action', 'easy-plugin-demo' ),
-            'type'     => 'registration_actions',
-            'std'      => 'login',
-			'desc'     => __( 'Choose where to send the user once they have successfully registered their demo site.', 'easy-plugin-demo' )
-        ),
-		'enable_plugins' => array(
-			'id'       => 'enable_plugins',
-			'name'     => __( 'Enable Plugins', 'easy-plugin-demo' ),
-			'type'     => 'select',
-			'multiple' => true,
-			'options'  => epd_get_non_network_enabled_plugins(),
-			'std'      => array(),
-			'desc'     => __( 'Select the non-Network Active plugins you would like enabled when a new demo site is registered.', 'easy-plugin-demo' )
+		/** General Settings */
+		'sites' => apply_filters( 'epd_settings_general',
+			array(
+				'main' => array(
+					'product' => array(
+						'id'       => 'product',
+						'name'     => __( 'Product Name', 'easy-plugin-demo' ),
+						'type'     => 'text',
+						'desc'     => __( 'Enter the name of the product you are demonstrating to users.', 'easy-plugin-demo' )
+					),
+					'title' => array(
+						'id'       => 'title',
+						'name'     => __( 'Default Title', 'easy-plugin-demo' ),
+						'type'     => 'text',
+						'std'      => sprintf( '%s Demo', esc_attr( get_network()->site_name ) ),
+						'desc'     => __( 'This will become the title of all new demo sites.', 'easy-plugin-demo' )
+					),
+					'max_user_sites' => array(
+						'id'       => 'max_user_sites',
+						'name'     => __( 'Maximum Sites of User', 'easy-plugin-demo' ),
+						'type'     => 'number',
+						'min'      => '1',
+						'step'     => '1',
+						'std'      => '1',
+						'size'     => 'small',
+						'desc'     => __( 'Enter the maximum number of sites a single user can have active at any time.' , 'easy-plugin-demo' )
+					),
+					'registration_action' => array(
+						'id'       => 'registration_action',
+						'name'     => __( 'Registration Action', 'easy-plugin-demo' ),
+						'type'     => 'registration_actions',
+						'std'      => 'login',
+						'desc'     => __( 'Choose where to send the user once they have successfully registered their demo site.', 'easy-plugin-demo' )
+					),
+					'delete_after' => array(
+						'id'       => 'delete_after',
+						'name'     => __( 'Delete Site After', 'easy-plugin-demo' ),
+						'type'     => 'select',
+						'options'  => epd_get_lifetime_options(),
+						'std'      => epd_get_default_site_lifetime(),
+						'desc'     => __( 'Select the time period for which a demo site can remain active. After this time it will be deleted.' , 'easy-plugin-demo' )
+					),
+				),
+				'config' => array(
+					'discourage_search' => array(
+						'id'       => 'discourage_search',
+						'name'     => __( 'Discourage Search Engines', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'Discourage search engines from indexing new sites.' , 'easy-plugin-demo' )
+					),
+					'disable_search' => array(
+						'id'       => 'disable_search',
+						'name'     => __( 'Disable Visibility Changes', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'std'      => 1,
+						'desc'     => __( 'Select to disable users from changing search engine visibility settings. Does not apply to the primary site or if the current user can manage networks.' , 'easy-plugin-demo' )
+					),
+					'hide_welcome' => array(
+						'id'       => 'hide_welcome',
+						'name'     => __( 'Hide Default Welcome', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'If enabled, the default WordPress welcome panel will be removed.' , 'easy-plugin-demo' )
+					),
+					'custom_welcome' => array(
+						'id'       => 'custom_welcome',
+						'name'     => __( 'Custom Welcome Panel', 'easy-plugin-demo' ),
+						'type'     => 'rich_editor',
+						'desc'     => __( 'Optionally enter text to create your own welcome panel when a site is registered and a user logs in. <a href="#" id="epd-welcome-example">Load example</a>.' , 'easy-plugin-demo' )
+					)
+				),
+				'themes' => array(
+					'allowed_themes' => array(
+						'id'       => 'allowed_themes',
+						'name'     => __( 'Allowed Themes', 'easy-plugin-demo' ),
+						'type'     => 'select',
+						'multiple' => true,
+						'options'  => epd_get_themes( false ),
+						'std'      => array(),
+						'desc'     => __( 'Select the themes you want to be available within a demo site for activation. Note that Network Active themes will always be available.' , 'easy-plugin-demo' ),
+					),
+					'theme' => array(
+						'id'       => 'theme',
+						'name'     => __( 'Demo Site Theme', 'easy-plugin-demo' ),
+						'type'     => 'select',
+						'options'  => epd_get_themes(),
+						'std'      => esc_attr( $current_theme->stylesheet ),
+						'desc'     => __( 'Select the theme you would like activated by default on a new demo site. If you select a theme that is not network enabled and not listed within <strong>Allowed Themes</strong> above, it will be added to the list of <strong>Allowed Themes</strong>.' , 'easy-plugin-demo' ),
+					),
+				),
+				'plugins' => array(
+					'enable_plugins' => array(
+						'id'       => 'enable_plugins',
+						'name'     => __( 'Enable Plugins', 'easy-plugin-demo' ),
+						'type'     => 'select',
+						'multiple' => true,
+						'options'  => epd_get_non_network_enabled_plugins(),
+						'std'      => array(),
+						'desc'     => __( 'Select the non-Network Active plugins you would like enabled when a new demo site is registered.', 'easy-plugin-demo' )
+					)
+				)
+			)
 		),
-        'delete_after' => array(
-            'id'       => 'delete_after',
-            'name'     => __( 'Delete Site After', 'easy-plugin-demo' ),
-            'type'     => 'select',
-            'options'  => epd_get_lifetime_options(),
-            'std'      => epd_get_default_site_lifetime(),
-			'desc'     => __( 'Select the time period for which a demo site can remain active. After this time it will be deleted.' , 'easy-plugin-demo' )
-        ),
-		'disable_email_confirmation' => array(
-			'id'       => 'disable_email_confirmation',
-            'name'     => __( 'Disable Email Confirmation', 'easy-plugin-demo' ),
-            'type'     => 'checkbox',
-			'desc'     => __( 'Select to disable email confirmation to the user after successful registration.' , 'easy-plugin-demo' )
+		'email' => apply_filters( 'epd_settings_general',
+			array(
+				'main' => array(
+					'disable_email_confirmation' => array(
+						'id'       => 'disable_email_confirmation',
+						'name'     => __( 'Disable Email Confirmation', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'Select to disable email confirmation to the user after successful registration.' , 'easy-plugin-demo' )
+					),
+					'from_name' => array(
+						'id'       => 'from_name',
+						'name'     => __( 'Email From Name', 'easy-plugin-demo' ),
+						'type'     => 'text',
+						'std'      => esc_attr( $network->site_name ), 
+						'desc'     => __( 'The name you want displayed on registration emails.' , 'easy-plugin-demo' )
+					),
+					'from_email' => array(
+						'id'       => 'from_email',
+						'name'     => __( 'Email From Address', 'easy-plugin-demo' ),
+						'type'     => 'text',
+						'std'      => get_network_option( $network->blog_id, 'admin_email' ),
+						'desc'     => __( 'The email address you want registration emails to be sent from.' , 'easy-plugin-demo' )
+					),
+					'registration_subject' => array(
+						'id'       => 'registration_subject',
+						'name'     => __( 'Registration Subject', 'easy-plugin-demo' ),
+						'type'     => 'text',
+						'std'      => sprintf( 'Your %s Demo is Ready', esc_attr( $network->site_name ) ),
+						'desc'     => __( 'Enter the subject of the registration email. Email tags are accepted.' , 'easy-plugin-demo' )
+					),
+					'registration_content' => array(
+						'id'       => 'registration_content',
+						'name'     => __( 'Registration Content', 'easy-plugin-demo' ),
+						'type'     => 'rich_editor',
+						'std'      => epd_get_site_registered_email_body_content(),
+						'desc'     => __( 'Enter the content of the registration email. Email tags are accepted.' , 'easy-plugin-demo' )
+					),
+					'email_tags_list' => array(
+						'id'       => 'email_tags_list',
+						'type'     => 'hook'
+					)
+				)
+			)
 		),
-		'from_name' => array(
-			'id'       => 'from_name',
-            'name'     => __( 'Email From Name', 'easy-plugin-demo' ),
-            'type'     => 'text',
-            'std'      => esc_attr( $network->site_name ), 
-			'desc'     => __( 'The name you want displayed on registration emails.' , 'easy-plugin-demo' )
+		/** Extension Settings */
+		'extensions' => apply_filters( 'epd_settings_extensions',
+			array()
 		),
-		'from_email' => array(
-			'id'       => 'from_email',
-            'name'     => __( 'Email From Address', 'easy-plugin-demo' ),
-            'type'     => 'text',
-            'std'      => get_network_option( $network->blog_id, 'admin_email' ),
-			'desc'     => __( 'The email address you want registration emails to be sent from.' , 'easy-plugin-demo' )
+		/** License Settings */
+		'licenses' => apply_filters( 'epd_settings_licenses',
+			array()
 		),
-		'registration_subject' => array(
-			'id'       => 'registration_subject',
-            'name'     => __( 'Registration Subject', 'easy-plugin-demo' ),
-            'type'     => 'text',
-            'std'      => sprintf( 'Your %s Demo is Ready', esc_attr( $network->site_name ) ),
-			'desc'     => __( 'Enter the subject of the registration email. Email tags are accepted.' , 'easy-plugin-demo' )
-		),
-		'registration_content' => array(
-			'id'       => 'registration_content',
-            'name'     => __( 'Registration Content', 'easy-plugin-demo' ),
-            'type'     => 'rich_editor',
-            'std'      => epd_get_site_registered_email_body_content(),
-			'desc'     => __( 'Enter the content of the registration email. Email tags are accepted.' , 'easy-plugin-demo' )
-		),
-		'email_tags_list' => array(
-			'id'       => 'email_tags_list',
-			'type'     => 'hook'
-		),
-        'credits' => array(
-			'id'       => 'credits',
-			'name'     => __( 'Give Credit', 'easy-plugin-demo' ),
-            'type'     => 'checkbox',
-            'std'      => 0,
-			'desc'     => __( 'If enabled, credit to EPD will be displayed below the registration form. We appreciate it.' , 'easy-plugin-demo' )
+		/** Misc Settings */
+		'misc' => apply_filters( 'epd_settings_general',
+			array(
+				'main' => array(
+					'credits' => array(
+						'id'       => 'credits',
+						'name'     => __( 'Give Credit', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'std'      => 0,
+						'desc'     => __( 'If enabled, credit to EPD will be displayed below the registration form. We appreciate it.' , 'easy-plugin-demo' )
+					)
+				),
+				'recaptcha' => array(
+					'id'       => 'recaptcha',
+					'name'     => __( 'reCaptcha v2 Keys', 'easy-plugin-demo' ),
+					'type'     => 'header'
+				),
+				'site_key' => array(
+					'id'       => 'site_key',
+					'name'     => __( 'Site Key', 'easy-plugin-demo' ),
+					'type'     => 'text',
+					'desc'     => sprintf(
+						__( '<a href="%s" target="_blank">Register your site</a> to retrieve your site key .' , 'easy-plugin-demo' ),
+						'https://www.google.com/recaptcha/admin'
+					)
+				),
+				'secret' => array(
+					'id'       => 'secret_key',
+					'name'     => __( 'Secret Key', 'easy-plugin-demo' ),
+					'type'     => 'text',
+					'desc'     => sprintf(
+						__( '<a href="%s" target="_blank">Register your site</a> to retrieve your secret key .' , 'easy-plugin-demo' ),
+						'https://www.google.com/recaptcha/admin'
+					)
+				)
+			)
 		)
 	);
 
@@ -257,50 +341,248 @@ function epd_get_registered_settings() {
 } // epd_get_registered_settings
 
 /**
+ * Add all settings sections and fields.
+ *
+ * @since	1.0
+ * @return	void
+*/
+function epd_register_settings() {
+
+	if ( false == get_site_option( 'epd_settings' ) ) {
+		add_site_option( 'epd_settings' );
+	}
+
+	foreach ( epd_get_registered_settings() as $tab => $sections ) {
+		foreach ( $sections as $section => $settings) {
+
+			// Check for backwards compatibility
+			$section_tabs = epd_get_settings_tab_sections( $tab );
+			if ( ! is_array( $section_tabs ) || ! array_key_exists( $section, $section_tabs ) ) {
+				$section = 'main';
+				$settings = $sections;
+			}
+
+			add_settings_section(
+				'epd_settings_' . $tab . '_' . $section,
+				__return_null(),
+				'__return_false',
+				'epd_settings_' . $tab . '_' . $section
+			);
+
+			foreach ( $settings as $option ) {
+				// For backwards compatibility
+				if ( empty( $option['id'] ) ) {
+					continue;
+				}
+
+				$args = wp_parse_args( $option, array(
+				    'section'       => $section,
+				    'id'            => null,
+				    'desc'          => '',
+				    'name'          => '',
+				    'size'          => null,
+				    'options'       => '',
+				    'std'           => '',
+				    'min'           => null,
+				    'max'           => null,
+				    'step'          => null,
+				    'chosen'        => null,
+				    'placeholder'   => null,
+				    'allow_blank'   => true,
+				    'readonly'      => false,
+				    'faux'          => false,
+				    'tooltip_title' => false,
+				    'tooltip_desc'  => false,
+				    'field_class'   => ''
+				) );
+
+				add_settings_field(
+					'epd_settings[' . $args['id'] . ']',
+					$args['name'],
+					function_exists( 'epd_' . $args['type'] . '_callback' ) ? 'epd_' . $args['type'] . '_callback' : 'epd_missing_callback',
+					'epd_settings_' . $tab . '_' . $section,
+					'epd_settings_' . $tab . '_' . $section,
+					$args
+				);
+			}
+		}
+
+	}
+
+	// Creates our settings in the options table
+	register_setting( 'epd_settings', 'epd_settings', 'epd_settings_sanitize' );
+
+} // epd_register_settings
+add_action( 'admin_init', 'epd_register_settings' );
+
+/**
  * Save Settings.
  *
  * @since	1.0
- * @param	array	$data	Array of posted data
+ * @param	array	$input	Array of posted data
  * @return	void
  */
-function epd_save_settings( $data ) {
+function epd_save_settings( $input = array() ) {
 
 	global $epd_options;
 
+	if ( empty( $_POST['_wp_http_referer'] ) ) {
+		return;
+	}
+
+	parse_str( $_POST['_wp_http_referer'], $referrer );
+
 	$settings = epd_get_registered_settings();
+	$tab      = isset( $referrer['tab'] )     ? $referrer['tab']     : 'sites';
+	$section  = isset( $referrer['section'] ) ? $referrer['section'] : 'main';
 
-	foreach( $settings as $key => $options )	{
-		$value = '';
-		$type  = isset( $options['type'] ) ? $options['type'] : false;
+	$input = $input ? $input : array();
 
-		if ( isset( $data[ $key ] ) )	{
-			$value = $data[ $key ];
-		} elseif ( $type && 'checkbox' == $type )	{
-			$value = 0;
-		} else	{
-			$value = '';
+	$input = apply_filters( 'epd_settings_' . $tab . '-' . $section . '_sanitize', $input );
+	if ( 'main' === $section )  {
+		// Check for extensions that aren't using new sections
+		$input = apply_filters( 'epd_settings_' . $tab . '_sanitize', $input );
+
+		// Check for an override on the section for when main is empty
+		if ( ! empty( $_POST['epd_section_override'] ) ) {
+			$section = sanitize_text_field( $_POST['epd_section_override'] );
 		}
+	}
+
+	// Loop through each setting being saved and pass it through a sanitization filter
+	foreach ( $input as $key => $value ) {
+
+		// Get the setting type (checkbox, select, etc)
+		$type = isset( $settings[ $tab ][ $key ]['type'] ) ? $settings[ $tab ][ $key ]['type'] : false;
 
 		if ( $type ) {
 			// Field type specific filter
-			$value = apply_filters( 'epd_settings_sanitize_' . $type, $value, $key );
+			$input[ $key ] = apply_filters( 'epd_settings_sanitize_' . $type, $value, $key );
 		}
 
 		// Specific key filter
-		$value = apply_filters( 'epd_settings_sanitize_' . $key, $value );
+		$input[ $key ] = apply_filters( 'epd_settings_sanitize_' . $key, $value );
 
 		// General filter
-		$value = apply_filters( 'epd_settings_sanitize', $value, $key );
+		$input[ $key ] = apply_filters( 'epd_settings_sanitize', $input[ $key ], $key );
 
-		$epd_options[ $key ] = $value;
 	}
 
-	// Save the page redirect
-	$epd_options['redirect_page'] = isset( $data['redirect_page'] ) ? sanitize_text_field( $data['redirect_page'] ) : false;
+	// Loop through the whitelist and unset any that are empty for the tab being saved
+	$main_settings    = $section == 'main' ? $settings[ $tab ] : array(); // Check for extensions that aren't using new sections
+	$section_settings = ! empty( $settings[ $tab ][ $section ] ) ? $settings[ $tab ][ $section ] : array();
 
-	return update_site_option( 'epd_settings', $epd_options );
+	$found_settings = array_merge( $main_settings, $section_settings );
+
+	if ( ! empty( $found_settings ) ) {
+		foreach ( $found_settings as $key => $value ) {
+
+			// Settings used to have numeric keys, now they have keys that match the option ID. This ensures both methods work
+			if ( is_numeric( $key ) ) {
+				$key = $value['id'];
+			}
+
+			if ( empty( $input[ $key ] ) && isset( $epd_options[ $key ] ) ) {
+				unset( $epd_options[ $key ] );
+			}
+
+		}
+	}
+
+	if ( isset( $input['registration_action'] ) )	{
+		$input['redirect_page'] = isset( $input['redirect_page'] ) ? sanitize_text_field( $input['redirect_page'] ) : false;
+	}
+
+	// Merge our new settings with the existing
+	$output = array_merge( $epd_options, $input );
+
+	update_site_option( 'epd_settings', $output );
 
 } // epd_save_settings
+
+/**
+ * Retrieve settings tabs
+ *
+ * @since	1.0
+ * @return	arr		$tabs
+ */
+function epd_get_settings_tabs() {
+
+	$tabs            = array();
+	$tabs['sites']   = __( 'Sites', 'easy-plugin-demo' );
+	$tabs['email']   = __( 'Email', 'easy-plugin-demo' );
+
+	if ( ! empty( $settings['extensions'] ) ) {
+		$tabs['extensions'] = __( 'Extensions', 'easy-plugin-demo' );
+	}
+
+	if ( ! empty( $settings['licenses'] ) ) {
+		$tabs['licenses'] = __( 'Licenses', 'easy-plugin-demo' );
+	}
+	
+	$tabs['misc']   = __( 'Misc', 'easy-plugin-demo' );
+
+	return apply_filters( 'epd_settings_tabs', $tabs );
+} // epd_get_settings_tabs
+
+/**
+ * Retrieve settings tabs
+ *
+ * @since	1.0
+ * @return	arr		$section
+ */
+function epd_get_settings_tab_sections( $tab = false ) {
+
+	$tabs     = false;
+	$sections = epd_get_registered_settings_sections();
+
+	if ( $tab && ! empty( $sections[ $tab ] ) ) {
+		$tabs = $sections[ $tab ];
+	} else if ( $tab ) {
+		$tabs = false;
+	}
+
+	return $tabs;
+} // epd_get_settings_tab_sections
+
+/**
+ * Get the settings sections for each tab
+ * Uses a static to avoid running the filters on every request to this function
+ *
+ * @since	1.0
+ * @return	arr		Array of tabs and sections
+ */
+function epd_get_registered_settings_sections() {
+
+	static $sections = false;
+
+	if ( false !== $sections ) {
+		return $sections;
+	}
+
+	$sections = array(
+		'sites'      => apply_filters( 'epd_settings_sections_general', array(
+			'main'    => __( 'General', 'easy-plugin-demo' ),
+			'config'  => __( 'Config', 'easy-plugin-demo' ),
+			'themes'  => __( 'Themes', 'easy-plugin-demo' ),
+			'plugins' => __( 'Plugins', 'easy-plugin-demo' )
+		) ),
+		'email'      => apply_filters( 'epd_settings_sections_emails', array(
+			'main' => __( 'Email Settings', 'easy-plugin-demo' )
+		) ),
+		'extensions' => apply_filters( 'epd_settings_sections_extensions', array(
+			'main' => __( 'Main', 'easy-plugin-demo' )
+		) ),
+		'licenses'   => apply_filters( 'epd_settings_sections_licenses', array() ),
+		'misc'       => apply_filters( 'epd_settings_sections_misc', array(
+			'main'      => __( 'Misc Settings', 'easy-plugin-demo' )
+		) )
+	);
+
+	$sections = apply_filters( 'epd_settings_sections', $sections );
+
+	return $sections;
+} // epd_get_registered_settings_sections
 
 /**
  * Sanitize text fields
