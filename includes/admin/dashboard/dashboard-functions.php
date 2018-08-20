@@ -22,16 +22,21 @@ if ( ! defined( 'ABSPATH' ) )
 function epd_render_custom_welcome_panel()	{
 	$user_id = get_current_user_id();
 	$site_id = get_current_blog_id();
-	$welcome = epd_get_option( 'custom_welcome' );
-	$welcome = stripslashes( $welcome );
-	$welcome = apply_filters( 'the_content', $welcome );
-	$welcome = epd_do_email_tags( $welcome, $site_id, $user_id  );
 
-	?>
-	<div class="welcome-panel-content">
-		<?php echo $welcome; ?>
-	</div>
-	<?php
+    if ( has_action( 'epd_welcome_panel_text' ) )   {
+        do_action( 'epd_welcome_panel_text', $user_id, $site_id );
+    } else  {
+        $welcome = epd_get_option( 'custom_welcome' );
+        $welcome = stripslashes( $welcome );
+        $welcome = apply_filters( 'the_content', $welcome );
+        $welcome = epd_do_email_tags( $welcome, $site_id, $user_id  );
+
+        ?>
+        <div class="welcome-panel-content">
+            <?php echo $welcome; ?>
+        </div>
+        <?php
+    }
 } // epd_render_custom_welcome_panel
 
 /**
