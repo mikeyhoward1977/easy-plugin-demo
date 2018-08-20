@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,16 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+**Monday, 20th August 2018**
+
+* **New**: Added Google reCaptcha. Insert your site/secret keys within EDP Settings
+* **New**: Added option to force Search Engine Visibility setting for new sites
+* **New**: Added option to hide the Search Engine Visibility setting
+* **New**: Define a personal welcome panel to be displayed on new sites
+* **Tweak**: Split settings into tabs and sections
+* **Tweak**: Moved plugin files into sub-directories
+* **Tweak**: Added `epd_register_form_top` hook
 
 **Thursday, 16th August 2018**
 
