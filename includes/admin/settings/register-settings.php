@@ -349,7 +349,7 @@ function epd_get_registered_settings() {
 function epd_register_settings() {
 
 	if ( false == get_site_option( 'epd_settings' ) ) {
-		add_site_option( 'epd_settings' );
+		add_site_option( 'epd_settings', array() );
 	}
 
 	foreach ( epd_get_registered_settings() as $tab => $sections ) {
