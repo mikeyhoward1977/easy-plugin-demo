@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
 Tested up to: 4.9.8
 Requires PHP: 5.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,12 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+**Wednesday, 12th September 2018**
+
+* **New**: Added count of created sites to network dashboard Right Now widget
+* **Bug**: Missing value may cause fatal error during activation
+* **Dev**: Use `epd_welcome_panel_text` hook to output welcome panel if it is hooked
 
 **Monday, 20th August 2018**
 
