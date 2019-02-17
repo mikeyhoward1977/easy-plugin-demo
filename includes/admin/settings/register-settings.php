@@ -184,6 +184,7 @@ function epd_get_registered_settings() {
 						'type'     => 'select',
 						'options'  => epd_get_lifetime_options(),
 						'std'      => epd_get_default_site_lifetime(),
+						'chosen'   => true,
 						'desc'     => __( 'Select the time period for which a demo site can remain active. After this time it will be deleted.' , 'easy-plugin-demo' )
 					),
 				),
@@ -222,6 +223,7 @@ function epd_get_registered_settings() {
 						'multiple' => true,
 						'options'  => epd_get_themes( false ),
 						'std'      => array(),
+						'chosen'   => true,
 						'desc'     => __( 'Select the themes you want to be available within a demo site for activation. Note that Network Active themes will always be available.' , 'easy-plugin-demo' ),
 					),
 					'theme' => array(
@@ -230,6 +232,7 @@ function epd_get_registered_settings() {
 						'type'     => 'select',
 						'options'  => epd_get_themes(),
 						'std'      => esc_attr( $current_theme->stylesheet ),
+						'chosen'   => true,
 						'desc'     => __( 'Select the theme you would like activated by default on a new demo site. If you select a theme that is not network enabled and not listed within <strong>Allowed Themes</strong> above, it will be added to the list of <strong>Allowed Themes</strong>.' , 'easy-plugin-demo' ),
 					),
 				),
@@ -241,6 +244,7 @@ function epd_get_registered_settings() {
 						'multiple' => true,
 						'options'  => epd_get_non_network_enabled_plugins(),
 						'std'      => array(),
+						'chosen'   => true,
 						'desc'     => __( 'Select the non-Network Active plugins you would like enabled when a new demo site is registered.', 'easy-plugin-demo' )
 					)
 				),
@@ -767,7 +771,7 @@ function epd_registration_actions_callback( $args ) {
 	$pages         = epd_get_pages();
 	$redirect      = epd_get_option( 'redirect_page' );
 
-	$pages_html = '<select id="epd-registration-action-page" name="epd_settings[redirect_page]">';
+	$pages_html = '<select id="epd-registration-action-page" name="epd_settings[redirect_page]" class="epd_select_chosen">';
 
 	foreach( $pages as $page_id => $page )	{
 		$page_selected = false;

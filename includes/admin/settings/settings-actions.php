@@ -77,6 +77,7 @@ function epd_set_post_type_options( $settings )	{
 			'multiple' => true,
 			'options'  => epd_get_primary_blog_posts( $post_type ),
 			'std'      => array(),
+			'chosen'   => true,
 			'desc'     => sprintf(
 				__( 'Select any <strong>%s</strong> that you would like created by default in each new demo site.', 'easy-plugin-demo' ),
 				strtolower( $post_object->name )
