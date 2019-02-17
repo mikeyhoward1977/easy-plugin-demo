@@ -186,6 +186,8 @@ final class Easy_Plugin_Demo {
         require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
         require_once EPD_PLUGIN_DIR . 'includes/sites/site-actions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/sites/site-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/posts/post-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/posts/post-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/users/user-actions.php';
         require_once EPD_PLUGIN_DIR . 'includes/users/user-functions.php';
@@ -356,9 +358,11 @@ final class Easy_Plugin_Demo {
 			'epd_admin_vars',
 			apply_filters( 'epd_admin_scripts_vars',
 				array(
-					'super_admin'      => current_user_can( 'setup_network' ),
+					'hide_blog_public' => epd_get_option( 'discourage_search', false ),
+					'max_posts_create' => epd_max_number_of_posts_to_create(),
 					'primary_site'     => get_current_blog_id() == get_network()->blog_id,
-					'hide_blog_public' => epd_get_option( 'discourage_search', false )
+					'super_admin'      => current_user_can( 'setup_network' )
+					
 				)
 			)
 		);

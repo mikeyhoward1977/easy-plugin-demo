@@ -32,7 +32,7 @@ function epd_save_options_action() {
 		wp_die( __( 'You do not have permissions to save EPD options.', 'easy-plugin-demo' ) );
 	}
 
-	if ( empty( $_POST['_wp_http_referer'] ) ) {
+	if ( empty( $_POST['_wp_http_referer'] ) || empty( $_POST['epd_settings'] ) ) {
 		return;
 	}
 
@@ -54,3 +54,36 @@ function epd_save_options_action() {
 	exit;
 } // epd_save_options_action
 add_action( 'admin_init', 'epd_save_options_action' );
+
+/**
+ * Output the options for each supported post type.
+ *
+ * @since	1.2.9
+ * @param	array	$settings	Array of post type setting options
+ * @return	Array of post type setting options
+ */
+function epd_set_post_type_options( $settings )	{
+	$post_types   = epd_get_supported_post_types();
+	$post_options = array();
+
+	foreach( $post_types as $post_type )	{
+		$post_object  = get_post_type_object( $post_type );
+		$key          = "replicate_$post_type";
+
+		$post_options[ $key ] = array(
+			'id'       => $key,
+			'name'     => sprintf( __( 'Replicate %s', 'easy-plugin-demo' ), $post_object->name ),
+			'type'     => 'select',
+			'multiple' => true,
+			'options'  => epd_get_primary_blog_posts( $post_type ),
+			'std'      => array(),
+			'desc'     => sprintf(
+				__( 'Select any <strong>%s</strong> that you would like created by default in each new demo site.', 'easy-plugin-demo' ),
+				strtolower( $post_object->name )
+			)
+		);
+	}
+
+	return $post_options;
+} // epd_set_post_type_options
+add_filter( 'epd_posts_pages_options', 'epd_set_post_type_options' );

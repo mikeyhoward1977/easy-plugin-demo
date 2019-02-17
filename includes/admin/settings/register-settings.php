@@ -243,7 +243,8 @@ function epd_get_registered_settings() {
 						'std'      => array(),
 						'desc'     => __( 'Select the non-Network Active plugins you would like enabled when a new demo site is registered.', 'easy-plugin-demo' )
 					)
-				)
+				),
+				'posts_pages' => apply_filters( 'epd_posts_pages_options', array() )
 			)
 		),
 		'email' => apply_filters( 'epd_settings_general',
@@ -562,10 +563,11 @@ function epd_get_registered_settings_sections() {
 
 	$sections = array(
 		'sites'      => apply_filters( 'epd_settings_sections_general', array(
-			'main'    => __( 'General', 'easy-plugin-demo' ),
-			'config'  => __( 'Config', 'easy-plugin-demo' ),
-			'themes'  => __( 'Themes', 'easy-plugin-demo' ),
-			'plugins' => __( 'Plugins', 'easy-plugin-demo' )
+			'main'        => __( 'General', 'easy-plugin-demo' ),
+			'config'      => __( 'Config', 'easy-plugin-demo' ),
+			'themes'      => __( 'Themes', 'easy-plugin-demo' ),
+			'plugins'     => __( 'Plugins', 'easy-plugin-demo' ),
+			'posts_pages' => __( 'Posts and Pages', 'easy-plugin-demo' )
 		) ),
 		'email'      => apply_filters( 'epd_settings_sections_emails', array(
 			'main' => __( 'Email Settings', 'easy-plugin-demo' )
