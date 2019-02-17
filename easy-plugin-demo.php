@@ -3,8 +3,8 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.0.2
- * Date: 12 September 2018
+ * Version: 1.1
+ * Date: 17th February 2019
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
  * Text Domain: easy-plugin-demo
@@ -30,7 +30,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.0
+ * @version		1.1
  */
 
 // Exit if accessed directly.
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.0.2' );
+			define( 'EPD_VERSION', '1.1' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
@@ -374,13 +374,11 @@ final class Easy_Plugin_Demo {
 			apply_filters( 'epd_admin_scripts_vars',
 				array(
 					'hide_blog_public'   => epd_get_option( 'discourage_search', false ),
-					'max_posts_create'   => epd_max_number_of_posts_to_create(),
 					'one_option'         => __( 'Choose an option', 'easy-plugin-demo' ),
 					'one_or_more_option' => __( 'Choose one or more options', 'easy-plugin-demo' ),
 					'primary_site'       => get_current_blog_id() == get_network()->blog_id,
 					'super_admin'        => current_user_can( 'setup_network' ),
-					'type_to_search'     => __( 'Type to search', 'easy-plugin-demo' ),
-					
+					'type_to_search'     => __( 'Type to search', 'easy-plugin-demo' )
 				)
 			)
 		);
