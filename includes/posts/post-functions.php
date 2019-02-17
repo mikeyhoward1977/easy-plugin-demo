@@ -120,7 +120,9 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 	$post_ids  = epd_posts_to_create( $post_type );
 	$old_posts = get_posts( array(
 		'posts_per_page' => epd_max_number_of_posts_to_create(),
-		'include'        => $post_ids
+		'include'        => $post_ids,
+		'post_type'      => $post_type,
+		'post_status'    => 'any'
 	) );
 	restore_current_blog();
 	switch_to_blog( $blog_id );
