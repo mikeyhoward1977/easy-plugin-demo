@@ -35,8 +35,10 @@ function epd_get_supported_post_types()	{
  */
 function epd_post_type_is_supported( $post_type = 'post' )	{
 	$post_types = epd_get_supported_post_types();
+	$supported  = in_array( $post_type, $post_types );
+	$supported  = apply_filters( 'epd_post_type_is_supported', $supported, $post_type );
 
-	return in_array( $post_type, $post_types );
+	return (bool) $supported;
 } // epd_post_type_is_supported
 
 /**
