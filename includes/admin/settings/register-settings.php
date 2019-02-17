@@ -517,6 +517,8 @@ function epd_get_settings_tabs() {
 	$tabs['sites']   = __( 'Sites', 'easy-plugin-demo' );
 	$tabs['email']   = __( 'Email', 'easy-plugin-demo' );
 
+	$tabs = apply_filters( 'epd_settings_tabs_after_email', $tabs );
+
 	if ( ! empty( $settings['extensions'] ) ) {
 		$tabs['extensions'] = __( 'Extensions', 'easy-plugin-demo' );
 	}
@@ -524,7 +526,9 @@ function epd_get_settings_tabs() {
 	if ( ! empty( $settings['licenses'] ) ) {
 		$tabs['licenses'] = __( 'Licenses', 'easy-plugin-demo' );
 	}
-	
+
+	$tabs = apply_filters( 'epd_settings_tabs_before_misc', $tabs );
+
 	$tabs['misc']   = __( 'Misc', 'easy-plugin-demo' );
 
 	return apply_filters( 'epd_settings_tabs', $tabs );
