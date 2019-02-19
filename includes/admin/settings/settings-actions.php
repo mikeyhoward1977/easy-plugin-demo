@@ -72,7 +72,7 @@ function epd_set_post_type_options( $settings )	{
 
 		$post_options[ $key ] = array(
 			'id'       => $key,
-			'name'     => sprintf( __( 'Replicate %s', 'easy-plugin-demo' ), $post_object->name ),
+			'name'     => sprintf( __( 'Replicate %s', 'easy-plugin-demo' ), $post_object->label ),
 			'type'     => 'select',
 			'multiple' => true,
 			'options'  => epd_get_primary_blog_posts( $post_type ),
@@ -80,7 +80,7 @@ function epd_set_post_type_options( $settings )	{
 			'chosen'   => true,
 			'desc'     => sprintf(
 				__( 'Select any <strong>%s</strong> that you would like created by default in each new demo site.', 'easy-plugin-demo' ),
-				strtolower( $post_object->name )
+				strtolower( $post_object->label )
 			)
 		);
 	}
