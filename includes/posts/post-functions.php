@@ -85,6 +85,8 @@ function epd_get_primary_blog_posts( $post_type = 'post' )	{
 
 	restore_current_blog();
 
+    $posts = apply_filters( 'epd_primary_blog_posts_' . $post_type, $posts );
+
 	return $posts;
 } // epd_get_primary_blog_posts
 
