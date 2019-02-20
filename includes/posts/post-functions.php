@@ -97,10 +97,8 @@ function epd_get_primary_blog_posts( $post_type = 'post' )	{
  * @return	array	Array of post or page ID's to replicate
  */
 function epd_posts_to_create( $type = 'post' )	{
-	switch_to_blog( get_network()->blog_id );
 	$option   = 'replicate_' . $type;
 	$post_ids = epd_get_option( $option, array() );
-	restore_current_blog();
 
 	return $post_ids;
 } // epd_posts_to_create
@@ -120,13 +118,13 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 		return $done;
 	}
 
-	switch_to_blog( get_network()->blog_id );
-	$post_ids  = epd_posts_to_create( $post_type );
+	$post_ids = epd_posts_to_create( $post_type );
 
     if ( empty( $post_ids ) )   {
         return $done;
     }
 
+    switch_to_blog( get_network()->blog_id );
 	$old_posts = get_posts( array(
 		'posts_per_page' => epd_max_number_of_posts_to_create(),
 		'include'        => $post_ids,
