@@ -122,6 +122,11 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 
 	switch_to_blog( get_network()->blog_id );
 	$post_ids  = epd_posts_to_create( $post_type );
+
+    if ( empty( $post_ids ) )   {
+        return $done;
+    }
+
 	$old_posts = get_posts( array(
 		'posts_per_page' => epd_max_number_of_posts_to_create(),
 		'include'        => $post_ids,
