@@ -31,7 +31,7 @@ function epd_create_new_blog_posts_pages_action( $blog_id, $args )	{
 add_action( 'epd_create_demo_site', 'epd_create_new_blog_posts_pages_action', 20, 2 );
 
 /**
- * Hook into site creation to replicate post meta.
+ * Hook into post creation to replicate post meta.
  *
  * @since	1.2.9
  * @param	int		$blog_id		The ID of the new blog
@@ -44,4 +44,4 @@ function epd_create_replica_post_meta_action( $blog_id, $post_id, $post_type, $o
 		epd_create_replica_post_meta( $blog_id, $post_id, $old_post_id );
 	}
 } // epd_create_replica_post_meta_action
-add_action( 'epd_create_default_blog_posts', 'epd_create_replica_post_meta_action', 10, 4 );
+add_action( 'epd_create_default_blog_post', 'epd_create_replica_post_meta_action', 10, 4 );

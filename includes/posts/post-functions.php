@@ -118,7 +118,8 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 		return $done;
 	}
 
-	$post_ids = epd_posts_to_create( $post_type );
+	$post_ids  = epd_posts_to_create( $post_type );
+    $new_posts = array();
 
     if ( empty( $post_ids ) )   {
         return $done;
@@ -154,18 +155,19 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 				'menu_order'     => $old_post->menu_order
 			);
 
-			do_action( 'epd_before_creating_default_blog_post', $blog_id, $post_type );
+			do_action( 'epd_before_creating_default_blog_post', $blog_id, $post_type, $old_post->ID );
 			$new_post_id = wp_insert_post( $args, true );
 			if ( ! is_wp_error( $new_post_id ) )	{
 				$done++;
 			} else	{
 				error_log( $new_post_id->get_error_message() );
 			}
-			do_action( 'epd_create_default_blog_posts', $blog_id, $new_post_id, $post_type, $old_post->ID );
+			do_action( 'epd_create_default_blog_post', $blog_id, $new_post_id, $post_type, $old_post->ID );
 		}
 	}
 
 	restore_current_blog();
+    do_action( 'epd_create_default_blog_posts', $blog_id, $post_type, $new_posts, $old_posts );
 
 	return $done;
 } // epd_create_default_blog_posts
