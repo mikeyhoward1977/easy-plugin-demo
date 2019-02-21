@@ -16,12 +16,13 @@ if ( ! defined( 'ABSPATH' ) )
 /**
  * Retrieve a list of supported post types.
  *
- * @since	1.2.9
+ * @since	1.1
  * @return	array	Array of supported post types
  */
 function epd_get_supported_post_types()	{
 	$post_types = array( 'post', 'page' );
 	$post_types = apply_filters( 'epd_supported_post_types', $post_types );
+    $post_types;
 
 	return $post_types;
 } // epd_get_supported_post_types
@@ -29,7 +30,7 @@ function epd_get_supported_post_types()	{
 /**
  * Whether or not a post type is supported.
  *
- * @since	1.2.9
+ * @since	1.1
  * @param	string	$post_type	Post type to check
  * @return	bool	True if supported, otherwise false
  */
@@ -44,7 +45,7 @@ function epd_post_type_is_supported( $post_type = 'post' )	{
 /**
  * Number of posts that can be auto created.
  *
- * @since	1.2.9
+ * @since	1.1
  * @return	int		Number of posts that can be created
  */
 function epd_max_number_of_posts_to_create()	{
@@ -55,6 +56,22 @@ function epd_max_number_of_posts_to_create()	{
 } // epd_max_number_of_posts_to_create
 
 /**
+ * Set the author for replicated posts.
+ *
+ * @since	1.1
+ * @param   int|object  $post   The post ID or a WP_Post object
+ * @return	int		    Number of posts that can be created
+ */
+function epd_set_author_for_post( $post )	{
+	$post = is_object( $post ) ? $post : get_post( $post );
+
+    $author = get_current_user_id();
+    $author = apply_filters( 'epd_set_author_for_post', $author, $post );
+
+    return $author;
+} // epd_set_author_for_post
+
+/**
  * Retrieve a list of existing posts or pages from the primary blog.
  *
  * @since	1.1
@@ -62,8 +79,7 @@ function epd_max_number_of_posts_to_create()	{
  * @return	array			Array of post objects
  */
 function epd_get_primary_blog_posts( $post_type = 'post' )	{
-	$posts = array();
-
+    $primary_posts = array();
 	switch_to_blog( get_network()->blog_id );
 
 	if ( epd_post_type_is_supported( $post_type ) )	{
@@ -76,18 +92,18 @@ function epd_get_primary_blog_posts( $post_type = 'post' )	{
 			'order'          => 'ASC'
 		);
 
-		$query = get_posts( $args );
+		$posts = get_posts( $args );
 
-		foreach( $query as $post )	{
-			$posts[ $post->ID ] = esc_attr( get_the_title( $post->ID ) );
+		foreach( $posts as $post )	{
+			$primary_posts[ $post->ID ] = esc_attr( get_the_title( $post->ID ) );
 		}
 	}
 
 	restore_current_blog();
 
-    $posts = apply_filters( 'epd_primary_blog_posts_' . $post_type, $posts );
+    $primary_posts = apply_filters( 'epd_primary_blog_posts_' . $post_type, $primary_posts );
 
-	return $posts;
+	return $primary_posts;
 } // epd_get_primary_blog_posts
 
 /**
@@ -142,7 +158,7 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 			$args = array(
 				'comment_status' => $old_post->comment_status,
 				'ping_status'    => $old_post->ping_status,
-				'post_author'    => get_current_user_id(),
+				'post_author'    => epd_set_author_for_post(),
 				'post_content'   => $old_post->post_content,
 				'post_excerpt'   => $old_post->post_excerpt,
 				'post_name'      => $old_post->post_name,
@@ -175,7 +191,7 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 /**
  * Replicate a posts meta data.
  *
- * @since	1.2.9
+ * @since	1.1
  * @param	int		$blog_id		The new site ID
  * @param	int		$post_id		The new post ID
  * @param	int		$old_post_id	The old post ID
