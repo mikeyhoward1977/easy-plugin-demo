@@ -59,16 +59,23 @@ add_action( 'admin_init', 'epd_save_options_action' );
  * Output the options for each supported post type.
  *
  * @since	1.2.9
- * @param	array	$settings	Array of post type setting options
+ * @param	array	post_options	Array of post type setting options
  * @return	Array of post type setting options
  */
-function epd_set_post_type_options( $settings )	{
+function epd_set_post_type_options( $post_options = array() )	{
 	$post_types   = epd_get_supported_post_types();
-	$post_options = array();
 
 	foreach( $post_types as $post_type )	{
 		$post_object  = get_post_type_object( $post_type );
 		$key          = "replicate_$post_type";
+
+        $post_options[ $key . '_heading' ] = array(
+			'id'       => $key . '_heading',
+			'name'     => $post_object->label,
+			'type'     => 'header',
+		);
+
+        $post_options = apply_filters( 'epd_post_type_options_after_header', $post_options, $post_type, $post_object );
 
 		$post_options[ $key ] = array(
 			'id'       => $key,
@@ -83,6 +90,9 @@ function epd_set_post_type_options( $settings )	{
 				strtolower( $post_object->label )
 			)
 		);
+
+        $post_options = apply_filters( 'epd_post_type_options_after_posts', $post_options, $post_type, $post_object );
+
 	}
 
 	return $post_options;
