@@ -82,10 +82,10 @@ add_filter( 'epd_validate_new_site_title', 'epd_validate_site_title', 10, 3 );
  * Set site defaults.
  *
  * @since	1.0
- * @param	int		$blog_id	The blog ID
+ * @param	object    $site   WP_Site New site object
  * @return	void
  */
-function epd_set_new_site_defaults( $blog_id )	{
+function epd_set_new_site_defaults( $site )	{
 	$default_delete = epd_get_default_site_lifetime();
 
 	if ( ! empty( $default_delete ) )	{
@@ -99,7 +99,7 @@ function epd_set_new_site_defaults( $blog_id )	{
     if ( ! empty( $allowed_themes ) )   {
         foreach( $allowed_themes as $allowed_theme )    {
             $_theme = wp_get_theme( epd_get_option( 'theme' ) );
-            if ( ! $_theme->exists() || ! $_theme->is_allowed( 'site', $blog_id ) )	{
+            if ( ! $_theme->exists() || ! $_theme->is_allowed( 'site', $site->blog_id ) )	{
                 $themes[ $_theme->stylesheet ] = true;
             }
         }
@@ -126,30 +126,30 @@ function epd_set_new_site_defaults( $blog_id )	{
 
 	foreach( $args as $key => $value )	{
 		if ( in_array( $key, $site_options ) )	{
-			update_network_option( $blog_id, $key, $value );
+			update_network_option( $site->blog_id, $key, $value );
 		} else	{
-			update_blog_option( $blog_id, $key, $value );
+			update_blog_option( $site->blog_id, $key, $value );
 		}
 	}
 
 } // epd_set_new_site_defaults
-add_action( 'wpmu_new_blog', 'epd_set_new_site_defaults' );
+add_action( 'wp_initialize_site', 'epd_set_new_site_defaults' );
 
 /**
  * Activate plugins when a new site is registered.
  *
  * @since	1.0
- * @param	int		$blog_id	The blog ID
+ * @param	object    $site   WP_Site New site object
  * @return	void
  */
-function epd_activate_new_blog_plugins( $blog_id )	{
+function epd_activate_new_blog_plugins( $site )	{
 	$plugins = epd_plugins_to_activate();
 
 	if ( ! function_exists( 'is_plugin_active' ) )	{
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	}
 
-	switch_to_blog( $blog_id );
+	switch_to_blog( $site->blog_id );
 	foreach( $plugins as $plugin )	{
 		if ( ! is_plugin_active( $plugin ) )	{
 			activate_plugin( $plugin );
@@ -157,7 +157,7 @@ function epd_activate_new_blog_plugins( $blog_id )	{
 	}
 	restore_current_blog();
 } // epd_activate_new_blog_plugins
-add_action( 'wpmu_new_blog', 'epd_activate_new_blog_plugins', 11 );
+add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
 
 /**
  * Deletes a site from the front end.
@@ -225,14 +225,14 @@ add_action( 'init', 'epd_delete_site_action' );
  * Remove default site option meta whena blog it deleted.
  *
  * @since   1.0
- * @param   int     $blog_id    The site ID
- * @param   bool    $drop       True if site's tables should be dropped
+ * @param   object     $site    WP_Site The old site object
  * @return  void
  */
-function epd_deleted_site_delete_default_meta( $blog_id, $drop )    {
+function epd_deleted_site_delete_default_meta( $site )    {
     global $wpdb;
 
     $site_options = epd_get_default_site_option_keys();
+    $site_id      = $site->blog_id;
 
 	if ( empty( $site_options ) )	{
 		return;
@@ -257,12 +257,12 @@ function epd_deleted_site_delete_default_meta( $blog_id, $drop )    {
         "
         DELETE FROM
         $wpdb->sitemeta
-        WHERE site_id = '{$blog_id}'
+        WHERE site_id = '{$site_id}'
         AND {$where}
         "
     );
 } // epd_deleted_site_delete_default_meta
-add_action( 'deleted_blog', 'epd_deleted_site_delete_default_meta', 10, 2 );
+add_action( 'wp_delete_site', 'epd_deleted_site_delete_default_meta', 10 );
 
 /**
  * Delete expired sites.

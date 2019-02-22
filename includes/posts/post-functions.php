@@ -149,12 +149,12 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 		'post_status'    => 'any'
 	) );
 	restore_current_blog();
-	switch_to_blog( $blog_id );
 
 	do_action( 'epd_before_create_default_blog_posts', $blog_id, $post_type, $post_ids );
 
 	if ( $old_posts )	{
 		foreach( $old_posts as $old_post )	{
+            switch_to_blog( $blog_id );
 			$args = array(
 				'comment_status' => $old_post->comment_status,
 				'ping_status'    => $old_post->ping_status,
@@ -179,10 +179,10 @@ function epd_create_default_blog_posts( $blog_id, $post_type = 'post' )	{
 				error_log( $new_post_id->get_error_message() );
 			}
 			do_action( 'epd_create_default_blog_post', $blog_id, $new_post_id, $post_type, $old_post->ID );
+            restore_current_blog();
 		}
 	}
 
-	restore_current_blog();
     do_action( 'epd_create_default_blog_posts', $blog_id, $post_type, $new_posts, $old_posts );
 
 	return $done;
