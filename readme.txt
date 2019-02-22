@@ -14,6 +14,8 @@ Automate the provisioning and management of a plugin or theme demo environment t
 
 With Easy Plugin Demo (EPD), showcasing your plugin or themes has never been easier!
 
+**EPD requires that you are running a WordPress multisite instance**
+
 EPD enables you to easily provide an individual WordPress instance for users who would like to demo your plugin or theme without making changes or adding content that is visible to other users wishing to access the demo.
 
 Simply adding the `[epd_register]` shortcode to your page is sufficient to get started once the plugin is installed and activated. Once a user enters their details, a new site is created and configured per the options you define within the settings page.
@@ -26,9 +28,23 @@ You can add further customizations via the plugin settings page such as:
 * Choose which theme should be activated for the new site by default
 * Specify the maximum number of sites a single user can register at any given time
 * Choose where to direct the user upon successful registration
-* Delete a site after a given period
+* Automatically delete a site after a given period
+* Define a custom welcome panel message to be displayed on new sites
 * Send a customized email message to the user once their registration completes
 * Select which plugins should be activated for the new demo site
+* Define which theme(s) can be used within new demo sites
+* Duplicate posts from the primary blog to the newly created demo site (3 posts per post type unless the Premium extension is installed)
+
+The Easy Plugin Demo [Premium Pack](https://easy-plugin-demo.com/extensions/premium-pack) extension unlocks a host of additional features including;
+
+* Cloning of a master site for all new demo sites
+* Duplication of posts from any post type
+* Duplicate an unlimited number of posts
+* Include taxonomies and terms as part of post duplication
+* Include post attachments (media) as part of the post duplication
+* Define author for replicated posts
+* Clone database tables, including custom ones
+* Choose to automatically add users to new sites
 
 We've also included a number of hooks and filters for further customizations by developers.
 
