@@ -498,11 +498,12 @@ function epd_save_settings( $input = array() ) {
 		$input['redirect_page'] = isset( $input['redirect_page'] ) ? sanitize_text_field( $input['redirect_page'] ) : false;
 	}
 
+	do_action( 'epd_saving_settings', $input );
 	// Merge our new settings with the existing
 	$output = array_merge( $epd_options, $input );
 
 	update_site_option( 'epd_settings', $output );
-
+	do_action( 'epd_saved_settings', $output );
 } // epd_save_settings
 
 /**
@@ -512,6 +513,8 @@ function epd_save_settings( $input = array() ) {
  * @return	arr		$tabs
  */
 function epd_get_settings_tabs() {
+
+	$settings = epd_get_registered_settings();
 
 	$tabs            = array();
 	$tabs['sites']   = __( 'Sites', 'easy-plugin-demo' );
@@ -523,9 +526,9 @@ function epd_get_settings_tabs() {
 		$tabs['extensions'] = __( 'Extensions', 'easy-plugin-demo' );
 	}
 
-	//if ( ! empty( $settings['licenses'] ) ) {
+	if ( ! empty( $settings['licenses'] ) ) {
 		$tabs['licenses'] = __( 'Licenses', 'easy-plugin-demo' );
-	//}
+	}
 
 	$tabs = apply_filters( 'epd_settings_tabs_before_misc', $tabs );
 
