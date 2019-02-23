@@ -35,16 +35,17 @@ You can add further customizations via the plugin settings page such as:
 * Define which theme(s) can be used within new demo sites
 * Duplicate posts from the primary blog to the newly created demo site (3 posts per post type unless the Premium extension is installed)
 
-The Easy Plugin Demo [Premium Pack](https://easy-plugin-demo.com/extensions/premium-pack) extension unlocks a host of additional features including;
+The Easy Plugin Demo [Premium Pack](https://easy-plugin-demo.com/downloads/premium-pack) extension unlocks a host of additional features including;
 
 * Cloning of a master site for all new demo sites
 * Duplication of posts from any post type
 * Duplicate an unlimited number of posts
 * Include taxonomies and terms as part of post duplication
 * Include post attachments (media) as part of the post duplication
+* Include post comments as part of the post duplication
 * Define author for replicated posts
 * Clone database tables, including custom ones
-* Choose to automatically add users to new sites
+* Choose to automatically add users to new sites and their roles
 
 We've also included a number of hooks and filters for further customizations by developers.
 
@@ -122,11 +123,25 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Changelog ==
 
+= 1.1 =
+
+**Monday, 25th February 2019**
+
+* **New**: You can now duplicate posts and/or pages into new sites (maximum 3 per type)
+* **Tweak**: Make select fields searchable on settings page
+* **Tweak**: Correct URL to EPD website within welcome panel
+* **Tweak**: Added license handler
+* **Dev**: Added more hooks and filters
+
+= 1.0.2 =
+
 **Wednesday, 12th September 2018**
 
 * **New**: Added count of created sites to network dashboard Right Now widget
 * **Bug**: Missing value may cause fatal error during activation
 * **Dev**: Use `epd_welcome_panel_text` hook to output welcome panel if it is hooked
+
+= 1.0.1 =
 
 **Monday, 20th August 2018**
 
@@ -137,6 +152,8 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 * **Tweak**: Split settings into tabs and sections
 * **Tweak**: Moved plugin files into sub-directories
 * **Tweak**: Added `epd_register_form_top` hook
+
+= 1.0 =
 
 **Thursday, 16th August 2018**
 
