@@ -312,7 +312,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 	
 			}
 	
-			if ( ! current_user_can( 'manage_ticket_settings' ) ) {
+			if ( ! current_user_can( 'manage_sites' ) ) {
 				return;
 			}
 	
@@ -414,7 +414,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 				return;
 			}
 	
-			if ( ! current_user_can( 'manage_ticket_settings' ) ) {
+			if ( ! current_user_can( 'manage_sites' ) ) {
 				return;
 			}
 	
