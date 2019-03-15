@@ -2,7 +2,7 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
-Tested up to: 5.1
+Tested up to: 5.1.1
 Requires PHP: 5.4
 Stable tag: 1.1
 License: GPLv2 or later
@@ -125,7 +125,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 = 1.1 =
 
-**Monday, 25th February 2019**
+**Friday, 15th March 2019**
 
 * **New**: You can now duplicate posts and/or pages into new sites (maximum 3 per type)
 * **Tweak**: Make select fields searchable on settings page
