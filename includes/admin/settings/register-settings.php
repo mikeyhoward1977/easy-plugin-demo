@@ -184,6 +184,7 @@ function epd_get_registered_settings() {
 						'type'     => 'select',
 						'options'  => epd_get_lifetime_options(),
 						'std'      => epd_get_default_site_lifetime(),
+						'chosen'   => true,
 						'desc'     => __( 'Select the time period for which a demo site can remain active. After this time it will be deleted.' , 'easy-plugin-demo' )
 					),
 				),
@@ -222,6 +223,7 @@ function epd_get_registered_settings() {
 						'multiple' => true,
 						'options'  => epd_get_themes( false ),
 						'std'      => array(),
+						'chosen'   => true,
 						'desc'     => __( 'Select the themes you want to be available within a demo site for activation. Note that Network Active themes will always be available.' , 'easy-plugin-demo' ),
 					),
 					'theme' => array(
@@ -230,6 +232,7 @@ function epd_get_registered_settings() {
 						'type'     => 'select',
 						'options'  => epd_get_themes(),
 						'std'      => esc_attr( $current_theme->stylesheet ),
+						'chosen'   => true,
 						'desc'     => __( 'Select the theme you would like activated by default on a new demo site. If you select a theme that is not network enabled and not listed within <strong>Allowed Themes</strong> above, it will be added to the list of <strong>Allowed Themes</strong>.' , 'easy-plugin-demo' ),
 					),
 				),
@@ -241,9 +244,11 @@ function epd_get_registered_settings() {
 						'multiple' => true,
 						'options'  => epd_get_non_network_enabled_plugins(),
 						'std'      => array(),
+						'chosen'   => true,
 						'desc'     => __( 'Select the non-Network Active plugins you would like enabled when a new demo site is registered.', 'easy-plugin-demo' )
 					)
-				)
+				),
+				'posts_pages' => apply_filters( 'epd_posts_pages_options', array() )
 			)
 		),
 		'email' => apply_filters( 'epd_settings_general',
@@ -493,11 +498,12 @@ function epd_save_settings( $input = array() ) {
 		$input['redirect_page'] = isset( $input['redirect_page'] ) ? sanitize_text_field( $input['redirect_page'] ) : false;
 	}
 
+	do_action( 'epd_saving_settings', $input );
 	// Merge our new settings with the existing
 	$output = array_merge( $epd_options, $input );
 
 	update_site_option( 'epd_settings', $output );
-
+	do_action( 'epd_saved_settings', $output );
 } // epd_save_settings
 
 /**
@@ -508,9 +514,13 @@ function epd_save_settings( $input = array() ) {
  */
 function epd_get_settings_tabs() {
 
+	$settings = epd_get_registered_settings();
+
 	$tabs            = array();
 	$tabs['sites']   = __( 'Sites', 'easy-plugin-demo' );
 	$tabs['email']   = __( 'Email', 'easy-plugin-demo' );
+
+	$tabs = apply_filters( 'epd_settings_tabs_after_email', $tabs );
 
 	if ( ! empty( $settings['extensions'] ) ) {
 		$tabs['extensions'] = __( 'Extensions', 'easy-plugin-demo' );
@@ -519,7 +529,9 @@ function epd_get_settings_tabs() {
 	if ( ! empty( $settings['licenses'] ) ) {
 		$tabs['licenses'] = __( 'Licenses', 'easy-plugin-demo' );
 	}
-	
+
+	$tabs = apply_filters( 'epd_settings_tabs_before_misc', $tabs );
+
 	$tabs['misc']   = __( 'Misc', 'easy-plugin-demo' );
 
 	return apply_filters( 'epd_settings_tabs', $tabs );
@@ -562,10 +574,11 @@ function epd_get_registered_settings_sections() {
 
 	$sections = array(
 		'sites'      => apply_filters( 'epd_settings_sections_general', array(
-			'main'    => __( 'General', 'easy-plugin-demo' ),
-			'config'  => __( 'Config', 'easy-plugin-demo' ),
-			'themes'  => __( 'Themes', 'easy-plugin-demo' ),
-			'plugins' => __( 'Plugins', 'easy-plugin-demo' )
+			'main'        => __( 'General', 'easy-plugin-demo' ),
+			'config'      => __( 'Config', 'easy-plugin-demo' ),
+			'themes'      => __( 'Themes', 'easy-plugin-demo' ),
+			'plugins'     => __( 'Plugins', 'easy-plugin-demo' ),
+			'posts_pages' => __( 'Posts and Pages', 'easy-plugin-demo' )
 		) ),
 		'email'      => apply_filters( 'epd_settings_sections_emails', array(
 			'main' => __( 'Email Settings', 'easy-plugin-demo' )
@@ -765,7 +778,7 @@ function epd_registration_actions_callback( $args ) {
 	$pages         = epd_get_pages();
 	$redirect      = epd_get_option( 'redirect_page' );
 
-	$pages_html = '<select id="epd-registration-action-page" name="epd_settings[redirect_page]">';
+	$pages_html = '<select id="epd-registration-action-page" name="epd_settings[redirect_page]" class="epd_select_chosen">';
 
 	foreach( $pages as $page_id => $page )	{
 		$page_selected = false;

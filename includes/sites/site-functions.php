@@ -54,11 +54,15 @@ function epd_get_site_expiration_date( $site_id )	{
  * @since   1.0
  * @return  array   Array of EPD site option keys
  */
-function epd_get_default_site_option_keys() {
-    $site_options = apply_filters( 'epd_site_options', array() );
+function epd_get_default_site_option_keys()	{
+	$site_options = array(
+		'epd_created_site' => current_time( 'mysql' )
+	);
+
+    $site_options = apply_filters( 'epd_default_site_options', $site_options );
 
     return $site_options;
-} //epd_get_default_site_option_keys
+} // epd_get_default_site_option_keys
 
 /**
  * Retrieve the total number of sites registered via EPD.

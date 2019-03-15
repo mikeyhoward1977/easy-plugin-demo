@@ -80,7 +80,7 @@ function epd_get_example_welcome_panel_text()	{
 		<div class="welcome-panel-column welcome-panel-last">
 			<h3><?php _e( 'More Actions', 'easy-plugin-demo' ); ?></h3>
 			<ul>
-				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-docs">View support documents</a>', 'easy-plugin-demo' ), 'https://easy-plugin-demo/support/' );?></li>
+				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-docs">View support documents</a>', 'easy-plugin-demo' ), 'https://easy-plugin-demo.com/support/' );?></li>
 				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-support">Visit support forum</a>', 'easy-plugin-demo' ), 'https://wordpress.org/support/plugin/easy-plugin-demo' );?></li>
 				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-rate">Add your review on WordPress.org</a>', 'easy-plugin-demo' ), 'https://wordpress.org/support/plugin/easy-plugin-demo/reviews/#new-post' );?></li>
 		

@@ -3,8 +3,8 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.0.2
- * Date: 12 September 2018
+ * Version: 1.1
+ * Date: 15th March 2019
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
  * Text Domain: easy-plugin-demo
@@ -30,7 +30,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.0
+ * @version		1.1
  */
 
 // Exit if accessed directly.
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.0.2' );
+			define( 'EPD_VERSION', '1.1' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
@@ -186,6 +186,8 @@ final class Easy_Plugin_Demo {
         require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
         require_once EPD_PLUGIN_DIR . 'includes/sites/site-actions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/sites/site-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/posts/post-actions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/posts/post-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/users/user-actions.php';
         require_once EPD_PLUGIN_DIR . 'includes/users/user-functions.php';
@@ -341,8 +343,23 @@ final class Easy_Plugin_Demo {
 			return;
 		}
 
-		$js_dir = EPD_PLUGIN_URL . 'assets/js/';
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$js_dir  = EPD_PLUGIN_URL . 'assets/js/';
+		$css_dir = EPD_PLUGIN_URL . 'assets/css/';
+		$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+		wp_register_style( 'jquery-chosen-css', $css_dir . 'chosen' . $suffix . '.css', array(), EPD_VERSION );
+		wp_enqueue_style( 'jquery-chosen-css' );
+		wp_register_style( 'epd-admin', $css_dir . 'epd-admin' . $suffix . '.css', array(), EPD_VERSION );
+		wp_enqueue_style( 'epd-admin' );
+
+		wp_register_script(
+			'jquery-chosen',
+			$js_dir . 'chosen.jquery' . $suffix . '.js',
+			array( 'jquery' ),
+			EPD_VERSION
+		);
+
+		wp_enqueue_script( 'jquery-chosen' );
 
 		wp_register_script(
 			'epd-admin-scripts',
@@ -356,9 +373,12 @@ final class Easy_Plugin_Demo {
 			'epd_admin_vars',
 			apply_filters( 'epd_admin_scripts_vars',
 				array(
-					'super_admin'      => current_user_can( 'setup_network' ),
-					'primary_site'     => get_current_blog_id() == get_network()->blog_id,
-					'hide_blog_public' => epd_get_option( 'discourage_search', false )
+					'hide_blog_public'   => epd_get_option( 'discourage_search', false ),
+					'one_option'         => __( 'Choose an option', 'easy-plugin-demo' ),
+					'one_or_more_option' => __( 'Choose one or more options', 'easy-plugin-demo' ),
+					'primary_site'       => get_current_blog_id() == get_network()->blog_id,
+					'super_admin'        => current_user_can( 'setup_network' ),
+					'type_to_search'     => __( 'Type to search', 'easy-plugin-demo' )
 				)
 			)
 		);

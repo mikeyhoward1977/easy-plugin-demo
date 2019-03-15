@@ -102,10 +102,10 @@ if ( ! class_exists( 'EPD_License' ) )	{
 			add_action( 'epd_settings_tab_top', array( $this, 'license_help_text' ) );
 	
 			// Activate license key on settings save
-			add_action( 'admin_init', array( $this, 'activate_license' ) );
+			add_action( 'epd_saved_settings', array( $this, 'activate_license' ) );
 	
 			// Deactivate license key
-			add_action( 'admin_init', array( $this, 'deactivate_license' ) );
+			add_action( 'epd_saved_settings', array( $this, 'deactivate_license' ) );
 	
 			// Check that license is valid once per week
 			add_action( 'epd_weekly_scheduled_events', array( $this, 'weekly_license_check' ) );
@@ -214,22 +214,22 @@ if ( ! class_exists( 'EPD_License' ) )	{
 		 * @since	1.0
 		 * @return	void
 		 */
-		public function activate_license() {
-	
+		public function activate_license( $input ) {
+
 			if ( ! isset( $_POST['epd_settings'] ) ) {
 				return;
 			}
-	
+
 			if ( ! isset( $_REQUEST[ $this->item_shortname . '_license_key-nonce'] ) || ! wp_verify_nonce( $_REQUEST[ $this->item_shortname . '_license_key-nonce'], $this->item_shortname . '_license_key-nonce' ) ) {
 	
 				return;
 	
 			}
-	
-			if ( ! current_user_can( 'manage_ticket_settings' ) ) {
+
+			if ( ! current_user_can( 'manage_sites' ) ) {
 				return;
 			}
-	
+
 			if ( empty( $_POST['epd_settings'][ $this->item_shortname . '_license_key'] ) ) {
 	
 				delete_site_option( $this->item_shortname . '_license_active' );
@@ -237,7 +237,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 				return;
 	
 			}
-	
+
 			foreach ( $_POST as $key => $value ) {
 				if ( false !== strpos( $key, 'license_key_deactivate' ) ) {
 					// Don't activate a key when deactivating a different key
@@ -312,7 +312,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 	
 			}
 	
-			if ( ! current_user_can( 'manage_ticket_settings' ) ) {
+			if ( ! current_user_can( 'manage_sites' ) ) {
 				return;
 			}
 	
@@ -414,7 +414,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 				return;
 			}
 	
-			if ( ! current_user_can( 'manage_ticket_settings' ) ) {
+			if ( ! current_user_can( 'manage_sites' ) ) {
 				return;
 			}
 	
