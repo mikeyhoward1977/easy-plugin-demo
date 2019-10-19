@@ -390,7 +390,7 @@ function epd_email_tag_demo_site_password( $blog_id, $user_id ) {
  * @return	string	Demo site URL
  */
 function epd_email_tag_demo_site_url( $blog_id, $user_id ) {
-	return get_blog_details( $blog_id )->siteurl;
+	return get_blog_details( $blog_id )->home;
 } // epd_email_tag_demo_site_url
 
 /**

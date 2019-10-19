@@ -3,7 +3,7 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.1.1
+ * Version: 1.1.2
  * Date: 19th October 2019
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.1.1' );
+			define( 'EPD_VERSION', '1.1.2' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
