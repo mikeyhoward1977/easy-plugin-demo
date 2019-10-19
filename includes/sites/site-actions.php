@@ -149,7 +149,7 @@ function epd_activate_new_blog_plugins( $site )	{
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	}
 
-	if ( ! empty( $plugins ) )	{
+	if ( ! empty( $plugins ) && is_array( $plugins ) )	{
 		switch_to_blog( $site->blog_id );
 		foreach( $plugins as $plugin )	{
 			if ( ! is_plugin_active( $plugin ) )	{
