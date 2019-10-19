@@ -149,13 +149,15 @@ function epd_activate_new_blog_plugins( $site )	{
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	}
 
-	switch_to_blog( $site->blog_id );
-	foreach( $plugins as $plugin )	{
-		if ( ! is_plugin_active( $plugin ) )	{
-			activate_plugin( $plugin );
+	if ( ! empty( $plugins ) )	{
+		switch_to_blog( $site->blog_id );
+		foreach( $plugins as $plugin )	{
+			if ( ! is_plugin_active( $plugin ) )	{
+				activate_plugin( $plugin );
+			}
 		}
+		restore_current_blog();
 	}
-	restore_current_blog();
 } // epd_activate_new_blog_plugins
 add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
 

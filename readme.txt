@@ -2,9 +2,9 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
-Tested up to: 5.1.1
+Tested up to: 5.2.4
 Requires PHP: 5.4
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,12 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.1.1 =
+
+**Saturday, 19th October 2019**
+
+* **Bug**: `epd_plugins_to_activate()` function may not return an array as expected
 
 = 1.1 =
 
