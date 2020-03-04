@@ -57,7 +57,7 @@ if ( is_user_logged_in() ) :
 							__( 'Admin', 'easy-plugin-demo' )
 						)
 					);
-					if ( BLOG_ID_CURRENT_SITE != absint( $user_blog->userblog_id ) )	{
+					if ( ! is_main_site( $user_blog->userblog_id ) )	{
 						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
 							esc_url( $delete_url ),
