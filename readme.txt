@@ -123,7 +123,13 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Changelog ==
 
-= 1.1.2
+= 1.1.3 =
+
+**Wednesday, 4th March 2020**
+
+* **Bug**: Do not show delete link for primary site when admin is multisite admin is logged in
+
+= 1.1.2 =
 
 **Saturday, 19th October 2019**
 
