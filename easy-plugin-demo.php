@@ -220,6 +220,7 @@ final class Easy_Plugin_Demo {
 	private function hooks()	{
 		// Admin notices
 		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
+        add_action( 'plugins_loaded', array( self::$instance, 'notify_premium_pack' ) );
 
 		// Scripts
 		add_action( 'admin_enqueue_scripts', array( self::$instance, 'load_admin_scripts' ) );
@@ -264,7 +265,7 @@ final class Easy_Plugin_Demo {
      */
     public function request_wp_5star_rating() {
 
-		if ( get_current_blog_id() != get_network()->blog_id )	{
+		if ( ! is_main_site() && ! is_network_admin )	{
 			return;
 		}
 	
@@ -280,9 +281,41 @@ final class Easy_Plugin_Demo {
 
         if ( $epd_registered > 15 ) {
             add_action( 'admin_notices', array( self::$instance, 'admin_wp_5star_rating_notice' ) );
+            add_action( 'network_admin_notices', array( self::$instance, 'admin_wp_5star_rating_notice' ) );
         }
 
     } // request_wp_5star_rating
+
+    /**
+     * Notify users that a premium pack exists.
+     *
+     * After 3 sites are registered via EPD we notify admins of the premium pack
+     *
+     * @since	1.0
+     * @return	void
+     */
+    public function notify_premium_pack() {
+
+		if ( ! is_main_site() && ! is_network_admin )	{
+			return;
+		}
+	
+        if ( ! current_user_can( 'manage_sites' ) )	{
+            return;
+        }
+
+        if ( epd_is_notice_dismissed( 'epd_upsell_premium_pack' ) )   {
+            return;
+        }
+
+        $epd_registered = epd_get_registered_demo_sites_count();
+
+        if ( $epd_registered > 2 ) {
+            add_action( 'admin_notices', array( self::$instance, 'admin_wp_premium_pack_rating_notice' ) );
+            add_action( 'network_admin_notices', array( self::$instance, 'admin_wp_premium_pack_rating_notice' ) );
+        }
+
+    } // notify_premium_pack
 
 	/**
      * Admin WP Rating Request Notice
@@ -328,6 +361,55 @@ final class Easy_Plugin_Demo {
 
         <?php echo ob_get_clean();
     } // admin_wp_5star_rating_notice
+
+    /**
+     * Admin WP Upsell Premium Pack Notice
+     *
+     * @since	1.1
+     * @return	void
+    */
+    function admin_wp_premium_pack_rating_notice() {
+        ob_start(); ?>
+
+		<script>
+		jQuery(document).ready(function ($) {
+			// Dismiss admin notices
+			$( document ).on( 'click', '.notice-epd-dismiss .notice-dismiss', function () {
+				var notice = $( this ).closest( '.notice-epd-dismiss' ).data( 'notice' );
+
+				var postData = {
+					notice : notice,
+					action : 'epd_dismiss_notice'
+				};
+
+				$.ajax({
+					type: 'POST',
+					dataType: 'json',
+					data: postData,
+					url: ajaxurl
+				});
+			});
+		});
+		</script>
+
+        <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_upsell_premium_pack">
+            <p>
+                <?php printf(
+                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
+                    'https://easy-plugin-demo.com/downloads/premium-pack/'
+                ); ?>
+            </p>
+            <p>
+                <?php printf(
+                    __( '<a href="%1$s" target="_blank">Click here</a> for more information and to secure a %2$s discount.', 'easy-plugin-demo' ),
+                    'https://easy-plugin-demo.com/downloads/premium-pack/?discount=15OFFNOW',
+                    '15%'
+                ); ?>
+            </p>
+        </div>
+
+        <?php echo ob_get_clean();
+    } // admin_wp_premium_pack_rating_notice
 
 /*****************************************
  -- SCRIPTS
