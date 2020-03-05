@@ -21,7 +21,10 @@ if ( ! defined( 'ABSPATH' ) )
  * @return  string  The registration form output
  */
 function epd_add_epd_register_shortcode( $atts )   {
-	$supported_atts = apply_filters( 'epd_register_supported_shortcode_atts', array( 'redirect' => '' ) );
+	$supported_atts = apply_filters(
+		'epd_register_shortcode_atts',
+		array( 'redirect' => '' )
+	);
 
     $args = shortcode_atts( $supported_atts, $atts, 'epd_register' );
 
