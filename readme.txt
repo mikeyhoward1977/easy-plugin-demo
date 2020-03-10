@@ -2,9 +2,9 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
-Tested up to: 5.3.2
+Tested up to: 5.4
 Requires PHP: 5.4
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,7 +123,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Changelog ==
 
-= 1.1.4 =
+= 1.1.5 =
 
 **Tuesday, 10th March 2020**
 

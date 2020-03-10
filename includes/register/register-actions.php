@@ -54,13 +54,12 @@ function epd_process_registration_action()	{
 
 	if ( $user_id )	{
         $network_id = get_current_network_id();
-        $net_domain = get_network()->domain;
+        $net_domain = get_network()->domain . get_network()->path;
         $user       = get_userdata( $user_id );
 		$blog       = preg_replace( "/[^A-Za-z0-9 ]/", '', $user->user_login );
 
 		if ( is_subdomain_install() )	{
-			$net_path = get_network()->path;
-			$domain   = $blog . $net_domain . $net_path;
+			$domain   = $blog . $net_domain;
 			$path     = '/';
             $i        = 1;
 
