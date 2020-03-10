@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 4.1
 Tested up to: 5.3.2
 Requires PHP: 5.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,14 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.1.4 =
+
+**Tuesday, 10th March 2020**
+
+* **Bug**: Path was not honored for subdomain installs
+* **Tweak**: Added `epd_register_shortcode_atts` filter to allow filtering of the `epd_register` shortcode atts
+* **Tweak**: Added link to Premium Pack in plugin row
 
 = 1.1.3 =
 
