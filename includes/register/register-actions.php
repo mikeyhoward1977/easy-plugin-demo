@@ -59,9 +59,10 @@ function epd_process_registration_action()	{
 		$blog       = preg_replace( "/[^A-Za-z0-9 ]/", '', $user->user_login );
 
 		if ( is_subdomain_install() )	{
-			$domain = $blog . $net_domain;
-			$path   = '/';
-            $i      = 1;
+			$net_path = get_network()->path;
+			$domain   = $blog . $net_domain . $net_path;
+			$path     = '/';
+            $i        = 1;
 
             while( domain_exists( $domain, $path, $network_id ) )   {
                 $domain = $blog . "-{$i}" . $net_domain;
