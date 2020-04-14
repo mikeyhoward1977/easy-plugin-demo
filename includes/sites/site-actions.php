@@ -280,10 +280,19 @@ function epd_delete_expired_sites()	{
 		return;
 	}
 
-	$delete_on = $now - $lifetime;
+	$delete_on  = $now - $lifetime;
+    $exclusions = array( get_network()->blog_id );
+
+    /**
+     * Allow filtering of the exclusions list.
+     *
+     * @since   1.2
+     * @param   array   $exclusions Array of site ID's to exclude
+     */
+    $exclusions = apply_filters( 'epd_delete_expired_sites_exclusions', $exclusions );
 
 	$delete_sites_query = array(
-		'site__not_in' => get_network()->blog_id,
+		'site__not_in' => $exclusions,
 		'date_query'   => array(
 			array(
 				'year'          => date( 'Y', $delete_on ),
