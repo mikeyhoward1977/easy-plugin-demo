@@ -120,7 +120,7 @@ function epd_set_new_site_defaults( $site )	{
 		'blog_public'   => epd_get_option( 'discourage_search' ) ? 0 : 1
 	);
 
-	$args = apply_filters( 'epd_set_new_site_defaults', $args );
+	$args = apply_filters( 'epd_set_new_site_defaults', $args, $site );
 
 	$site_options = epd_get_default_site_option_keys();
 
