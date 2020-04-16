@@ -40,5 +40,8 @@ add_action( 'admin_init', 'epd_get_non_network_enabled_plugins' );
  * @return	array	Array of plugins to activate
  */
 function epd_plugins_to_activate()	{
-	return epd_get_option( 'enable_plugins' );
+	$plugins = epd_get_option( 'enable_plugins', array() );
+	$plugins = apply_filters( 'epd_plugins_to_activate', $plugins );
+
+	return $plugins;
 } // epd_plugins_to_activate
