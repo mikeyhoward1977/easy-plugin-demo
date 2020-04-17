@@ -241,14 +241,14 @@ function epd_deleted_site_delete_default_meta( $site )    {
 	}
 
     $where = '(';
-    $i     = false;
+    $i     = 0;
 
-    foreach( $site_options as $site_option )    {
+    foreach( $site_options as $key => $option )    {
         if ( $i > 0 )   {
             $where .= " OR ";
         }
 
-        $where .= "`meta_key` = '{$site_option}'";
+        $where .= "`meta_key` = '{$key}'";
 
         $i++;
     }
