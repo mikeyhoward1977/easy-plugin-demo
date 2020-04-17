@@ -456,7 +456,7 @@ final class Easy_Plugin_Demo {
 			'epd_admin_vars',
 			apply_filters( 'epd_admin_scripts_vars',
 				array(
-					'hide_blog_public'   => epd_get_option( 'discourage_search', false ),
+					'hide_blog_public'   => epd_get_option( 'disable_search', false ),
 					'one_option'         => __( 'Choose an option', 'easy-plugin-demo' ),
 					'one_or_more_option' => __( 'Choose one or more options', 'easy-plugin-demo' ),
 					'primary_site'       => get_current_blog_id() == get_network()->blog_id,
