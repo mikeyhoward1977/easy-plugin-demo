@@ -28,6 +28,8 @@ function epd_process_registration_action()	{
 
 	$data = array();
 
+    do_action( 'epd_before_registration' );
+
 	foreach( $_POST as $key => $value )	{
 		if ( 'epd_' == substr( $key, 0, 4 ) )	{
 			$data[ substr( $key, 4 ) ] = sanitize_text_field( $value );
