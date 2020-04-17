@@ -138,6 +138,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 * **Tweak**: Parse site object with the `epd_set_new_site_defaults` filter
 * **Tweak**: Added the `epd_delete_expired_sites_exclusions` filter to allow for sites to be excluded from expiring
 * **Tweak**: Added the `epd_hide_default_welcome_panel` and `epd_add_custom_welcome_panel` filters
+* **Tweak**: Add some site meta for EPD created sites
 
 = 1.1.5 =
 

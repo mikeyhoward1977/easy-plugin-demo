@@ -122,14 +122,8 @@ function epd_set_new_site_defaults( $site )	{
 
 	$args = apply_filters( 'epd_set_new_site_defaults', $args, $site );
 
-	$site_options = epd_get_default_site_option_keys();
-
 	foreach( $args as $key => $value )	{
-		if ( in_array( $key, $site_options ) )	{
-			update_network_option( $site->blog_id, $key, $value );
-		} else	{
-			update_blog_option( $site->blog_id, $key, $value );
-		}
+        update_blog_option( $site->blog_id, $key, $value );
 	}
 
 } // epd_set_new_site_defaults
@@ -160,6 +154,22 @@ function epd_activate_new_blog_plugins( $site )	{
 	}
 } // epd_activate_new_blog_plugins
 add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
+
+/**
+ * Set the blog options for the new site.
+ * 
+ * @since   1.1.6
+ * @param   int     $site_id    Site ID
+ * @return  void
+ */
+function epd_set_options_for_site( $site_id )  {
+    $options = epd_get_default_blog_option_keys();
+
+    foreach( $options as $key => $value )   {
+        update_network_option( $site_id, $key, $value );
+    }
+} // epd_set_options_for_site
+add_action( 'epd_create_demo_site', 'epd_set_options_for_site' );
 
 /**
  * Deletes a site from the front end.
@@ -224,7 +234,7 @@ function epd_delete_site_action()	{
 add_action( 'init', 'epd_delete_site_action' );
 
 /**
- * Remove default site option meta whena blog it deleted.
+ * Remove default site option meta whena blog is deleted.
  *
  * @since   1.0
  * @param   object     $site    WP_Site The old site object
@@ -233,7 +243,7 @@ add_action( 'init', 'epd_delete_site_action' );
 function epd_deleted_site_delete_default_meta( $site )    {
     global $wpdb;
 
-    $site_options = epd_get_default_site_option_keys();
+    $site_options = epd_get_default_blog_option_keys();
     $site_id      = $site->blog_id;
 
 	if ( empty( $site_options ) )	{
