@@ -127,11 +127,13 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 **DATE**
 
+* **Bug**: Allowed themes setting was not being honoured
 * **Bug**: Corrected site path for sub directory installations
 * **Bug**: Missing brackets from function name
 * **Bug**: Incorrect MySQL syntax caused PHP warning on site deletion
 * **Bug**: Hide Search Engine Visibility option when Disable Visibility Changes option is enabled. Previously incorrectly hidden when Discourage Search Engines was enabled
 
+* **Tweak**: Added the `epd_before_registration` hook
 * **Tweak**: Added the `epd_plugins_to_activate` filter
 * **Tweak**: Parse site object with the `epd_set_new_site_defaults` filter
 * **Tweak**: Added the `epd_delete_expired_sites_exclusions` filter to allow for sites to be excluded from expiring

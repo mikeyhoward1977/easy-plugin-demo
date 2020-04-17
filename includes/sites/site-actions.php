@@ -98,8 +98,8 @@ function epd_set_new_site_defaults( $site )	{
 
     if ( ! empty( $allowed_themes ) )   {
         foreach( $allowed_themes as $allowed_theme )    {
-            $_theme = wp_get_theme( epd_get_option( 'theme' ) );
-            if ( ! $_theme->exists() || ! $_theme->is_allowed( 'site', $site->blog_id ) )	{
+            $_theme = wp_get_theme( $allowed_theme );
+            if ( $_theme->exists() )	{
                 $themes[ $_theme->stylesheet ] = true;
             }
         }
