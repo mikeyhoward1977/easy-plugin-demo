@@ -162,14 +162,14 @@ add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
  * @param   int     $site_id    Site ID
  * @return  void
  */
-function epd_set_options_for_site( $site_id )  {
-    $options = epd_get_default_blog_option_keys();
+function epd_set_blog_meta( $site_id )  {
+    $options = epd_get_default_blog_meta();
 
     foreach( $options as $key => $value )   {
-        update_network_option( $site_id, $key, $value );
+        update_site_meta( $site_id, $key, $value );
     }
-} // epd_set_options_for_site
-add_action( 'epd_create_demo_site', 'epd_set_options_for_site' );
+} // epd_set_blog_meta
+add_action( 'epd_create_demo_site', 'epd_set_blog_meta' );
 
 /**
  * Deletes a site from the front end.
@@ -243,7 +243,7 @@ add_action( 'init', 'epd_delete_site_action' );
 function epd_deleted_site_delete_default_meta( $site )    {
     global $wpdb;
 
-    $site_options = epd_get_default_blog_option_keys();
+    $site_options = epd_get_default_blog_meta();
     $site_id      = $site->blog_id;
 
 	if ( empty( $site_options ) )	{

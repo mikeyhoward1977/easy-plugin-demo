@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) )
  */
 function epd_get_default_site_lifetime()	{
 	$lifetime = epd_get_option( 'delete_after' );
+    $lifetime = apply_filters( 'epd_site_lifetime', $lifetime );
 
 	return $lifetime;
 } // epd_get_default_site_lifetime
@@ -54,15 +55,15 @@ function epd_get_site_expiration_date( $site_id )	{
  * @since   1.0
  * @return  array   Array of EPD site option keys
  */
-function epd_get_default_blog_option_keys()	{
+function epd_get_default_blog_meta()	{
 	$site_options = array(
 		'epd_created_site' => current_time( 'mysql' )
 	);
 
-    $site_options = apply_filters( 'epd_default_blog_options', $site_options );
+    $site_options = apply_filters( 'epd_default_blog_meta', $site_options );
 
     return $site_options;
-} // epd_get_default_blog_option_keys
+} // epd_get_default_blog_meta
 
 /**
  * Retrieve the total number of sites registered via EPD.
