@@ -55,7 +55,7 @@ function epd_get_example_welcome_panel_text()	{
 		.welcome-panel .welcome-plugins:before { content: "\f106"; top: -3px; }
 		.welcome-panel .welcome-docs:before { content: "\f118"; top: -2px; }
 		.welcome-panel .welcome-rate:before { content: "\f155"; top: -2px; }
-		.welcome-panel .welcome-support:before { content: "\f125"; top: -2px; }
+		.welcome-panel .welcome-premium:before { content: "\f174"; top: -2px; }
 	</style>
 
 	<h2><?php _e( 'Welcome to the {demo_product_name} (EPD) Demo!', 'easy-plugin-demo' ); ?></h2>
@@ -81,8 +81,8 @@ function epd_get_example_welcome_panel_text()	{
 			<h3><?php _e( 'More Actions', 'easy-plugin-demo' ); ?></h3>
 			<ul>
 				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-docs">View support documents</a>', 'easy-plugin-demo' ), 'https://easy-plugin-demo.com/support/' );?></li>
-				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-support">Visit support forum</a>', 'easy-plugin-demo' ), 'https://wordpress.org/support/plugin/easy-plugin-demo' );?></li>
 				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-rate">Add your review on WordPress.org</a>', 'easy-plugin-demo' ), 'https://wordpress.org/support/plugin/easy-plugin-demo/reviews/#new-post' );?></li>
+				<li><?php printf( __( '<a href="%s" target="_blank" class="welcome-icon welcome-premium">Add Premium Features</a>', 'easy-plugin-demo' ), 'https://easy-plugin-demo.com/downloads/premium-pack/' );?></li>
 		
 			</ul>
 		</div>
