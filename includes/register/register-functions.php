@@ -14,6 +14,26 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
+ * Determine if the current page is the registration page.
+ *
+ * @since	1.2
+ * @return	bool	True if registration page, or false.
+ */
+function epd_is_register_page()	{
+	$is_register = is_page( epd_get_option( 'registration_page' ) );
+
+	if ( ! $is_register )	{
+		global $post;
+
+		if ( ! empty( $post ) )	{
+			$is_register = has_shortcode( $post->post_content, 'epd_register' );
+		}
+	}
+
+	return apply_filters( 'epd_is_register_page', $is_register );
+} // epd_is_register_page
+
+/**
  * Define the registration submit button label
  *
  * @since	1.0

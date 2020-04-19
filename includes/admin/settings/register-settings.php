@@ -542,13 +542,13 @@ function epd_get_settings_tabs() {
 		$tabs['extensions'] = __( 'Extensions', 'easy-plugin-demo' );
 	}
 
-	if ( ! empty( $settings['licenses'] ) ) {
-		$tabs['licenses'] = __( 'Licenses', 'easy-plugin-demo' );
-	}
-
 	$tabs = apply_filters( 'epd_settings_tabs_before_misc', $tabs );
 
 	$tabs['misc']   = __( 'Misc', 'easy-plugin-demo' );
+
+	if ( ! empty( $settings['licenses'] ) ) {
+		$tabs['licenses'] = __( 'Premium License', 'easy-plugin-demo' );
+	}
 
 	return apply_filters( 'epd_settings_tabs', $tabs );
 } // epd_get_settings_tabs
