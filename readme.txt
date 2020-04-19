@@ -133,6 +133,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 * **Bug**: Incorrect MySQL syntax caused PHP warning on site deletion
 * **Bug**: Hide Search Engine Visibility option when Disable Visibility Changes option is enabled. Previously incorrectly hidden when Discourage Search Engines was enabled
 
+* **Tweak**: Added registration page option within settings
 * **Tweak**: Added the `epd_before_registration` hook
 * **Tweak**: Added the `epd_plugins_to_activate` filter
 * **Tweak**: Parse site object with the `epd_set_new_site_defaults` filter

@@ -145,7 +145,22 @@ function epd_get_registered_settings() {
 	 */
 	$epd_settings = array(
 		/** General Settings */
-		'sites' => apply_filters( 'epd_settings_general',
+		'general' => apply_filters( 'epd_settings_general',
+			array(
+				'main' => array(
+					'registration_page' => array(
+						'id'      => 'registration_page',
+						'name'    => __( 'Registration Page', 'easy-plugin-demo' ),
+						'type'    => 'select',
+						'options' => epd_get_primary_pages(),
+						'chosen'  => true,
+						'desc'    => __( 'Select the page you are using as your registration page. Should contain the shortcode <code>[epd_register]</code>', 'easy-plugin-demo' )
+					)
+				)
+			)
+		),
+		/** Site Settings */
+		'sites' => apply_filters( 'epd_settings_sites',
 			array(
 				'main' => array(
 					'product' => array(
@@ -438,7 +453,7 @@ function epd_save_settings( $input = array() ) {
 	parse_str( $_POST['_wp_http_referer'], $referrer );
 
 	$settings = epd_get_registered_settings();
-	$tab      = isset( $referrer['tab'] )     ? $referrer['tab']     : 'sites';
+	$tab      = isset( $referrer['tab'] )     ? $referrer['tab']     : 'general';
 	$section  = isset( $referrer['section'] ) ? $referrer['section'] : 'main';
 
 	$input = $input ? $input : array();
@@ -517,6 +532,7 @@ function epd_get_settings_tabs() {
 	$settings = epd_get_registered_settings();
 
 	$tabs            = array();
+	$tabs['general'] = __( 'General', 'easy-plugin-demo' );
 	$tabs['sites']   = __( 'Sites', 'easy-plugin-demo' );
 	$tabs['email']   = __( 'Email', 'easy-plugin-demo' );
 
@@ -573,7 +589,10 @@ function epd_get_registered_settings_sections() {
 	}
 
 	$sections = array(
-		'sites'      => apply_filters( 'epd_settings_sections_general', array(
+		'general'    => apply_filters( 'epd_settings_section_general', array(
+			'main'   => __( 'General', 'easy-plugin-demo' )
+		) ),
+		'sites'      => apply_filters( 'epd_settings_sections_sites', array(
 			'main'        => __( 'General', 'easy-plugin-demo' ),
 			'config'      => __( 'Config', 'easy-plugin-demo' ),
 			'themes'      => __( 'Themes', 'easy-plugin-demo' ),
@@ -1374,6 +1393,27 @@ function epd_get_pages( $force = false ) {
 
 	return $pages_options;
 } // epd_get_pages
+
+/**
+ * Retrieve an array of pages from the primary site.
+ *
+ * @since	1.2
+ * @return	array	Array of page ID's => names
+ */
+function epd_get_primary_pages()	{
+	$options = array();
+	switch_to_blog( get_network()->blog_id );
+
+	$pages = get_pages();
+
+	foreach( $pages as $page )	{
+		$options[ $page->ID ] = get_the_title( $page->ID );
+	}
+
+	restore_current_blog();
+
+	return $options;
+} // epd_get_primary_pages
 
 /**
  * Retrieve a list of all installed themes.
