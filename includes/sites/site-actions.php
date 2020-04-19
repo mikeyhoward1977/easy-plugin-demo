@@ -234,49 +234,6 @@ function epd_delete_site_action()	{
 add_action( 'init', 'epd_delete_site_action' );
 
 /**
- * Remove default site option meta whena blog is deleted.
- *
- * @since   1.0
- * @param   object     $site    WP_Site The old site object
- * @return  void
- */
-function epd_deleted_site_delete_default_meta( $site )    {
-    global $wpdb;
-
-    $site_options = epd_get_default_blog_meta();
-    $site_id      = $site->blog_id;
-
-	if ( empty( $site_options ) )	{
-		return;
-	}
-
-    $where = '(';
-    $i     = 0;
-
-    foreach( $site_options as $key => $option )    {
-        if ( $i > 0 )   {
-            $where .= " OR ";
-        }
-
-        $where .= "`meta_key` = '{$key}'";
-
-        $i++;
-    }
-
-    $where .= ')';
-
-    $wpdb->query(
-        "
-        DELETE FROM
-        $wpdb->sitemeta
-        WHERE site_id = '{$site_id}'
-        AND {$where}
-        "
-    );
-} // epd_deleted_site_delete_default_meta
-add_action( 'wp_delete_site', 'epd_deleted_site_delete_default_meta', 10 );
-
-/**
  * Delete expired sites.
  *
  * @since	1.0
