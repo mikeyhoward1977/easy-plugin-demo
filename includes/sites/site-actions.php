@@ -252,23 +252,47 @@ function epd_delete_expired_sites()	{
 
 	$delete_sites_query = array(
 		'site__not_in' => $exclusions,
-		'date_query'   => array(
+		'number'       => 250,
+		'fields'       => 'ids', // Remove when $backwards_compat is removed
+		'meta_query'   => array(
+			'relation' => 'OR',
 			array(
-				'year'          => date( 'Y', $delete_on ),
-				'month'         => date( 'n', $delete_on ),
-				'day'           => date( 'j', $delete_on ),
-				'hour'          => date( 'G', $delete_on ),
-				'minute'        => intval( date( 'i', $delete_on ) ),
-				'second'        => intval( date( 's', $delete_on ) ),
-				'compare'       => '<=',
-				'column'        => 'registered'
+				'key'     => 'epd_site_expires',
+				'value'   => $now,
+				'compare' => '<=',
+				'type'    => 'NUMERIC'
+			),
+			array(
+				'key'     => 'epd_site_expires',
+				'compare' => 'NOT EXISTS',
+				'value'   => '#bug'
 			)
+		)
+	);
+
+	$backwards_compat_query = array(
+		'site__not_in' => $exclusions,
+		'number'       => 250,
+		'fields'       => 'ids',
+		'date_query'   => array(
+			'year'          => date( 'Y', $delete_on ),
+			'month'         => date( 'n', $delete_on ),
+			'day'           => date( 'j', $delete_on ),
+			'hour'          => date( 'G', $delete_on ),
+			'minute'        => intval( date( 'i', $delete_on ) ),
+			'second'        => intval( date( 's', $delete_on ) ),
+			'compare'       => '<=',
+			'column'        => 'registered'
 		)
 	);
 
 	$delete_sites_query = apply_filters( 'epd_delete_sites_query', $delete_sites_query );
 
-	$sites = get_sites( $delete_sites_query );
+	$delete_site_ids           = get_sites( $delete_sites_query );
+	$backwards_compat_site_ids = get_sites( $backwards_compat_query );
+	$site_ids                  = array_merge( $delete_site_ids, $backwards_compat_site_ids );
+
+	$sites = get_sites( array( 'site__in' => $site_ids, 'number' => 250 ) );
 
 	require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 
