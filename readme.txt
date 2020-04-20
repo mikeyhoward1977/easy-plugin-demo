@@ -1,7 +1,7 @@
 === Easy Plugin Demo ===
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
-Requires at least: 4.1
+Requires at least: 5.3
 Tested up to: 5.4
 Requires PHP: 5.4
 Stable tag: 1.1.5
