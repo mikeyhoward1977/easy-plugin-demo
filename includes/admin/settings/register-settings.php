@@ -144,8 +144,8 @@ function epd_get_registered_settings() {
 	 * section to allow extensions and other plugins to add their own settings.
 	 */
 	$epd_settings = array(
-		/** General Settings */
-		'general' => apply_filters( 'epd_settings_general',
+		/** Site Settings */
+		'sites' => apply_filters( 'epd_settings_sites',
 			array(
 				'main' => array(
 					'registration_page' => array(
@@ -155,14 +155,7 @@ function epd_get_registered_settings() {
 						'options' => epd_get_primary_pages(),
 						'chosen'  => true,
 						'desc'    => __( 'Select the page you are using as your registration page. Should contain the shortcode <code>[epd_register]</code>', 'easy-plugin-demo' )
-					)
-				)
-			)
-		),
-		/** Site Settings */
-		'sites' => apply_filters( 'epd_settings_sites',
-			array(
-				'main' => array(
+					),
 					'product' => array(
 						'id'       => 'product',
 						'name'     => __( 'Product Name', 'easy-plugin-demo' ),
@@ -453,7 +446,7 @@ function epd_save_settings( $input = array() ) {
 	parse_str( $_POST['_wp_http_referer'], $referrer );
 
 	$settings = epd_get_registered_settings();
-	$tab      = isset( $referrer['tab'] )     ? $referrer['tab']     : 'general';
+	$tab      = isset( $referrer['tab'] )     ? $referrer['tab']     : 'sites';
 	$section  = isset( $referrer['section'] ) ? $referrer['section'] : 'main';
 
 	$input = $input ? $input : array();
@@ -532,7 +525,6 @@ function epd_get_settings_tabs() {
 	$settings = epd_get_registered_settings();
 
 	$tabs            = array();
-	$tabs['general'] = __( 'General', 'easy-plugin-demo' );
 	$tabs['sites']   = __( 'Sites', 'easy-plugin-demo' );
 	$tabs['email']   = __( 'Email', 'easy-plugin-demo' );
 
@@ -589,9 +581,6 @@ function epd_get_registered_settings_sections() {
 	}
 
 	$sections = array(
-		'general'    => apply_filters( 'epd_settings_section_general', array(
-			'main'   => __( 'General', 'easy-plugin-demo' )
-		) ),
 		'sites'      => apply_filters( 'epd_settings_sections_sites', array(
 			'main'        => __( 'General', 'easy-plugin-demo' ),
 			'config'      => __( 'Config', 'easy-plugin-demo' ),

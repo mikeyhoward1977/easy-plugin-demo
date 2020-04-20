@@ -33,8 +33,8 @@ function epd_options_page() {
 
 	$settings_tabs = epd_get_settings_tabs();
 	$settings_tabs = empty( $settings_tabs) ? array() : $settings_tabs;
-	$active_tab    = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'general';
-	$active_tab    = array_key_exists( $active_tab, $settings_tabs ) ? $active_tab : 'general';
+	$active_tab    = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'sites';
+	$active_tab    = array_key_exists( $active_tab, $settings_tabs ) ? $active_tab : 'sites';
 	$sections      = epd_get_settings_tab_sections( $active_tab );
 	$key           = 'main';
 
