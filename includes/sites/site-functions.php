@@ -14,6 +14,21 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
+ * Get the lifetime of a site.
+ *
+ * @since	1.2
+ * @param	int		$site_id	Site ID
+ * @return	int		Lifetime of site (in seconds)
+ */
+function epd_get_site_lifetime( $site_id )	{
+	$lifetime = get_site_meta( $site_id, 'epd_site_lifetime', true );
+	$lifetime = '' == $lifetime ? epd_get_default_site_lifetime() : $lifetime;
+	$lifetime = apply_filters( 'epd_site_lifetime', $lifetime );
+
+	return $lifetime;
+} // epd_get_site_lifetime
+
+/**
  * Defines the default lifetime of a site.
  *
  * @since	1.0
@@ -27,21 +42,42 @@ function epd_get_default_site_lifetime()	{
 } // epd_get_default_site_lifetime
 
 /**
+ * Get the date/time the site was registered.
+ *
+ * @since	1.2
+ * @param	int		$site_id	Site ID
+ * @param	string	$format		Date format to be returned
+ * @return	string	Date/Time the site was registered
+ */
+function epd_get_site_registered_time( $site_id, $format = '' )	{
+	$registered = strtotime( get_blog_details( $site_id )->registered );
+	$format     = empty( $format ) ? 'Y/m/d ' . get_option( 'time_format' ) : $format;
+
+	return wp_date( $format, $registered );
+} // epd_get_site_registered_time
+
+/**
  * Retrieve a sites expiration date.
  *
  * @since	1.0
  * @param	int		$site_id	The site ID
+ * @param	string	$format		Date format to be returned
  * @return	string	Time (in seconds) that a site should exist for before being deleted.
  */
-function epd_get_site_expiration_date( $site_id )	{
-	$lifetime = epd_get_default_site_lifetime();
+function epd_get_site_expiration_date( $site_id, $format = '' )	{
+	$default_lifetime = epd_get_default_site_lifetime();
+	$expiration       = get_site_meta( $site_id, 'epd_site_expires', true );
+	$format           = empty( $format ) ? 'Y/m/d ' . get_option( 'time_format' ) : $format;
 
-	if ( ! $lifetime )	{
-		$return = '0';
+	if ( '' == $expiration )	{
+		$expiration = strtotime( get_blog_details( $site_id )->registered );
+		$expiration = $expiration + $default_lifetime;
+	}
+
+	if ( empty( $expiration ) )	{
+		$return = false;
 	} else	{
-		$return = strtotime( get_blog_details( $site_id )->registered );
-		$return = $return + $lifetime;
-		$return = date_i18n( 'Y-m-d H:i:s', $return );
+		$return = wp_date( $format, $expiration );
 	}
 
 	$return = apply_filters( 'epd_site_expiration_date', $return, $site_id );
@@ -57,8 +93,8 @@ function epd_get_site_expiration_date( $site_id )	{
  */
 function epd_get_default_blog_meta()	{
 	$site_options = array(
-		'epd_created_site' => current_time( 'mysql' ),
-        'epd_site_expires' => epd_get_default_site_lifetime()
+        'epd_site_lifetime' => epd_get_default_site_lifetime(),
+		'epd_site_expires'  => current_time( 'timestamp' ) + epd_get_default_site_lifetime()
 	);
 
     $site_options = apply_filters( 'epd_default_blog_meta', $site_options );
@@ -215,16 +251,3 @@ function epd_exclude_sites_from_delete()    {
 
     return $excludes;
 } // epd_exclude_sites_from_delete
-
-
-/**
- * Get sites scheduled for deletion.
- *
- * @since   1.2
- * @return  array   Array of WP_Site objects
- */
-function epd_get_sites_for_deletion()   {
-    global $wpdb;
-
-    
-} // epd_get_sites_for_deletion
