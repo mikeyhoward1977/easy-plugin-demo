@@ -41,25 +41,26 @@ if ( is_user_logged_in() ) :
 				<?php foreach( $user_blogs as $user_blog ) :
 					$date_format = 'Y/m/d ' . get_option( 'time_format' );
 					$expires     = epd_get_site_expiration_date( $user_blog->userblog_id );
-					$expires     = empty( $expires ) ? __( 'Never', 'easy-plugin-demo' ) : mysql2date( $date_format, $expires );
+					$expires     = empty( $expires ) ? __( 'Never', 'easy-plugin-demo' ) : $expires;
 					$delete_url  = wp_nonce_url( add_query_arg( array(
 						'epd_action' => 'delete_site',
 						'site_id'    => $user_blog->userblog_id,
 						), home_url( $wp->request )
 						), 'delete_site', 'epd_nonce'
 					);
-					$actions    = array(
-						sprintf(
+					$actions    = array();
+                    if ( ! epd_site_has_expired( $user_blog->userblog_id ) ) :
+						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
 							esc_url( $user_blog->siteurl ),
 							__( 'Visit', 'easy-plugin-demo' )
-						),
-						sprintf(
+						);
+						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
 							esc_url( get_admin_url( $user_blog->userblog_id ) ),
 							__( 'Admin', 'easy-plugin-demo' )
-						)
-					);
+						);
+					endif;
 					if ( ! is_main_site( $user_blog->userblog_id ) )	{
 						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
