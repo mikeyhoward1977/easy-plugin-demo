@@ -96,6 +96,10 @@ function epd_site_has_expired( $site_id )   {
     $expires = strtotime( epd_get_site_expiration_date( $site_id ) );
     $current = current_time( 'timestamp' );
 
+    if  ( empty( $expires ) )   {
+        return false;
+    }
+
     return $current > $expires;
 } // epd_site_has_expired
 

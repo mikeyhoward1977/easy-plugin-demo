@@ -298,7 +298,7 @@ function epd_delete_expired_sites()	{
 	);
 
 	$backwards_compat_site_ids = get_sites( $backwards_compat_query );
-	$site_ids                  = array_merge( $delete_site_ids, $backwards_compat_site_ids );
+	$site_ids                  = array_unique( array_merge( $delete_site_ids, $backwards_compat_site_ids ) );
 
     if ( ! empty( $site_ids ) )   {
         $sites = get_sites( array( 'site__in' => $site_ids, 'number' => 250 ) );
