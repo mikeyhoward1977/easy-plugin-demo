@@ -77,13 +77,27 @@ function epd_get_site_expiration_date( $site_id, $format = '' )	{
 	if ( empty( $expiration ) )	{
 		$return = false;
 	} else	{
-		$return = wp_date( $format, $expiration );
+		$return = date_i18n( $format, $expiration );
 	}
 
 	$return = apply_filters( 'epd_site_expiration_date', $return, $site_id );
 
 	return $return;
 } // epd_get_site_expiration_date
+
+/**
+ * Whether or not a site has expired.
+ *
+ * @since   1.2
+ * @param   int     $site_id    Site ID
+ * @return  bool    Whether or not the site has expired
+ */
+function epd_site_has_expired( $site_id )   {
+    $expires = strtotime( epd_get_site_expiration_date( $site_id ) );
+    $current = current_time( 'timestamp' );
+
+    return $current > $expires;
+} // epd_site_has_expired
 
 /**
  * Retrieve default site option keys.
