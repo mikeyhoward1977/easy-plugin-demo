@@ -266,11 +266,11 @@ final class Easy_Plugin_Demo {
      */
     public function request_wp_5star_rating() {
 
-		if ( ! is_main_site() && ! is_network_admin() )	{
+		if ( ! is_network_admin() )	{
 			return;
 		}
 	
-        if ( ! current_user_can( 'manage_sites' ) )	{
+        if ( ! current_user_can( 'manage_network' ) )	{
             return;
         }
 
@@ -297,11 +297,11 @@ final class Easy_Plugin_Demo {
      */
     public function notify_premium_pack() {
 
-		if ( ! is_main_site() && ! is_network_admin() )	{
+		if ( ! is_network_admin() )	{
 			return;
 		}
 	
-        if ( ! current_user_can( 'manage_sites' ) )	{
+        if ( ! current_user_can( 'manage_network' ) )	{
             return;
         }
 
@@ -396,7 +396,7 @@ final class Easy_Plugin_Demo {
         <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_upsell_premium_pack">
             <p>
                 <?php printf(
-                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
+                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as demo site templates, EDD integration, Woocommerce integration, button shortcodes, site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
                     'https://easy-plugin-demo.com/downloads/premium-pack/'
                 ); ?>
             </p>
