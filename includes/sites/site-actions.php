@@ -14,6 +14,24 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
+ * Remove primary blog from front end sites listing.
+ *
+ * @since   1.2
+ * @param   array   $sites  Array of user sites
+ * @return  array   Array of user sites
+ */
+function epd_exclude_primary_site_from_front( $sites )  {
+    $primary = get_network()->blog_id;
+
+    if ( ! is_admin() && array_key_exists( $primary, $sites ) )    {
+        unset( $sites[ $primary ] );
+    }
+    
+    return $sites;
+} // epd_exclude_primary_site_from_front
+add_filter( 'get_blogs_of_user', 'epd_exclude_primary_site_from_front', 100 );
+
+/**
  * Validate a new sites domain.
  *
  * @since	1.0
