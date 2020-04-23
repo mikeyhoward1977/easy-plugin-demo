@@ -220,6 +220,7 @@ final class Easy_Plugin_Demo {
 	 */
 	private function hooks()	{
 		// Admin notices
+		add_action( 'network_admin_notices', array( self::$instance, 'registration_page_notice' ) );
 		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
         add_action( 'plugins_loaded', array( self::$instance, 'notify_premium_pack' ) );
 
@@ -256,6 +257,31 @@ final class Easy_Plugin_Demo {
 /*****************************************
  -- ADMIN NOTICES
 *****************************************/
+	/**
+	 * Notice to set registration page.
+	 *
+	 * @since	1.2
+	 * @return	void
+	 */
+	public function registration_page_notice()	{
+		$screen = get_current_screen();
+
+		if ( 'settings-network' != $screen->id && ! epd_get_option( 'registration_page', false ) )	{
+			ob_start(); ?>
+
+			<div class="updated notice">
+				<p>
+					<?php printf(
+						__( '<strong>Important!</strong> Your Easy Plugin Demo registration page is not defined. <a href="%s">Click here</a> to set it now.', 'easy-plugin-demo' ),
+						add_query_arg( 'page', 'epd-settings', network_admin_url( 'settings.php' ) )
+					); ?>
+				</p>
+			</div>
+
+			<?php echo ob_get_clean();
+		}
+	} // registration_page_notice
+
 	/**
      * Request 5 star rating after 15 sites have been registered via EPD.
      *
@@ -482,6 +508,10 @@ final class Easy_Plugin_Demo {
 
         $did_upgrade = false;
         $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
+
+		if ( version_compare( $epd_version, '1.2', '<' ) ) {
+			epd_update_option( 'registration_page', false );
+		}
 
         if ( version_compare( $epd_version, EPD_VERSION, '<' ) )	{
             // Let us know that an upgrade has happened

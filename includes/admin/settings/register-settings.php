@@ -154,7 +154,8 @@ function epd_get_registered_settings() {
 						'type'    => 'select',
 						'options' => epd_get_primary_pages(),
 						'chosen'  => true,
-						'desc'    => __( 'Select the page you are using as your registration page. Should contain the shortcode <code>[epd_register]</code>', 'easy-plugin-demo' )
+						'desc'    => __( 'Select the page you are using as your registration page. Should contain the shortcode <code>[epd_register]</code>', 'easy-plugin-demo' ),
+						'std'     => false
 					),
 					'product' => array(
 						'id'       => 'product',
