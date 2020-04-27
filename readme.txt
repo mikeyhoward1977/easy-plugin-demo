@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.4
 Requires PHP: 5.4
-Stable tag: 1.1.5
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,9 +123,9 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Changelog ==
 
-= 1.1.6 =
+= 1.2 =
 
-**DATE**
+**Monday, 27th April 2020**
 
 * **Bug**: Allowed themes setting was not being honoured
 * **Bug**: Corrected site path for sub directory installations
@@ -134,7 +134,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 * **Bug**: Hide Search Engine Visibility option when Disable Visibility Changes option is enabled. Previously incorrectly hidden when Discourage Search Engines was enabled
 
 * **Tweak**: Added registration page option within settings
-* **Tweak**: If a site has expired, do not allow user access
+* **Tweak**: If a site has expired, remove from sites list for user
 * **Tweak**: Added the `epd_before_registration` hook
 * **Tweak**: Added the `epd_plugins_to_activate` filter
 * **Tweak**: Parse site object with the `epd_set_new_site_defaults` filter
