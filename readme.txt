@@ -2,7 +2,7 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
-Tested up to: 5.4
+Tested up to: 5.4.1
 Requires PHP: 5.4
 Stable tag: 1.2
 License: GPLv2 or later
@@ -141,6 +141,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 * **Tweak**: Added the `epd_delete_expired_sites_exclusions` filter to allow for sites to be excluded from expiring
 * **Tweak**: Added the `epd_hide_default_welcome_panel` and `epd_add_custom_welcome_panel` filters
 * **Tweak**: Add some site meta for EPD created sites
+* **Tweak**: Enabled filtering of various template tags
 
 = 1.1.5 =
 
