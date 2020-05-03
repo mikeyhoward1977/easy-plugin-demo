@@ -18,13 +18,14 @@ $readonly     = $user ? ' readonly'       : '';
 $can_register = $user ? epd_can_user_register( $user_id ) : true;
 
 $register_to_activate = __( 'Register to Activate your Demo', 'easy-plugin-demo' );
+$register_to_activate = apply_filters( 'epd_registration_form_heading', $register_to_activate );
 $launch_demo_label    = epd_get_register_form_submit_label();
 $limit_reached        = __( 'You have reached the limit for how many sites you may have active at any time. You can register a new site when one of your existing sites has expired.', 'easy-plugin-demo' );
 
 if ( $can_register ) :
 	do_action( 'epd_notices' );
 	do_action( 'epd_register_form_top' ); ?>
-	<h3><?php echo $register_to_activate; ?></h3>
+	<h3 class="epd_register_head"><?php echo $register_to_activate; ?></h3>
 	<form id="epd_register_form" class="epd_form" action="" method="post">
 		<div class="epd_alert epd_alert_error epd_hidden"></div>
 		<?php do_action( 'epd_register_form_fields_top' ); ?>

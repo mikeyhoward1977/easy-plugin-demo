@@ -523,7 +523,7 @@ final class Easy_Plugin_Demo {
             update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EPD_VERSION ) );
         }
 
-    } // upgrades	
+    } // upgrades
 
 } // class Easy_Plugin_Demo
 endif;
