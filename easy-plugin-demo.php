@@ -266,7 +266,7 @@ final class Easy_Plugin_Demo {
      */
     public function request_wp_5star_rating() {
 
-		if ( ! is_main_site() && ! is_network_admin )	{
+		if ( ! is_main_site() && ! is_network_admin() )	{
 			return;
 		}
 	
@@ -297,7 +297,7 @@ final class Easy_Plugin_Demo {
      */
     public function notify_premium_pack() {
 
-		if ( ! is_main_site() && ! is_network_admin )	{
+		if ( ! is_main_site() && ! is_network_admin() )	{
 			return;
 		}
 	
