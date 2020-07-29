@@ -4,7 +4,7 @@
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
  * Version: 1.2
- * Date: 27th April 2020
+ * Date: 30th July 2020
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
  * Text Domain: easy-plugin-demo
