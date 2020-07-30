@@ -125,7 +125,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 = 1.2 =
 
-**Monday, 27th April 2020**
+**Thursday, 30th July 2020**
 
 * **Bug**: Allowed themes setting was not being honoured
 * **Bug**: Corrected site path for sub directory installations
