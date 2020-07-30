@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Easy Plugin Demo 1.2\n"
 "Report-Msgid-Bugs-To: https://mikesplugins.co.uk/\n"
-"POT-Creation-Date: 2020-05-02 18:52:32+00:00\n"
+"POT-Creation-Date: 2020-07-30 08:11:34+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -399,7 +399,7 @@ msgid "Sites"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:530
-#: templates/register/register-form.php:46
+#: templates/register/register-form.php:47
 msgid "Email"
 msgstr ""
 
@@ -828,24 +828,24 @@ msgstr ""
 msgid "Register to Activate your Demo"
 msgstr ""
 
-#: templates/register/register-form.php:22
+#: templates/register/register-form.php:23
 msgid ""
 "You have reached the limit for how many sites you may have active at any "
 "time. You can register a new site when one of your existing sites has "
 "expired."
 msgstr ""
 
-#: templates/register/register-form.php:36
 #: templates/register/register-form.php:37
+#: templates/register/register-form.php:38
 msgid "First Name"
 msgstr ""
 
-#: templates/register/register-form.php:41
 #: templates/register/register-form.php:42
+#: templates/register/register-form.php:43
 msgid "Last Name"
 msgstr ""
 
-#: templates/register/register-form.php:47
+#: templates/register/register-form.php:48
 msgid "Email Address"
 msgstr ""
 

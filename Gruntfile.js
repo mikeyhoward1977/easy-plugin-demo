@@ -15,6 +15,7 @@ module.exports = function( grunt ) {
 		dirs: {
 			main: {
 				js: 'assets/js',
+				css: 'assets/css',
 				lang: 'languages'
 			},
 			templates: {
@@ -115,7 +116,8 @@ module.exports = function( grunt ) {
 		cssmin:	{
 			build:	{
 				files: {
-					'<%= dirs.templates.css %>/epd.min.css': ['<%= dirs.templates.css %>/epd.css']
+					'<%= dirs.templates.css %>/epd.min.css': ['<%= dirs.templates.css %>/epd.css'],
+					'<%= dirs.main.css %>/epd-admin.min.css': ['<%= dirs.main.css %>/epd-admin.css']
 				}
 			}
 		},
