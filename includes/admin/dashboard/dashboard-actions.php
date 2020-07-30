@@ -24,11 +24,16 @@ function epd_manage_dashboard_welcome_panel()	{
 		return;
 	}
 
-	if ( epd_get_option( 'hide_welcome' ) )	{
+    $remove_welcome = epd_get_option( 'hide_welcome' );
+    $remove_welcome = (bool) apply_filters( 'epd_hide_default_welcome_panel', $remove_welcome );
+    $custom_welcome = epd_get_option( 'custom_welcome' );
+    $custom_welcome = (bool) apply_filters( 'epd_add_custom_welcome_panel', $custom_welcome );
+
+	if ( $remove_welcome )	{
 		remove_action( 'welcome_panel', 'wp_welcome_panel' );
 	}
 
-	if ( epd_get_option( 'custom_welcome' ) )	{
+	if ( $custom_welcome )	{
 		add_action( 'welcome_panel', 'epd_render_custom_welcome_panel' );
 	}
 } // epd_manage_dashboard_welcome_panel

@@ -40,17 +40,14 @@ function epd_render_sites_expires_column( $column_name, $blog_id )	{
 		global $mode;
 
 		$blog      = get_site( $blog_id );
-		$lifetime  = epd_get_default_site_lifetime();
 		$format    = 'Y/m/d ' . get_option( 'time_format' );
-		$expires   = false;
+		$expires   = epd_get_site_expiration_date( $blog_id );
 
 		if ( get_network()->blog_id == $blog_id )	{
 			$return = '&ndash;';
-		} elseif ( ! $lifetime )	{
+		} elseif ( empty( $expires ) )	{
 			$return = __( 'Never', 'easy-plugin-demo' );
 		} else	{
-			$expires = strtotime( '+' . $lifetime . ' seconds', strtotime( $blog->registered ) );
-			$expires = date( 'Y-m-d, H:i:s', $expires );
 			$return  = mysql2date( $format, $expires );
 		}
 

@@ -144,10 +144,19 @@ function epd_get_registered_settings() {
 	 * section to allow extensions and other plugins to add their own settings.
 	 */
 	$epd_settings = array(
-		/** General Settings */
-		'sites' => apply_filters( 'epd_settings_general',
+		/** Site Settings */
+		'sites' => apply_filters( 'epd_settings_sites',
 			array(
 				'main' => array(
+					'registration_page' => array(
+						'id'      => 'registration_page',
+						'name'    => __( 'Registration Page', 'easy-plugin-demo' ),
+						'type'    => 'select',
+						'options' => epd_get_primary_pages(),
+						'chosen'  => true,
+						'desc'    => __( 'Select the page you are using as your registration page. Should contain the shortcode <code>[epd_register]</code>', 'easy-plugin-demo' ),
+						'std'     => false
+					),
 					'product' => array(
 						'id'       => 'product',
 						'name'     => __( 'Product Name', 'easy-plugin-demo' ),
@@ -526,13 +535,13 @@ function epd_get_settings_tabs() {
 		$tabs['extensions'] = __( 'Extensions', 'easy-plugin-demo' );
 	}
 
-	if ( ! empty( $settings['licenses'] ) ) {
-		$tabs['licenses'] = __( 'Licenses', 'easy-plugin-demo' );
-	}
-
 	$tabs = apply_filters( 'epd_settings_tabs_before_misc', $tabs );
 
 	$tabs['misc']   = __( 'Misc', 'easy-plugin-demo' );
+
+	if ( ! empty( $settings['licenses'] ) ) {
+		$tabs['licenses'] = __( 'Premium License', 'easy-plugin-demo' );
+	}
 
 	return apply_filters( 'epd_settings_tabs', $tabs );
 } // epd_get_settings_tabs
@@ -573,7 +582,7 @@ function epd_get_registered_settings_sections() {
 	}
 
 	$sections = array(
-		'sites'      => apply_filters( 'epd_settings_sections_general', array(
+		'sites'      => apply_filters( 'epd_settings_sections_sites', array(
 			'main'        => __( 'General', 'easy-plugin-demo' ),
 			'config'      => __( 'Config', 'easy-plugin-demo' ),
 			'themes'      => __( 'Themes', 'easy-plugin-demo' ),
@@ -1374,6 +1383,27 @@ function epd_get_pages( $force = false ) {
 
 	return $pages_options;
 } // epd_get_pages
+
+/**
+ * Retrieve an array of pages from the primary site.
+ *
+ * @since	1.2
+ * @return	array	Array of page ID's => names
+ */
+function epd_get_primary_pages()	{
+	$options = array();
+	switch_to_blog( get_network()->blog_id );
+
+	$pages = get_pages();
+
+	foreach( $pages as $page )	{
+		$options[ $page->ID ] = get_the_title( $page->ID );
+	}
+
+	restore_current_blog();
+
+	return $options;
+} // epd_get_primary_pages
 
 /**
  * Retrieve a list of all installed themes.

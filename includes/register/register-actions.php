@@ -28,6 +28,8 @@ function epd_process_registration_action()	{
 
 	$data = array();
 
+    do_action( 'epd_before_registration' );
+
 	foreach( $_POST as $key => $value )	{
 		if ( 'epd_' == substr( $key, 0, 4 ) )	{
 			$data[ substr( $key, 4 ) ] = sanitize_text_field( $value );
@@ -54,7 +56,7 @@ function epd_process_registration_action()	{
 
 	if ( $user_id )	{
         $network_id = get_current_network_id();
-        $net_domain = get_network()->domain . get_network()->path;
+        $net_domain = get_network()->domain;
         $user       = get_userdata( $user_id );
 		$blog       = preg_replace( "/[^A-Za-z0-9 ]/", '', $user->user_login );
 
@@ -81,7 +83,7 @@ function epd_process_registration_action()	{
 
 		$args = array(
 			'domain'     => $domain,
-			'path'       => $path,
+			'path'       => untrailingslashit( get_network()->path ) . $path,
 			'title'      => esc_attr( epd_get_option( 'title' ) ),
 			'user_id'    => $user_id,
 			'meta'       => array(),

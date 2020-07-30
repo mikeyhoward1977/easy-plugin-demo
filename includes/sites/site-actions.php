@@ -14,6 +14,24 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
+ * Remove primary blog from front end sites listing.
+ *
+ * @since   1.2
+ * @param   array   $sites  Array of user sites
+ * @return  array   Array of user sites
+ */
+function epd_exclude_primary_site_from_front( $sites )  {
+    $primary = get_network()->blog_id;
+
+    if ( ! is_admin() && array_key_exists( $primary, $sites ) )    {
+        unset( $sites[ $primary ] );
+    }
+    
+    return $sites;
+} // epd_exclude_primary_site_from_front
+add_filter( 'get_blogs_of_user', 'epd_exclude_primary_site_from_front', 100 );
+
+/**
  * Validate a new sites domain.
  *
  * @since	1.0
@@ -98,8 +116,8 @@ function epd_set_new_site_defaults( $site )	{
 
     if ( ! empty( $allowed_themes ) )   {
         foreach( $allowed_themes as $allowed_theme )    {
-            $_theme = wp_get_theme( epd_get_option( 'theme' ) );
-            if ( ! $_theme->exists() || ! $_theme->is_allowed( 'site', $site->blog_id ) )	{
+            $_theme = wp_get_theme( $allowed_theme );
+            if ( $_theme->exists() )	{
                 $themes[ $_theme->stylesheet ] = true;
             }
         }
@@ -120,16 +138,10 @@ function epd_set_new_site_defaults( $site )	{
 		'blog_public'   => epd_get_option( 'discourage_search' ) ? 0 : 1
 	);
 
-	$args = apply_filters( 'epd_set_new_site_defaults', $args );
-
-	$site_options = epd_get_default_site_option_keys();
+	$args = apply_filters( 'epd_set_new_site_defaults', $args, $site );
 
 	foreach( $args as $key => $value )	{
-		if ( in_array( $key, $site_options ) )	{
-			update_network_option( $site->blog_id, $key, $value );
-		} else	{
-			update_blog_option( $site->blog_id, $key, $value );
-		}
+        update_blog_option( $site->blog_id, $key, $value );
 	}
 
 } // epd_set_new_site_defaults
@@ -160,6 +172,22 @@ function epd_activate_new_blog_plugins( $site )	{
 	}
 } // epd_activate_new_blog_plugins
 add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
+
+/**
+ * Set the blog options for the new site.
+ * 
+ * @since   1.1.6
+ * @param   int     $site_id    Site ID
+ * @return  void
+ */
+function epd_set_blog_meta( $site_id )  {
+    $options = epd_get_default_blog_meta();
+
+    foreach( $options as $key => $value )   {
+        update_site_meta( $site_id, $key, $value );
+    }
+} // epd_set_blog_meta
+add_action( 'epd_create_demo_site', 'epd_set_blog_meta' );
 
 /**
  * Deletes a site from the front end.
@@ -224,49 +252,6 @@ function epd_delete_site_action()	{
 add_action( 'init', 'epd_delete_site_action' );
 
 /**
- * Remove default site option meta whena blog it deleted.
- *
- * @since   1.0
- * @param   object     $site    WP_Site The old site object
- * @return  void
- */
-function epd_deleted_site_delete_default_meta( $site )    {
-    global $wpdb;
-
-    $site_options = epd_get_default_site_option_keys();
-    $site_id      = $site->blog_id;
-
-	if ( empty( $site_options ) )	{
-		return;
-	}
-
-    $where = '(';
-    $i     = false;
-
-    foreach( $site_options as $site_option )    {
-        if ( $i > 0 )   {
-            $where .= " OR ";
-        }
-
-        $where .= "`meta_key` = '{$site_option}'";
-
-        $i++;
-    }
-
-    $where .= ')';
-
-    $wpdb->query(
-        "
-        DELETE FROM
-        $wpdb->sitemeta
-        WHERE site_id = '{$site_id}'
-        AND {$where}
-        "
-    );
-} // epd_deleted_site_delete_default_meta
-add_action( 'wp_delete_site', 'epd_deleted_site_delete_default_meta', 10 );
-
-/**
  * Delete expired sites.
  *
  * @since	1.0
@@ -280,64 +265,98 @@ function epd_delete_expired_sites()	{
 		return;
 	}
 
-	$delete_on = $now - $lifetime;
+	$delete_on  = $now - $lifetime;
+    $exclusions = epd_exclude_sites_from_delete();
 
 	$delete_sites_query = array(
-		'site__not_in' => get_network()->blog_id,
-		'date_query'   => array(
+		'site__not_in' => $exclusions,
+		'number'       => 250,
+		'fields'       => 'ids', // Remove when $backwards_compat is removed
+		'meta_query'   => array(
+			'relation' => 'OR',
 			array(
-				'year'          => date( 'Y', $delete_on ),
-				'month'         => date( 'n', $delete_on ),
-				'day'           => date( 'j', $delete_on ),
-				'hour'          => date( 'G', $delete_on ),
-				'minute'        => intval( date( 'i', $delete_on ) ),
-				'second'        => intval( date( 's', $delete_on ) ),
-				'compare'       => '<=',
-				'column'        => 'registered'
+				'key'     => 'epd_site_expires',
+				'value'   => $now,
+				'compare' => '<=',
+				'type'    => 'NUMERIC'
+			),
+			array(
+				'key'     => 'epd_site_expires',
+				'compare' => 'NOT EXISTS',
+				'value'   => '#bug'
 			)
 		)
 	);
 
-	$delete_sites_query = apply_filters( 'epd_delete_sites_query', $delete_sites_query );
+    $delete_sites_query = apply_filters( 'epd_delete_sites_query', $delete_sites_query );
+	$delete_site_ids    = get_sites( $delete_sites_query );
+    $exclusions         = array_merge( $exclusions, $delete_site_ids );
 
-	$sites = get_sites( $delete_sites_query );
+	$backwards_compat_query = array(
+		'site__not_in' => $exclusions,
+		'number'       => 250,
+		'fields'       => 'ids',
+		'date_query'   => array(
+			'year'          => date( 'Y', $delete_on ),
+			'month'         => date( 'n', $delete_on ),
+			'day'           => date( 'j', $delete_on ),
+			'hour'          => date( 'G', $delete_on ),
+			'minute'        => intval( date( 'i', $delete_on ) ),
+			'second'        => intval( date( 's', $delete_on ) ),
+			'compare'       => '<=',
+			'column'        => 'registered'
+		),
+        'meta_query'   => array(
+			array(
+				'key'     => 'epd_site_expires',
+				'compare' => 'NOT EXISTS',
+				'value'   => '#bug'
+			)
+		)
+	);
 
-	require_once( ABSPATH . 'wp-admin/includes/admin.php' );
+	$backwards_compat_site_ids = get_sites( $backwards_compat_query );
+	$site_ids                  = array_unique( array_merge( $delete_site_ids, $backwards_compat_site_ids ) );
 
-	if ( $sites )	{
-		$delete_users = array();
+    if ( ! empty( $site_ids ) )   {
+        $sites = get_sites( array( 'site__in' => $site_ids, 'number' => 250 ) );
 
-		foreach( $sites as $site )	{
+        if ( $sites )	{
+            require_once( ABSPATH . 'wp-admin/includes/admin.php' );
 
-			$delete_this_site = apply_filters( 'epd_delete_this_site', true, $site->blog_id );
+            $delete_users = array();
 
-			if ( $delete_this_site && function_exists( 'wpmu_delete_blog' ) )	{
-				$blog_users = get_users( array( 'blog_id' => $site->blog_id ) );
+            foreach( $sites as $site )	{
 
-				if ( ! empty( $blog_users ) )	{
-					foreach( $blog_users as $blog_user )	{
-						if ( ! is_super_admin( $blog_user->ID ) )	{
-							$delete_users[] = $blog_user->ID;
-						}
-					}
-				}
+                $delete_this_site = apply_filters( 'epd_delete_this_site', true, $site->blog_id );
 
-				wpmu_delete_blog( $site->blog_id, true );
-			}
-		}
+                if ( $delete_this_site && function_exists( 'wpmu_delete_blog' ) )	{
+                    $blog_users = get_users( array( 'blog_id' => $site->blog_id ) );
 
-		if ( ! empty( $delete_users ) )	{
-			$delete_users = array_unique( $delete_users );
+                    if ( ! empty( $blog_users ) )	{
+                        foreach( $blog_users as $blog_user )	{
+                            if ( ! is_super_admin( $blog_user->ID ) )	{
+                                $delete_users[] = $blog_user->ID;
+                            }
+                        }
+                    }
 
-			foreach( $delete_users as $user_id )	{
-				$user_blogs = get_blogs_of_user( $blog_user->ID );
+                    wpmu_delete_blog( $site->blog_id, true );
+                }
+            }
 
-				if ( empty( $user_blogs ) )	{
-					wpmu_delete_user( $user_id );
-				}
-			}
-		}
+            if ( ! empty( $delete_users ) )	{
+                $delete_users = array_unique( $delete_users );
 
-	}
+                foreach( $delete_users as $user_id )	{
+                    $user_blogs = get_blogs_of_user( $blog_user->ID );
+
+                    if ( empty( $user_blogs ) )	{
+                        wpmu_delete_user( $user_id );
+                    }
+                }
+            }
+        }
+    }
 } // epd_delete_expired_sites
 add_action( 'epd_twicedaily_scheduled_events', 'epd_delete_expired_sites' );

@@ -3,8 +3,8 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.1.5
- * Date: 10th March 2020
+ * Version: 1.2
+ * Date: 30th July 2020
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
  * Text Domain: easy-plugin-demo
@@ -30,7 +30,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.1.5
+ * @version		1.2
  */
 
 // Exit if accessed directly.
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.1.5' );
+			define( 'EPD_VERSION', '1.2' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
@@ -220,6 +220,7 @@ final class Easy_Plugin_Demo {
 	 */
 	private function hooks()	{
 		// Admin notices
+		add_action( 'network_admin_notices', array( self::$instance, 'registration_page_notice' ) );
 		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
         add_action( 'plugins_loaded', array( self::$instance, 'notify_premium_pack' ) );
 
@@ -257,6 +258,31 @@ final class Easy_Plugin_Demo {
  -- ADMIN NOTICES
 *****************************************/
 	/**
+	 * Notice to set registration page.
+	 *
+	 * @since	1.2
+	 * @return	void
+	 */
+	public function registration_page_notice()	{
+		$screen = get_current_screen();
+
+		if ( 'settings-network' != $screen->id && ! epd_get_option( 'registration_page', false ) )	{
+			ob_start(); ?>
+
+			<div class="updated notice">
+				<p>
+					<?php printf(
+						__( '<strong>Important!</strong> Your Easy Plugin Demo registration page is not defined. <a href="%s">Click here</a> to set it now.', 'easy-plugin-demo' ),
+						add_query_arg( 'page', 'epd-settings', network_admin_url( 'settings.php' ) )
+					); ?>
+				</p>
+			</div>
+
+			<?php echo ob_get_clean();
+		}
+	} // registration_page_notice
+
+	/**
      * Request 5 star rating after 15 sites have been registered via EPD.
      *
      * After 15 sites are registered via EPD we ask the admin for a 5 star rating on WordPress.org
@@ -266,11 +292,11 @@ final class Easy_Plugin_Demo {
      */
     public function request_wp_5star_rating() {
 
-		if ( ! is_main_site() && ! is_network_admin )	{
+		if ( ! is_network_admin() )	{
 			return;
 		}
 	
-        if ( ! current_user_can( 'manage_sites' ) )	{
+        if ( ! current_user_can( 'manage_network' ) )	{
             return;
         }
 
@@ -297,11 +323,11 @@ final class Easy_Plugin_Demo {
      */
     public function notify_premium_pack() {
 
-		if ( ! is_main_site() && ! is_network_admin )	{
+		if ( ! is_network_admin() )	{
 			return;
 		}
 	
-        if ( ! current_user_can( 'manage_sites' ) )	{
+        if ( ! current_user_can( 'manage_network' ) )	{
             return;
         }
 
@@ -396,7 +422,7 @@ final class Easy_Plugin_Demo {
         <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_upsell_premium_pack">
             <p>
                 <?php printf(
-                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
+                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as demo site templates, EDD integration, Woocommerce integration, button shortcodes, site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
                     'https://easy-plugin-demo.com/downloads/premium-pack/'
                 ); ?>
             </p>
@@ -456,7 +482,7 @@ final class Easy_Plugin_Demo {
 			'epd_admin_vars',
 			apply_filters( 'epd_admin_scripts_vars',
 				array(
-					'hide_blog_public'   => epd_get_option( 'discourage_search', false ),
+					'hide_blog_public'   => epd_get_option( 'disable_search', false ),
 					'one_option'         => __( 'Choose an option', 'easy-plugin-demo' ),
 					'one_or_more_option' => __( 'Choose one or more options', 'easy-plugin-demo' ),
 					'primary_site'       => get_current_blog_id() == get_network()->blog_id,
@@ -483,6 +509,10 @@ final class Easy_Plugin_Demo {
         $did_upgrade = false;
         $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
 
+		if ( version_compare( $epd_version, '1.2', '<' ) ) {
+			epd_update_option( 'registration_page', false );
+		}
+
         if ( version_compare( $epd_version, EPD_VERSION, '<' ) )	{
             // Let us know that an upgrade has happened
             $did_upgrade = true;
@@ -493,7 +523,7 @@ final class Easy_Plugin_Demo {
             update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EPD_VERSION ) );
         }
 
-    } // upgrades	
+    } // upgrades
 
 } // class Easy_Plugin_Demo
 endif;

@@ -348,6 +348,7 @@ function epd_email_tag_demo_name( $blog_id, $user_id ) {
  */
 function epd_email_tag_demo_product_name( $blog_id, $user_id ) {
 	$product = epd_get_option( 'product' );
+	$product = apply_filters( 'epd_tag_demo_product_name', $product, $blog_id, $user_id );
 
 	return esc_html( $product );
 } // epd_email_tag_demo_product_name
@@ -362,7 +363,10 @@ function epd_email_tag_demo_product_name( $blog_id, $user_id ) {
  * @return	string	Date the site expires
  */
 function epd_email_tag_demo_site_expiration( $blog_id, $user_id ) {
-	return esc_html( epd_get_site_expiration_date( $blog_id ) );
+	$expires = epd_get_site_expiration_date( $blog_id );
+	$expires = apply_filters( 'epd_tag_demo_site_expiration', esc_html( $expires ), $blog_id, $user_id );
+	
+	return esc_html( $expires );
 } // epd_email_tag_demo_site_expiration
 
 /**
