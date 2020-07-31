@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.4.2
 Requires PHP: 5.4
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,13 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.2.1 =
+
+**Thursday, 31st July 2020**
+
+* **New**: Added **Delete Data on Uninstall** option. Plugin data will only be deleted on uninstall if this option is selected
+* **Bug**: Missing function caused PHP error
 
 = 1.2 =
 
