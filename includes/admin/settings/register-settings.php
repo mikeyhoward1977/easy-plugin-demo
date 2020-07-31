@@ -316,37 +316,44 @@ function epd_get_registered_settings() {
 		'misc' => apply_filters( 'epd_settings_general',
 			array(
 				'main' => array(
+                    'remove_on_uninstall' => array(
+                        'id'       => 'remove_on_uninstall',
+                        'name'     => __( 'Delete Data on Uninstall', 'easy-plugin-demo' ),
+                        'type'     => 'checkbox',
+                            'std'      => 0,
+                            'desc'     => __( 'If enabled, all EPD data and settings will be deleted when the plugin is removed.' , 'easy-plugin-demo' )
+                    ),
 					'credits' => array(
 						'id'       => 'credits',
 						'name'     => __( 'Give Credit', 'easy-plugin-demo' ),
 						'type'     => 'checkbox',
 						'std'      => 0,
 						'desc'     => __( 'If enabled, credit to EPD will be displayed below the registration form. We appreciate it.' , 'easy-plugin-demo' )
-					)
-				),
-				'recaptcha' => array(
-					'id'       => 'recaptcha',
-					'name'     => __( 'reCaptcha v2 Keys', 'easy-plugin-demo' ),
-					'type'     => 'header'
-				),
-				'site_key' => array(
-					'id'       => 'site_key',
-					'name'     => __( 'Site Key', 'easy-plugin-demo' ),
-					'type'     => 'text',
-					'desc'     => sprintf(
-						__( '<a href="%s" target="_blank">Register your site</a> to retrieve your site key .' , 'easy-plugin-demo' ),
-						'https://www.google.com/recaptcha/admin'
-					)
-				),
-				'secret' => array(
-					'id'       => 'secret_key',
-					'name'     => __( 'Secret Key', 'easy-plugin-demo' ),
-					'type'     => 'text',
-					'desc'     => sprintf(
-						__( '<a href="%s" target="_blank">Register your site</a> to retrieve your secret key .' , 'easy-plugin-demo' ),
-						'https://www.google.com/recaptcha/admin'
-					)
-				)
+					),
+                    'recaptcha' => array(
+                        'id'       => 'recaptcha',
+                        'name'     => __( 'reCaptcha v2 Keys', 'easy-plugin-demo' ),
+                        'type'     => 'header'
+                    ),
+                    'site_key' => array(
+                        'id'       => 'site_key',
+                        'name'     => __( 'Site Key', 'easy-plugin-demo' ),
+                        'type'     => 'text',
+                        'desc'     => sprintf(
+                            __( '<a href="%s" target="_blank">Register your site</a> to retrieve your site key .' , 'easy-plugin-demo' ),
+                            'https://www.google.com/recaptcha/admin'
+                        )
+                    ),
+                    'secret' => array(
+                        'id'       => 'secret_key',
+                        'name'     => __( 'Secret Key', 'easy-plugin-demo' ),
+                        'type'     => 'text',
+                        'desc'     => sprintf(
+                            __( '<a href="%s" target="_blank">Register your site</a> to retrieve your secret key .' , 'easy-plugin-demo' ),
+                            'https://www.google.com/recaptcha/admin'
+                        )
+                    )
+                )
 			)
 		)
 	);

@@ -121,6 +121,16 @@ function epd_get_default_blog_meta()	{
 } // epd_get_default_blog_meta
 
 /**
+ * Retrieve default site option keys.
+ *
+ * @since   1.0
+ * @return  array   Array of EPD site option keys
+ */
+function epd_get_default_site_option_keys() {
+    return epd_get_default_blog_meta();
+} // epd_get_default_site_option_keys
+
+/**
  * Retrieve the total number of sites registered via EPD.
  *
  * @since	1.0

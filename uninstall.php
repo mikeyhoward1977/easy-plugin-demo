@@ -16,16 +16,17 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) )
  * @since       1.0
  *
  */
+if ( epd_get_option( 'remove_on_uninstall' ) )	{
+    // Remove Plugin Options
+    $site_options = array(
+        'epd_settings',
+        'epd_version',
+        'epd_install_version',
+        'epd_installed',
+        'epd_registered_demo_sites'
+    );
 
-// Remove Plugin Options
-$site_options = array(
-	'epd_settings',
-	'epd_version',
-	'epd_install_version',
-	'epd_installed',
-	'epd_registered_demo_sites'
-);
-
-foreach( $site_options as $site_option )	{
-	delete_site_option( $site_option );
+    foreach( $site_options as $site_option )	{
+        delete_site_option( $site_option );
+    }
 }
