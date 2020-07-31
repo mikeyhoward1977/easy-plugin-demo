@@ -1164,7 +1164,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 						$class = 'error';
 						$messages[] = sprintf(
 							__( 'Invalid license. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> and verify it.', 'easy-plugin-demo' ),
-							'http://easy-plugin-demo.com/your-account'
+							'https://easy-plugin-demo.com/your-account'
 						);
 
 						$license_status = 'license-' . $class . '-notice';
@@ -1178,7 +1178,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 						$messages[] = sprintf(
 							__( 'Your %s is not active for this URL. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> to manage your license key URLs.', 'easy-plugin-demo' ),
 							$args['name'],
-							'http://easy-plugin-demo.com/your-account'
+							'https://easy-plugin-demo.com/your-account'
 						);
 
 						$license_status = 'license-' . $class . '-notice';
@@ -1245,7 +1245,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 							$messages[] = sprintf(
 								__( 'Your license key expires soon! It expires on %s. <a href="%s" target="_blank" title="Renew license">Renew your license key</a>.', 'easy-plugin-demo' ),
 								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
-								'http://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
+								'https://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
 							);
 
 							$license_status = 'license-expires-soon-notice';
