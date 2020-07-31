@@ -190,6 +190,42 @@ function epd_set_blog_meta( $site_id )  {
 add_action( 'epd_create_demo_site', 'epd_set_blog_meta' );
 
 /**
+ * Reset a site to its original state.
+ *
+ * @since   1.3
+ * @param   int     $site_id    Site ID
+ * @return  void
+ */
+function epd_reset_site( $site_id = 0 ) {
+    if ( ! isset( $_GET['epd_action'] ) || 'reset_site' != $_GET['epd_action'] || ! isset( $_GET['site_id'] ) )	{
+		return;
+	}
+
+	if ( ! isset( $_GET['epd_nonce'] ) || ! wp_verify_nonce( $_GET['epd_nonce'], 'reset_site' ) )	{
+		return;
+	}
+
+    $redirect = add_query_arg( 'epd-message', 'reset', $redirect );
+    $result   = 0;
+    $site_id  = ! empty( $_GET['site_id'] ) ? $_GET['site_id'] : get_current_blog_id();
+    $site_id  = absint( $site_id );
+
+    if ( empty( $site_id ) || get_network()->blog_id == absint( $site_id ) ) {
+        return;
+    }
+
+    $reset = is_user_member_of_blog( 0, $site_id ) && ! in_array( $site_id, epd_exclude_sites_from_delete() );
+
+    if ( $reset )	{
+        $result = apply_filters( 'epd_reset_site_result', 0 );
+    }
+
+    wp_safe_redirect( add_query_arg( 'epd-result', $result, $redirect ) );
+	exit;
+} // epd_reset_site
+add_action( 'admin_init', 'epd_reset_site' );
+
+/**
  * Deletes a site from the front end.
  *
  * @since	1.0
