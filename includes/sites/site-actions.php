@@ -210,7 +210,7 @@ function epd_reset_site( $site_id = 0 ) {
     $site_id  = ! empty( $_GET['site_id'] ) ? $_GET['site_id'] : get_current_blog_id();
     $site_id  = absint( $site_id );
 
-    if ( empty( $site_id ) || get_network()->blog_id == absint( $site_id ) ) {
+    if ( empty( $site_id ) || get_network()->blog_id == $site_id ) {
         return;
     }
 
