@@ -98,10 +98,7 @@ function epd_process_registration_action()	{
 	}
 
 	if ( $blog_id )	{
-        $action = epd_get_option( 'registration_action' );
-        $action = apply_filters( 'epd_after_user_registration_action', $action );
-
-        do_action( "epd_after_registration_{$action}_action", $blog_id, $user_id );
+        epd_redirect_after_register( $blog_id, $user_id );
 	}
 
 } // epd_process_registration_action

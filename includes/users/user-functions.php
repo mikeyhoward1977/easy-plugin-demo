@@ -130,3 +130,26 @@ function epd_create_demo_user( $data = array() )	{
 
     return $user_id;
 } // epd_create_demo_user
+
+/**
+ * Retrieve the primary user ID for a site.
+ *
+ * @since	1.3
+ * @param	int		$site_id	The ID of the site to retrieve the user for
+ * @return	int		Primary user ID
+ */
+function epd_get_site_primary_user_id( $site_id )	{
+	global $wpdb;
+
+	$user_id = $wpdb->get_var( $wpdb->prepare(
+		"
+		SELECT user_id
+		FROM {$wpdb->usermeta}
+		WHERE meta_key ='primary_blog'
+		AND meta_value = '%d'
+		",
+		absint( $site_id )
+	) );
+
+	return $user_id;
+} // epd_get_site_primary_user_id

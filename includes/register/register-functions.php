@@ -92,3 +92,18 @@ function epd_registration_form( $redirect = '' ) {
 
 	return apply_filters( 'epd_registration_form', ob_get_clean() );
 } // epd_registration_form
+
+/**
+ * Redirect user after registration.
+ *
+ * @since	1.3
+ * @param	int		$site_id	The site ID registered
+ * @param	int		$user_ud	User ID for the site
+ * @return	void
+ */
+function epd_redirect_after_register( $site_id, $user_id )	{
+	$action = epd_get_option( 'registration_action' );
+	$action = apply_filters( 'epd_after_user_registration_action', $action );
+
+	do_action( "epd_after_registration_{$action}_action", $site_id, $user_id );
+} // epd_redirect_after_register

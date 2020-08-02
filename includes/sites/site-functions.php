@@ -57,6 +57,20 @@ function epd_get_site_registered_time( $site_id, $format = '' )	{
 } // epd_get_site_registered_time
 
 /**
+ * Retrieve a sites expiration timestamp.
+ *
+ * @since	1.0
+ * @param	int		$site_id	The site ID
+ * @return	string	Timestamp for when a site should be deleted.
+ */
+function epd_get_site_expiration_timestamp( $site_id )	{
+	$expires = get_site_meta( $site_id, 'epd_site_expires', true );
+	$expires = apply_filters( 'epd_site_expiration_timestamp', $expires );
+
+	return $expires;
+} // epd_get_site_expiration_timestamp
+
+/**
  * Retrieve a sites expiration date.
  *
  * @since	1.0
@@ -66,7 +80,7 @@ function epd_get_site_registered_time( $site_id, $format = '' )	{
  */
 function epd_get_site_expiration_date( $site_id, $format = '' )	{
 	$default_lifetime = epd_get_default_site_lifetime();
-	$expiration       = get_site_meta( $site_id, 'epd_site_expires', true );
+	$expiration       = epd_get_site_expiration_timestamp( $site_id );
 	$format           = empty( $format ) ? 'Y/m/d ' . get_option( 'time_format' ) : $format;
 
 	if ( '' == $expiration )	{
@@ -194,7 +208,11 @@ function epd_create_demo_site( $args = array() )	{
 		return false;
 	}
 
-	epd_increase_registered_demo_sites_count( 1 );
+	$increment_count = apply_filters( 'epd_increment_site_count', true );
+
+	if ( $increment_count )	{
+		epd_increase_registered_demo_sites_count( 1 );
+	}
 
 	do_action( 'epd_create_demo_site', $site_id, $args );
 
@@ -279,3 +297,66 @@ function epd_exclude_sites_from_delete()    {
 
     return $excludes;
 } // epd_exclude_sites_from_delete
+
+/**
+ * Delete a site.
+ *
+ * @since	1.3
+ * @param	int		$site_id	The ID of the site to be deleted
+ * @return	bool	True if the site is deleted, otherwise false
+ */
+function epd_delete_site( $site_id )	{
+	require_once( ABSPATH . 'wp-admin/includes/admin.php' );
+
+	$delete_users = array();
+	$result       = false;
+
+	if ( function_exists( 'wpmu_delete_blog' ) )	{
+		$blog_users = get_users( array( 'blog_id' => $site_id ) );
+
+		if ( ! empty( $blog_users ) )	{
+			foreach( $blog_users as $blog_user )	{
+				if ( ! is_super_admin( $blog_user->ID ) )	{
+					$delete_users[] = $blog_user->ID;
+				}
+			}
+		}
+
+		wpmu_delete_blog( $site_id, true );
+
+		$delete_users = apply_filters( 'epd_delete_site_delete_users', $delete_users, $site_id );
+
+		if ( ! empty( $delete_users ) )	{
+			$delete_users = array_unique( $delete_users );
+
+			foreach( $delete_users as $user_id )	{
+				$user_blogs = get_blogs_of_user( $user_id );
+
+				if ( empty( $user_blogs ) )	{
+					if ( $user_id == get_current_user_id() )	{
+						wp_logout();
+					}
+
+					wpmu_delete_user( $user_id );
+				}
+			}
+		}
+
+		$result = true;
+	}
+
+	return $result;
+} // epd_delete_site
+
+/**
+ * Reset a site to its original state.
+ *
+ * @since	1.3
+ * @param	int		$site_id	The ID of the site to reset
+ * @return	bool	True if successful, false if the site was not reset
+ */
+function epd_reset_site( $site_id )	{
+	$epd_reset = new EPD_Reset_Site( $site_id );
+
+	$epd_reset->execute();
+} // epd_reset_site

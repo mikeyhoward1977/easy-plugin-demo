@@ -186,6 +186,7 @@ final class Easy_Plugin_Demo {
         require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
         require_once EPD_PLUGIN_DIR . 'includes/sites/site-actions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/sites/site-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/sites/class-epd-reset-site.php';
 		require_once EPD_PLUGIN_DIR . 'includes/posts/post-actions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/posts/post-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
