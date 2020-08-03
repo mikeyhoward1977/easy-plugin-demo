@@ -111,7 +111,7 @@ function epd_options_page() {
 			}
 
             if ( ! get_site_option( 'epd_premium_version' ) )   {
-                echo '<a href="https://easy-plugin-demo.com/premium-pack/" target="_blank" class="nav-tab">';
+                echo '<a href="https://easy-plugin-demo.com/premium-pack/" target="_blank" class="nav-tab epd-nav-tab-active">';
 					_e( 'Go Premium', 'easy-plugin-demo' );
 				echo '</a>';
             }
