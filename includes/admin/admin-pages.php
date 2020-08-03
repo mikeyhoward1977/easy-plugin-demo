@@ -38,3 +38,35 @@ function epd_add_options_link() {
 
 } // epd_add_options_link
 add_action( 'network_admin_menu', 'epd_add_options_link', 20 );
+
+/**
+ * Adds a reset site option to the tools menu
+ *
+ * @since	1.3
+ * @return	void
+ */
+function epd_add_menu_items() {
+	global $epd_reset_site_page;
+
+	$reset_role = epd_get_reset_site_cap_role();
+
+	$epd_reset_site_page = add_submenu_page(
+        'tools.php',
+        __( 'Reset Site', 'easy-plugin-demo' ),
+        __( 'Reset Site', 'easy-plugin-demo' ),
+        $reset_role,
+        'epd_reset',
+        'epd_output_reset_screen'
+    );
+} // epd_add_menu_items
+add_action( 'admin_menu', 'epd_add_menu_items' );
+
+/**
+ * The site reset page.
+ *
+ * @since   1.3
+ * @return  void
+ */
+function epd_output_reset_screen()  {
+    echo 'Hi';
+} // epd_output_reset_screen

@@ -144,3 +144,16 @@ function epd_get_site_primary_user_id( $site_id )	{
 
 	return $user_id;
 } // epd_get_site_primary_user_id
+
+/**
+ * Defines the role required to reset a site.
+ *
+ * @since   1.3
+ * @return  string
+ */
+function epd_get_reset_site_cap_role()  {
+    $role = 'administrator';
+    $role = apply_filters( 'epd_reset_site_cap_role', $role );
+
+    return $role;
+} // epd_get_reset_site_cap_role
