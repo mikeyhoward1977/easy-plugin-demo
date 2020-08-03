@@ -178,16 +178,21 @@ add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
  * 
  * @since   1.1.6
  * @param   int     $site_id    Site ID
+ * @param   array   $args       Array of args parsed to created site
  * @return  void
  */
-function epd_set_blog_meta( $site_id )  {
+function epd_set_blog_meta( $site_id, $args = array() )  {
     $options = epd_get_default_blog_meta();
+
+    if ( ! empty( $args['user_id'] ) )  {
+        $options[ 'epd_demo_customer'] = $args['user_id'];
+    }
 
     foreach( $options as $key => $value )   {
         update_site_meta( $site_id, $key, $value );
     }
 } // epd_set_blog_meta
-add_action( 'epd_create_demo_site', 'epd_set_blog_meta' );
+add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
 
 /**
  * Reset a site to its original state.

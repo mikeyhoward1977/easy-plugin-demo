@@ -139,17 +139,8 @@ function epd_create_demo_user( $data = array() )	{
  * @return	int		Primary user ID
  */
 function epd_get_site_primary_user_id( $site_id )	{
-	global $wpdb;
-
-	$user_id = $wpdb->get_var( $wpdb->prepare(
-		"
-		SELECT user_id
-		FROM {$wpdb->usermeta}
-		WHERE meta_key ='primary_blog'
-		AND meta_value = '%d'
-		",
-		absint( $site_id )
-	) );
+	$user_id = get_site_meta( $site_id, 'epd_demo_customer', true );
+    $user_id = ! empty( $user_id ) ? absint( $user_id ) : 0;
 
 	return $user_id;
 } // epd_get_site_primary_user_id
