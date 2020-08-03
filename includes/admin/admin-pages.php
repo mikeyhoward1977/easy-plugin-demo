@@ -27,7 +27,7 @@ function epd_add_options_link() {
 
 	global $epd_settings_page;
 
-	$epd_settings_page   = add_submenu_page(
+	$epd_settings_page = add_submenu_page(
         'settings.php',
         __( 'EPD Settings', 'easy-plugin-demo' ),
         __( 'Easy Plugin Demo', 'easy-plugin-demo' ),
