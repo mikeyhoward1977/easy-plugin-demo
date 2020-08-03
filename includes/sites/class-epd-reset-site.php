@@ -240,6 +240,26 @@ class EPD_Reset_Site {
 		return $args;
 	} // get_site_args
 
+    /**
+     * Update the blog table for the new site.
+     *
+     * @since   1.3
+     * @return  bool
+     */
+    public function update_blog_table()   {
+        $args = array(
+            'registered' => $this->registered
+        );
+
+        $args = apply_filters( 'epd_update_blog_table_args', $args );
+
+        if ( ! empty( $args ) ) {
+            return update_blog_details( $this->new_site_id, $args );
+        }
+
+        return true;
+    } // update_blog_table
+
 	/**
 	 * Execute the reset.
 	 *
@@ -255,6 +275,7 @@ class EPD_Reset_Site {
 		}
 
 		if ( ! empty( $this->new_site_id ) )	{
+            $this->update_blog_table();
 			epd_redirect_after_register( $this->new_site_id, $this->user_id );
 		}
 	} // execute
