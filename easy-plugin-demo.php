@@ -339,8 +339,8 @@ final class Easy_Plugin_Demo {
         $epd_registered = epd_get_registered_demo_sites_count();
 
         if ( $epd_registered > 2 ) {
-            add_action( 'admin_notices', array( self::$instance, 'admin_wp_premium_pack_rating_notice' ) );
-            add_action( 'network_admin_notices', array( self::$instance, 'admin_wp_premium_pack_rating_notice' ) );
+            add_action( 'admin_notices', array( self::$instance, 'admin_wp_premium_pack_upsell_notice' ) );
+            add_action( 'network_admin_notices', array( self::$instance, 'admin_wp_premium_pack_upsell_notice' ) );
         }
 
     } // notify_premium_pack
@@ -396,7 +396,7 @@ final class Easy_Plugin_Demo {
      * @since	1.1
      * @return	void
     */
-    function admin_wp_premium_pack_rating_notice() {
+    function admin_wp_premium_pack_upsell_notice() {
         ob_start(); ?>
 
 		<script>
@@ -437,7 +437,7 @@ final class Easy_Plugin_Demo {
         </div>
 
         <?php echo ob_get_clean();
-    } // admin_wp_premium_pack_rating_notice
+    } // admin_wp_premium_pack_upsell_notice
 
 /*****************************************
  -- SCRIPTS
