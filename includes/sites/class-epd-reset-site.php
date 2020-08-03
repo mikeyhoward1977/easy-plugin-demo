@@ -106,6 +106,14 @@ class EPD_Reset_Site {
 	 */
 	private $meta = array();
 
+    /**
+	 * Site reset count
+	 *
+	 * @since	1.3
+	 * @var		int
+	 */
+	private $resets;
+
 	/**
 	 * Get things going
 	 *
@@ -135,6 +143,7 @@ class EPD_Reset_Site {
 		$this->expires    = epd_get_site_expiration_timestamp( $this->site_id );
 		$this->lifetime   = epd_get_site_lifetime( $this->site_id );
 		$this->meta       = $this->define_site_meta();
+        $this->resets     = epd_get_site_reset_count( $this->site_id );
 
 		return true;
 	} // setup_site
@@ -179,8 +188,9 @@ class EPD_Reset_Site {
 	 */
 	public function define_site_meta()	{
 		$restore_meta = array(
-			'epd_site_expires'  => $this->expires,
-			'epd_site_lifetime' => $this->lifetime
+			'epd_site_expires'     => $this->expires,
+			'epd_site_lifetime'    => $this->lifetime,
+            'epd_site_reset'       => current_time( 'mysql' )
 		);
 
 		$restore_meta = apply_filters( 'epd_define_site_meta', $restore_meta, $this->site_id );
@@ -213,6 +223,8 @@ class EPD_Reset_Site {
 	 * @return	array	Array of site meta
 	 */
 	public function set_site_meta( $meta )	{
+        $meta['epd_site_reset_count'] = epd_increase_demo_site_reset_count( $this->new_site_id, 1 );
+
 		foreach( $this->meta as $meta_key => $meta_value )	{
 			$meta[ $meta_key ] = $meta_value;
 		}

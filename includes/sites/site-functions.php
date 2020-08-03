@@ -176,6 +176,42 @@ function epd_increase_registered_demo_sites_count( $count = 0 )	{
 } // epd_increase_registered_demo_sites_count
 
 /**
+ * Retrieve the total number of times a site has been reset.
+ *
+ * @since	1.3
+ * @param   int     $site_id    Site ID
+ * @return	int		Total number of times the site has been reset
+ */
+function epd_get_site_reset_count( $site_id = 0 )	{
+    $site_id = ! empty( $site_id ) ? $site_id : get_current_blog_id();
+
+	$total = get_site_meta( $site_id, 'epd_site_reset_count', true );
+	$total = apply_filters( 'epd_site_reset_count', $total );
+
+	return (int)$total;
+} // epd_get_site_reset_count
+
+/**
+ * Increase total number of times a site has been reset.
+ *
+ * @since	1.0
+ * @param   int     $site_id    Site ID
+ * @param	int		$count	The count of resets to increase by
+ * @return	int		Total number of times the site has been reset
+ */
+function epd_increase_demo_site_reset_count( $site_id = 0, $count = 0 )	{
+    $site_id = ! empty( $site_id ) ? $site_id : get_current_blog_id();
+	$count   = absint( $count );
+
+	$total = epd_get_site_reset_count( $site_id );
+	$total = $total + $count;
+
+	update_site_meta( $site_id, 'epd_site_reset_count', $total );
+
+	return $total;
+} // epd_increase_demo_site_reset_count
+
+/**
  * Creates a new site within the Multisite installation.
  *
  * @since	1.0
