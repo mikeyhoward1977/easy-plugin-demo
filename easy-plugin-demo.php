@@ -430,7 +430,7 @@ final class Easy_Plugin_Demo {
             <p>
                 <?php printf(
                     __( '<a href="%1$s" target="_blank">Click here</a> for more information and to secure a %2$s discount.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/premium-pack/?discount=15OFFNOW',
+                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15OFFNOW',
                     '15%'
                 ); ?>
             </p>
