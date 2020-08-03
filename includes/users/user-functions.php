@@ -152,7 +152,7 @@ function epd_get_site_primary_user_id( $site_id )	{
  * @return  string
  */
 function epd_get_reset_site_cap_role()  {
-    $role = 'administrator';
+    $role = 'manage_options';
     $role = apply_filters( 'epd_reset_site_cap_role', $role );
 
     return $role;
