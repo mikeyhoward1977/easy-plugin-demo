@@ -187,6 +187,13 @@ function epd_get_registered_settings() {
 						'std'      => 'login',
 						'desc'     => __( 'Choose where to send the user once they have successfully registered their demo site.', 'easy-plugin-demo' )
 					),
+					'allow_reset' => array(
+						'id'       => 'allow_reset',
+						'name'     => __( 'Allow Site Reset?', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'std'      => '1',
+						'desc'     => __( 'If enabled, users will be able to reset their demo sites to its original state.' , 'easy-plugin-demo' )
+					),
 					'delete_after' => array(
 						'id'       => 'delete_after',
 						'name'     => __( 'Delete Site After', 'easy-plugin-demo' ),

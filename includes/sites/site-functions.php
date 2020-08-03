@@ -118,6 +118,18 @@ function epd_site_has_expired( $site_id )   {
 } // epd_site_has_expired
 
 /**
+ * Whether or not sites can be reset.
+ *
+ * @since   1.2
+ * @return  bool    Whether or not sites can be reset
+ */
+function epd_can_reset_sites()   {
+    $reset = epd_get_option( 'allow_reset', false );
+
+    return $reset;
+} // epd_can_reset_sites
+
+/**
  * Retrieve default site option keys.
  *
  * @since   1.0

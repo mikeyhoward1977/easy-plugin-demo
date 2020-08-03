@@ -48,6 +48,10 @@ add_action( 'network_admin_menu', 'epd_add_options_link', 20 );
 function epd_add_menu_items() {
 	global $epd_reset_site_page;
 
+	if ( ! epd_can_reset_sites() )	{
+		return;
+	}
+
 	$primary_blog = get_network()->blog_id;
 	$current_blog = get_current_blog_id();
 
