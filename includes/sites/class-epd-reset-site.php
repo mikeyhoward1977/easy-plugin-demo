@@ -269,6 +269,8 @@ class EPD_Reset_Site {
 	public function execute()	{
 		switch_to_blog( get_network()->blog_id );
 
+        do_action( 'epd_before_site_reset', $this );
+
 		if ( epd_delete_site( $this->site_id ) )	{
 			$args = $this->get_site_args();
 			$this->new_site_id = epd_create_demo_site( $args );
@@ -276,6 +278,7 @@ class EPD_Reset_Site {
 
 		if ( ! empty( $this->new_site_id ) )	{
             $this->update_blog_table();
+            do_action( 'epd_site_reset', $this );
 			epd_redirect_after_register( $this->new_site_id, $this->user_id );
 		}
 	} // execute
