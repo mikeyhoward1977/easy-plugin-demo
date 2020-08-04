@@ -192,7 +192,7 @@ function epd_get_registered_settings() {
 						'name'     => __( 'Allow Site Reset?', 'easy-plugin-demo' ),
 						'type'     => 'checkbox',
 						'std'      => '1',
-						'desc'     => __( 'If enabled, users will be able to reset their demo sites to its original state.' , 'easy-plugin-demo' )
+						'desc'     => __( 'If enabled, users will be able to reset their demo sites to their original state.' , 'easy-plugin-demo' )
 					),
 					'delete_after' => array(
 						'id'       => 'delete_after',

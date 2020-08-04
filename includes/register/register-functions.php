@@ -14,6 +14,20 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
+ * Get the registration page URL.
+ *
+ * @since   1.3
+ * @return  string  URL of registration page
+ */
+function epd_get_registration_page_url()    {
+    switch_to_blog(get_network()->blog_id );
+    $registration_url = get_permalink( epd_get_option( 'registration_page' ) );
+    restore_current_blog();
+
+    return $registration_url;
+} // epd_get_registration_page_url
+
+/**
  * Determine if the current page is the registration page.
  *
  * @since	1.2
