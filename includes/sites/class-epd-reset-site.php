@@ -162,6 +162,9 @@ class EPD_Reset_Site {
 
 		// Restore site meta
 		add_filter( 'epd_default_blog_meta', array( $this, 'set_site_meta' ), 999 );
+
+        // Change redirect after reset
+        add_filter( 'epd_after_user_registration_action', 'redirect' );
     } // init
 
 	/**
@@ -272,6 +275,23 @@ class EPD_Reset_Site {
         return true;
     } // update_blog_table
 
+    /**
+     * Redirect after successful reset
+     *
+     * @since   1.3
+     * @return  void
+     */
+    public function redirect( $confirm )  {
+        $url = get_admin_url( $this->new_site_id, 'tools.php' );
+        $url = add_query_arg( array(
+            'page'        => 'epd_reset',
+            'epd-message' => "reset-{$confirm}",
+            ), $url );
+
+        wp_safe_redirect( $url );
+        exit;
+    } // redirect
+
 	/**
 	 * Execute the reset.
 	 *
@@ -283,6 +303,8 @@ class EPD_Reset_Site {
 
         do_action( 'epd_before_site_reset', $this );
 
+        $confirm = 'error';
+
 		if ( epd_delete_site( $this->site_id ) )	{
 			$args = $this->get_site_args();
 			$this->new_site_id = epd_create_demo_site( $args );
@@ -291,8 +313,10 @@ class EPD_Reset_Site {
 		if ( ! empty( $this->new_site_id ) )	{
             $this->update_blog_table();
             do_action( 'epd_site_reset', $this );
-			epd_redirect_after_register( $this->new_site_id, $this->user_id );
+            $confirm = 'success';
 		}
+
+        $this->redirect( $confirm );
 	} // execute
 
 } // EPD_Reset_Site

@@ -255,9 +255,6 @@ final class Easy_Plugin_Demo {
 
 	} // load_textdomain
 
-/*****************************************
- -- ADMIN NOTICES
-*****************************************/
 	/**
 	 * Notice to set registration page.
 	 *
@@ -446,7 +443,8 @@ final class Easy_Plugin_Demo {
 
 		$load_page_hook = array(
 			'options-reading.php',
-			'settings_page_epd-settings'
+			'settings_page_epd-settings',
+            'tools_page_epd_reset'
 		);
 
 		if ( ! in_array( $hook, $load_page_hook ) )	{

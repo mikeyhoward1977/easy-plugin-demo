@@ -64,4 +64,20 @@ jQuery(document).ready(function ($) {
 		});
 	});
 
+    /**
+     * Disable reset button until confirmation is selected.
+     *
+     * @since   1.3
+     */
+    $('#epd-confirm-reset').click(function(){
+        //If the checkbox is checked.
+        if ( $(this).is(':checked') ){
+            //Enable the submit button.
+            $('#epd-reset-submit').attr("disabled", false);
+        } else{
+            //If it is not checked, disable the button.
+            $('#epd-reset-submit').attr("disabled", true);
+        }
+    });
+
 });

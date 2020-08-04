@@ -95,17 +95,44 @@ add_action( 'admin_menu', 'epd_add_menu_items' );
  * @return  void
  */
 function epd_output_reset_screen()  {
-	$site_id  = isset( $_REQUEST['site_id'] ) ? absint( $_REQUEST['site_id'] ) : get_current_blog_id();
-	$title    = __( 'Reset Demo', 'easy-plugin-demo' );
-	$text_top = sprintf(
+    $title    = __( 'Reset Demo', 'easy-plugin-demo' );
+	$site_id  = isset( $_REQUEST['site_id'] )     ? absint( $_REQUEST['site_id'] )                  : get_current_blog_id();
+    $screen   = isset( $_REQUEST['epd-message'] ) ? sanitize_text_field( $_REQUEST['epd-message'] ) : 'reset';
+
+    ?>
+	<div class="wrap">
+		<h1><?php echo $title; ?></h1>
+        <?php
+            switch( $screen ) {
+                case 'reset-success' :
+                    $action = 'reset-success';
+                    break;
+                default:
+                    $action = apply_filters( 'epd_reset_demo_default_action', 'reset' );
+                    break;
+            }
+        ?>
+		<?php do_action( "epd_reset_screen_{$action}", $site_id ); ?>
+	</div>
+	<?php
+} // epd_output_reset_screen
+
+/**
+ * Display the reset demo site form.
+ *
+ * @since   1.3
+ * @param   int     $site_id    The site ID
+ * @return  void
+ */
+function epd_display_reset_demo_screen( $site_id )    {
+    $text_top = sprintf(
 		__( 'If you want to restore your %s site to its original state, you can reset it using the form below. When you click <strong>Reset My Demo</strong> all customizations you have made since registering your demo will be erased including changes to;' ),
 		get_network()->site_name
 	);
 
-    ?>
-	<div class="wrap">
-		<h1><?php _e( 'Reset Demo', 'easy-plugin-demo' ); ?></h1>
-		<p><?php echo $text_top; ?></p>
+    ob_start(); ?>
+
+    <p><?php echo $text_top; ?></p>
 		<ul>
 			<li><?php _e( 'Themes and plugins', 'easy-plugin-demo' ); ?></li>
 			<li><?php _e( 'Posts/pages', 'easy-plugin-demo' ); ?></li>
@@ -124,8 +151,43 @@ function epd_output_reset_screen()  {
 				_e( "I'm sure I want to reset my demo, and I am aware that all my changes will be lost.", 'easy-plugin-demo' );
 			?>
 			</strong></label></p>
-			<?php submit_button( __( 'Reset My Demo', 'easy-plugin-demo' ) ); ?>
+			<?php submit_button(
+                __( 'Reset My Demo', 'easy-plugin-demo' ),
+                'primary',
+                'epd-reset-submit',
+                true,
+                array( 'disabled' => 'disabled' )
+            ); ?>
 		</form>
-	</div>
-	<?php
-} // epd_output_reset_screen
+
+    <?php echo ob_get_clean();
+} // epd_display_reset_demo_screen
+add_action( 'epd_reset_screen_reset', 'epd_display_reset_demo_screen' );
+add_action( 'epd_reset_screen_reset-error', 'epd_display_reset_demo_screen' );
+
+/**
+ * Display the reset demo site confirmation.
+ *
+ * @since   1.3
+ * @param   int     $site_id    The site ID
+ * @return  void
+ */
+function epd_display_reset_demo_confirmation_screen( $site_id )    {
+    $home_url  = get_home_url( $site_id );
+    $admin_url = get_admin_url( $site_id );
+    switch_to_blog(get_network()->blog_id );
+    $reg_url   = epd_get_registration_page_url();
+    restore_current_blog();
+
+    ob_start(); ?>
+
+    <p><?php printf(
+        __( 'Your site, %s has been reset.', 'easy-plugin-demo' ),
+        get_network()->site_name
+    );?></p>
+
+<p><a href="<?php echo $home_url; ?>"><?php _e( 'Home Page', 'easy-plugin-demo' ); ?></a> &#124; <a href="<?php echo $admin_url; ?>"><?php _e( 'Dashboard', 'easy-plugin-demo' ); ?></a> &#124; <a href="<?php echo $reg_url; ?>"><?php _e( 'Registration Page', 'easy-plugin-demo' ); ?></a></p>
+
+    <?php echo ob_get_clean();
+} // epd_display_reset_demo_confirmation_screen
+add_action( 'epd_reset_screen_reset-success', 'epd_display_reset_demo_confirmation_screen' );
