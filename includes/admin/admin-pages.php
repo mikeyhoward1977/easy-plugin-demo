@@ -89,6 +89,54 @@ function epd_add_menu_items() {
 add_action( 'admin_menu', 'epd_add_menu_items' );
 
 /**
+ * Adds the reset demo link to the WordPress admin bar.
+ *
+ * @since   1.3
+ * @param   object  $admin_bar  WP_Admin_Bar
+ * @return  void
+ */
+function epd_admin_bar_reset_demo_link( $admin_bar )    {
+    if ( ! epd_can_reset_sites() )	{
+		return;
+	}
+
+	$primary_blog = get_network()->blog_id;
+	$current_blog = get_current_blog_id();
+
+	// Do not display the link if in network admin, or is the main site
+	if ( $primary_blog == $current_blog )	{
+		return;
+	}
+
+	$primary_user_id = epd_get_site_primary_user_id( $current_blog );
+	$current_user_id = get_current_user_id();
+	$required_role   = epd_get_reset_site_cap_role();
+
+	// Do not display the link if not a site admin, or the original demo requestor
+	if ( ! is_super_admin() && $current_user_id != $primary_user_id )	{
+		return;
+	}
+
+	$show_menu = apply_filters( 'epd_show_reset_demo_admin_bar_item', true, $current_blog );
+
+	if ( ! $show_menu )	{
+		return;
+	}
+
+    $admin_bar->add_menu( array(
+        'id'     => 'epd-reset-demo-site',
+        'parent' => null,
+        'group'  => null,
+        'title'  => '<span class="ab-icon dashicons dashicons-image-rotate"></span>' . __( 'Reset Demo', 'easy-plugin-demo' ) . '</span>',
+        'href'   => admin_url( 'tools.php?page=epd_reset' ),
+        'meta'   => array(
+            'title' => __( 'Reset this demo site', 'easy-plugin-demo' )
+        )
+    ) );
+} // epd_admin_bar_reset_demo_link
+add_action( 'admin_bar_menu', 'epd_admin_bar_reset_demo_link', 500 );
+
+/**
  * The site reset page.
  *
  * @since   1.3
