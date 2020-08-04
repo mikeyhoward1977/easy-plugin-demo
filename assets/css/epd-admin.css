@@ -46,7 +46,7 @@
 
 #wpadminbar #wp-admin-bar-epd-reset-demo-site .ab-icon:before {
     content: '\f531';
-    margin-top: 1px;
+    top: 3px;
     font-size: smaller;
 }
 

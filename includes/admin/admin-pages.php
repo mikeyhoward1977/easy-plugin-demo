@@ -128,13 +128,13 @@ function epd_admin_bar_reset_demo_link( $admin_bar )    {
         'parent' => null,
         'group'  => null,
         'title'  => '<span class="ab-icon dashicons dashicons-image-rotate"></span>' . __( 'Reset Demo', 'easy-plugin-demo' ) . '</span>',
-        'href'   => admin_url( 'tools.php?page=epd_reset' ),
+        'href'   => get_admin_url( $current_blog, 'tools.php?page=epd_reset' ),
         'meta'   => array(
             'title' => __( 'Reset this demo site', 'easy-plugin-demo' )
         )
     ) );
 } // epd_admin_bar_reset_demo_link
-add_action( 'admin_bar_menu', 'epd_admin_bar_reset_demo_link', 500 );
+add_action( 'admin_bar_menu', 'epd_admin_bar_reset_demo_link', 200 );
 
 /**
  * The site reset page.
