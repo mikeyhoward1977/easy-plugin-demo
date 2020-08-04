@@ -32,7 +32,7 @@ function epd_save_options_action() {
 		wp_die( __( 'You do not have permissions to save EPD options.', 'easy-plugin-demo' ) );
 	}
 
-	if ( empty( $_POST['_wp_http_referer'] ) || empty( $_POST['epd_settings'] ) ) {
+	if ( empty( $_POST['_wp_http_referer'] ) ) {
 		return;
 	}
 
