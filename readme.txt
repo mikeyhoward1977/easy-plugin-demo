@@ -2,7 +2,7 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
-Tested up to: 5.4.2
+Tested up to: 5.5
 Requires PHP: 5.4
 Stable tag: 1.2.1
 License: GPLv2 or later
@@ -122,6 +122,15 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3 =
+
+**DATE**
+
+* **New**: Demo sites can now be reset to their original state by the site creator, or site admins
+* **Bug**: Occasional odd behaviour when saving the plugin options
+* **Tweak**: Correct URL pointing to Premium Pack
+* **Tweak**: Added Premium Pack upsell to settings screen
 
 = 1.2.1 =
 
