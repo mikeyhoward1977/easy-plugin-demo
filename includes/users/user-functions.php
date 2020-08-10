@@ -130,3 +130,30 @@ function epd_create_demo_user( $data = array() )	{
 
     return $user_id;
 } // epd_create_demo_user
+
+/**
+ * Retrieve the primary user ID for a site.
+ *
+ * @since	1.3
+ * @param	int		$site_id	The ID of the site to retrieve the user for
+ * @return	int		Primary user ID
+ */
+function epd_get_site_primary_user_id( $site_id )	{
+	$user_id = get_site_meta( $site_id, 'epd_demo_customer', true );
+    $user_id = ! empty( $user_id ) ? absint( $user_id ) : 0;
+
+	return $user_id;
+} // epd_get_site_primary_user_id
+
+/**
+ * Defines the role required to reset a site.
+ *
+ * @since   1.3
+ * @return  string
+ */
+function epd_get_reset_site_cap_role()  {
+    $role = 'manage_options';
+    $role = apply_filters( 'epd_reset_site_cap_role', $role );
+
+    return $role;
+} // epd_get_reset_site_cap_role

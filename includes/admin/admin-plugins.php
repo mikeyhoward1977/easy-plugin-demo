@@ -23,9 +23,9 @@ if ( ! defined( 'ABSPATH' ) )
  */
 function epd_plugin_row_meta( $input, $file )	{
 
-	if ( $file == 'easy-plugin-demo/easy-plugin-demo.php' )    {
+	if ( $file == 'easy-plugin-demo/easy-plugin-demo.php' && ! get_site_option( 'epd_premium_version' ) )    {
         $links = array(
-            '<a href="' . esc_url( 'https://easy-plugin-demo.com/premium-pack/' ) . '" target="_blank"><strong>' . esc_html__( 'Get Premium Pack', 'easy-plugin-demo' ) . '</strong></a>'
+            '<a href="' . esc_url( 'https://easy-plugin-demo.com/downloads/epd-premium-pack/' ) . '" target="_blank"><strong>' . esc_html__( 'Get Premium Pack', 'easy-plugin-demo' ) . '</strong></a>'
         );
 
         $input = array_merge( $input, $links );

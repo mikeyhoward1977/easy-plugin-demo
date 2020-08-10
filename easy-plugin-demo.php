@@ -3,7 +3,7 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.2.1
+ * Version: 1.3
  * Date: 31st July 2020
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
@@ -30,7 +30,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.2.1
+ * @version		1.3
  */
 
 // Exit if accessed directly.
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.2.1' );
+			define( 'EPD_VERSION', '1.3' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
@@ -186,6 +186,7 @@ final class Easy_Plugin_Demo {
         require_once EPD_PLUGIN_DIR . 'includes/shortcodes.php';
         require_once EPD_PLUGIN_DIR . 'includes/sites/site-actions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/sites/site-functions.php';
+		require_once EPD_PLUGIN_DIR . 'includes/sites/class-epd-reset-site.php';
 		require_once EPD_PLUGIN_DIR . 'includes/posts/post-actions.php';
 		require_once EPD_PLUGIN_DIR . 'includes/posts/post-functions.php';
         require_once EPD_PLUGIN_DIR . 'includes/template-functions.php';
@@ -254,9 +255,6 @@ final class Easy_Plugin_Demo {
 
 	} // load_textdomain
 
-/*****************************************
- -- ADMIN NOTICES
-*****************************************/
 	/**
 	 * Notice to set registration page.
 	 *
@@ -338,8 +336,8 @@ final class Easy_Plugin_Demo {
         $epd_registered = epd_get_registered_demo_sites_count();
 
         if ( $epd_registered > 2 ) {
-            add_action( 'admin_notices', array( self::$instance, 'admin_wp_premium_pack_rating_notice' ) );
-            add_action( 'network_admin_notices', array( self::$instance, 'admin_wp_premium_pack_rating_notice' ) );
+            add_action( 'admin_notices', array( self::$instance, 'admin_wp_premium_pack_upsell_notice' ) );
+            add_action( 'network_admin_notices', array( self::$instance, 'admin_wp_premium_pack_upsell_notice' ) );
         }
 
     } // notify_premium_pack
@@ -395,7 +393,7 @@ final class Easy_Plugin_Demo {
      * @since	1.1
      * @return	void
     */
-    function admin_wp_premium_pack_rating_notice() {
+    function admin_wp_premium_pack_upsell_notice() {
         ob_start(); ?>
 
 		<script>
@@ -429,14 +427,14 @@ final class Easy_Plugin_Demo {
             <p>
                 <?php printf(
                     __( '<a href="%1$s" target="_blank">Click here</a> for more information and to secure a %2$s discount.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/premium-pack/?discount=15OFFNOW',
+                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15OFFNOW',
                     '15%'
                 ); ?>
             </p>
         </div>
 
         <?php echo ob_get_clean();
-    } // admin_wp_premium_pack_rating_notice
+    } // admin_wp_premium_pack_upsell_notice
 
 /*****************************************
  -- SCRIPTS
@@ -445,8 +443,17 @@ final class Easy_Plugin_Demo {
 
 		$load_page_hook = array(
 			'options-reading.php',
-			'settings_page_epd-settings'
+			'settings_page_epd-settings',
+            'tools_page_epd_reset'
 		);
+
+        if ( epd_can_reset_sites() )   {
+            echo "<style>#wpadminbar #wp-admin-bar-epd-reset-demo-site .ab-icon:before {
+                content: '\f531';
+                top: 1px;
+                font-size: smaller;
+            }</style>";
+        }
 
 		if ( ! in_array( $hook, $load_page_hook ) )	{
 			return;

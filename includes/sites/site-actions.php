@@ -178,16 +178,60 @@ add_action( 'wp_initialize_site', 'epd_activate_new_blog_plugins', 11 );
  * 
  * @since   1.1.6
  * @param   int     $site_id    Site ID
+ * @param   array   $args       Array of args parsed to created site
  * @return  void
  */
-function epd_set_blog_meta( $site_id )  {
+function epd_set_blog_meta( $site_id, $args = array() )  {
     $options = epd_get_default_blog_meta();
+
+    if ( ! empty( $args['user_id'] ) )  {
+        $options[ 'epd_demo_customer'] = $args['user_id'];
+    }
 
     foreach( $options as $key => $value )   {
         update_site_meta( $site_id, $key, $value );
     }
 } // epd_set_blog_meta
-add_action( 'epd_create_demo_site', 'epd_set_blog_meta' );
+add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
+
+/**
+ * Reset a site to its original state.
+ *
+ * @since   1.3
+ * @param   int     $site_id    Site ID
+ * @return  void
+ */
+function epd_reset_site_action( $site_id = 0 ) {
+    if ( ! isset( $_REQUEST['epd_action'] ) || 'reset_site' != $_REQUEST['epd_action'] )	{
+		return;
+	}
+
+	if ( ! isset( $_REQUEST['epd_nonce'] ) || ! wp_verify_nonce( $_REQUEST['epd_nonce'], 'reset_site' ) )	{
+		return;
+	}
+
+	if ( ! isset( $_REQUEST['epd_confirm_reset'] ) || '1' != $_REQUEST['epd_confirm_reset'] )	{
+		return;
+	}
+
+	$redirect = remove_query_arg( array( 'epd_action', 'epd_nonce' ) );
+    $redirect = add_query_arg( 'epd-message', 'reset', $redirect );
+    $result   = 0;
+    $site_id  = ! empty( $_REQUEST['site_id'] ) ? $_REQUEST['site_id'] : get_current_blog_id();
+    $site_id  = absint( $site_id );
+	$site     = get_site( $site_id );
+
+    if ( empty( $site_id ) || get_network()->blog_id == $site_id ) {
+        return;
+    }
+
+    $reset = is_user_member_of_blog( 0, $site_id ) || is_super_admin();
+
+    if ( $reset )	{
+        epd_reset_site( $site_id );
+    }
+} // epd_reset_site_action
+add_action( 'admin_init', 'epd_reset_site_action' );
 
 /**
  * Deletes a site from the front end.
@@ -204,47 +248,11 @@ function epd_delete_site_action()	{
 		return;
 	}
 
-	require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-
-	$delete_users = array();
-	$site_id      = absint( $_GET['site_id'] );
-	$delete_site  = is_user_member_of_blog( 0, $site_id );
-	$redirect     = remove_query_arg( array( 'epd-registered', 'epd-deleted', 'epd_action', 'epd_nonce' ) );
-	$redirect     = add_query_arg( 'epd-message', 'deleted', $redirect );
-
-	if ( $delete_site && function_exists( 'wpmu_delete_blog' ) )	{
-		$blog_users = get_users( array( 'blog_id' => $site_id ) );
-
-		if ( ! empty( $blog_users ) )	{
-			foreach( $blog_users as $blog_user )	{
-				if ( ! is_super_admin( $blog_user->ID ) )	{
-					$delete_users[] = $blog_user->ID;
-				}
-			}
-		}
-
-		wpmu_delete_blog( $site_id, true );
-
-		if ( ! empty( $delete_users ) )	{
-			$delete_users = array_unique( $delete_users );
-
-			foreach( $delete_users as $user_id )	{
-				$user_blogs = get_blogs_of_user( $user_id );
-
-				if ( empty( $user_blogs ) )	{
-					if ( $user_id == get_current_user_id() )	{
-						wp_logout();
-					}
-
-					wpmu_delete_user( $user_id );
-				}
-			}
-		}
-
-		$result  = 1;
-	} else	{
-		$result  = 0;
-	}
+	$site_id     = absint( $_GET['site_id'] );
+	$delete_site = is_user_member_of_blog( 0, $site_id );
+	$redirect    = remove_query_arg( array( 'epd-registered', 'epd-deleted', 'epd_action', 'epd_nonce' ) );
+	$redirect    = add_query_arg( 'epd-message', 'deleted', $redirect );
+	$result      = epd_delete_site( $site_id );
 
 	wp_safe_redirect( add_query_arg( 'epd-result', $result, $redirect ) );
 	exit;
@@ -349,9 +357,10 @@ function epd_delete_expired_sites()	{
                 $delete_users = array_unique( $delete_users );
 
                 foreach( $delete_users as $user_id )	{
-                    $user_blogs = get_blogs_of_user( $blog_user->ID );
+                    $user_blogs  = get_blogs_of_user( $blog_user->ID );
+					$delete_user = apply_filters( 'epd_delete_site_delete_user', true, $user_id );
 
-                    if ( empty( $user_blogs ) )	{
+                    if ( $delete_user && ( $user_blogs ) )	{
                         wpmu_delete_user( $user_id );
                     }
                 }
