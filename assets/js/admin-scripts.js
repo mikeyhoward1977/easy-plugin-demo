@@ -73,10 +73,10 @@ jQuery(document).ready(function ($) {
         //If the checkbox is checked.
         if ( $(this).is(':checked') ){
             //Enable the submit button.
-            $('#epd-reset-submit').attr("disabled", false);
+            $('#epd-reset-submit').attr('disabled', false);
         } else{
             //If it is not checked, disable the button.
-            $('#epd-reset-submit').attr("disabled", true);
+            $('#epd-reset-submit').attr('disabled', true);
         }
     });
 
