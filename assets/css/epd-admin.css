@@ -44,12 +44,6 @@
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-#wpadminbar #wp-admin-bar-epd-reset-demo-site .ab-icon:before {
-    content: '\f531';
-    top: 1px;
-    font-size: smaller;
-}
-
 .epd-nav-tab-active,
 .epd-nav-tab-active:hover,
 .epd-nav-tab-active:focus,

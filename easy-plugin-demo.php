@@ -447,6 +447,14 @@ final class Easy_Plugin_Demo {
             'tools_page_epd_reset'
 		);
 
+        if ( epd_can_reset_sites() )   {
+            echo "<style>#wpadminbar #wp-admin-bar-epd-reset-demo-site .ab-icon:before {
+                content: '\f531';
+                top: 1px;
+                font-size: smaller;
+            }</style>";
+        }
+
 		if ( ! in_array( $hook, $load_page_hook ) )	{
 			return;
 		}
