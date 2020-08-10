@@ -48,7 +48,7 @@ add_action( 'network_admin_menu', 'epd_add_options_link', 20 );
 function epd_add_menu_items() {
 	global $epd_reset_site_page;
 
-	if ( ! epd_can_reset_sites() )	{
+	if ( ! epd_can_reset_sites() || ! is_super_admin() )	{
 		return;
 	}
 
@@ -96,7 +96,7 @@ add_action( 'admin_menu', 'epd_add_menu_items' );
  * @return  void
  */
 function epd_admin_bar_reset_demo_link( $admin_bar )    {
-    if ( ! epd_can_reset_sites() )	{
+    if ( ! epd_can_reset_sites() || ! is_super_admin() )	{
 		return;
 	}
 
@@ -173,9 +173,10 @@ function epd_output_reset_screen()  {
  * @return  void
  */
 function epd_display_reset_demo_screen( $site_id )    {
+	$site     = get_site( $site_id );
     $text_top = sprintf(
-		__( 'If you want to restore your %s site to its original state, you can reset it using the form below. When you click <strong>Reset My Demo</strong> all customizations you have made since registering your demo will be erased including changes to;' ),
-		get_network()->site_name
+		__( 'If you want to restore your %s site to its original state, you can reset it using the form below. When you click <strong>Reset My Demo</strong> all customizations you have made since registering your demo will be erased including changes to;', 'easy-plugin-demo' ),
+		$site->blogname
 	);
 
     ob_start(); ?>
@@ -221,9 +222,10 @@ add_action( 'epd_reset_screen_reset-error', 'epd_display_reset_demo_screen' );
  * @return  void
  */
 function epd_display_reset_demo_confirmation_screen( $site_id )    {
+	$site      = get_site( $site_id );
     $home_url  = get_home_url( $site_id );
     $admin_url = get_admin_url( $site_id );
-    switch_to_blog(get_network()->blog_id );
+    switch_to_blog( get_network()->blog_id );
     $reg_url   = epd_get_registration_page_url();
     restore_current_blog();
 
@@ -231,7 +233,7 @@ function epd_display_reset_demo_confirmation_screen( $site_id )    {
 
     <p><?php printf(
         __( 'Your site, %s has been reset.', 'easy-plugin-demo' ),
-        get_network()->site_name
+        $site->blogname
     );?></p>
 
 <p><a href="<?php echo $home_url; ?>"><?php _e( 'Home Page', 'easy-plugin-demo' ); ?></a> &#124; <a href="<?php echo $admin_url; ?>"><?php _e( 'Dashboard', 'easy-plugin-demo' ); ?></a> &#124; <a href="<?php echo $reg_url; ?>"><?php _e( 'Registration Page', 'easy-plugin-demo' ); ?></a></p>
