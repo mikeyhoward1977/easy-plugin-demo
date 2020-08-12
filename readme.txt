@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.5
 Requires PHP: 5.4
-Stable tag: 1.3
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,14 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.1 =
+
+**Wednesday, 12th August 2020**
+
+* **Bug**: Addresses issue whereby randomly the primary user was not reassigned permissions to the site being reset
+
+**Tuesday, 11th August 2020**
 
 = 1.3 =
 

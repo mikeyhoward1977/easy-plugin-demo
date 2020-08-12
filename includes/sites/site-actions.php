@@ -201,7 +201,7 @@ add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
  * @param   int     $site_id    Site ID
  * @return  void
  */
-function epd_reset_site_action( $site_id = 0 ) {
+function epd_reset_site_action( $site_id ) {
     if ( ! isset( $_REQUEST['epd_action'] ) || 'reset_site' != $_REQUEST['epd_action'] )	{
 		return;
 	}
@@ -214,10 +214,12 @@ function epd_reset_site_action( $site_id = 0 ) {
 		return;
 	}
 
+    remove_action( 'admin_init', 'epd_reset_site_action' );
+
 	$redirect = remove_query_arg( array( 'epd_action', 'epd_nonce' ) );
     $redirect = add_query_arg( 'epd-message', 'reset', $redirect );
     $result   = 0;
-    $site_id  = ! empty( $_REQUEST['site_id'] ) ? $_REQUEST['site_id'] : get_current_blog_id();
+    $site_id  = ! empty( $_REQUEST['site_id'] ) ? $_REQUEST['site_id'] : false;
     $site_id  = absint( $site_id );
 	$site     = get_site( $site_id );
 
