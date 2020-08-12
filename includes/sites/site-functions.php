@@ -211,8 +211,8 @@ function epd_get_site_reset_count( $site_id = 0 )	{
  * @param	int		$count	The count of resets to increase by
  * @return	int		Total number of times the site has been reset
  */
-function epd_increase_demo_site_reset_count( $site_id = 0, $count = 0 )	{
-    $site_id = ! empty( $site_id ) ? $site_id : get_current_blog_id();
+function epd_increase_demo_site_reset_count( $site_id, $count = 0 )	{
+    $site_id = absint( $site_id );
 	$count   = absint( $count );
 
 	$total = epd_get_site_reset_count( $site_id );
