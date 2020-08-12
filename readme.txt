@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.5
 Requires PHP: 5.4
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,11 +123,13 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 == Changelog ==
 
-= 1.3.1 =
+= 1.3.2 =
 
 **Wednesday, 12th August 2020**
 
 * **Bug**: Addresses issue whereby randomly the primary user was not reassigned permissions to the site being reset
+* **Bug**: Reset link may be missing from menu and admin bar for demo site owner
+* **Tweak**: Added the `epd_register_display_firstname` and `epd_register_display_lastname` filters to the registration form template. **Customised templates should be reviewed and updated**. See [this article](https://easy-plugin-demo.com/articles/hiding-registration-form-fields/) for details of these filters.
 
 **Tuesday, 11th August 2020**
 

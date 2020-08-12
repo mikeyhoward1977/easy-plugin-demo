@@ -3,7 +3,7 @@
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
- * Version: 1.3.1
+ * Version: 1.3.2
  * Date: 12th August 2020
  * Author: Mike Howard
  * Author URI: https://mikesplugins.co.uk/
@@ -30,7 +30,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.3.1
+ * @version		1.3.2
  */
 
 // Exit if accessed directly.
@@ -146,7 +146,7 @@ final class Easy_Plugin_Demo {
 	private function setup_constants()	{
 
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.3.1' );
+			define( 'EPD_VERSION', '1.3.2' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
