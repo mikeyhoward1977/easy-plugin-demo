@@ -48,7 +48,7 @@ add_action( 'network_admin_menu', 'epd_add_options_link', 20 );
 function epd_add_menu_items() {
 	global $epd_reset_site_page;
 
-	if ( ! epd_can_reset_sites() || ! is_super_admin() )	{
+	if ( ! epd_can_reset_sites() && ! is_super_admin() )	{
 		return;
 	}
 
@@ -96,7 +96,7 @@ add_action( 'admin_menu', 'epd_add_menu_items' );
  * @return  void
  */
 function epd_admin_bar_reset_demo_link( $admin_bar )    {
-    if ( ! epd_can_reset_sites() || ! is_super_admin() )	{
+    if ( ! epd_can_reset_sites() && ! is_super_admin() )	{
 		return;
 	}
 
