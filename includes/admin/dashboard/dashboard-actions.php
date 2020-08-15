@@ -45,24 +45,28 @@ add_action( 'wp_dashboard_setup', 'epd_manage_dashboard_welcome_panel' );
  * @since   1.0.2
  * @return  void
  */
-function epd_right_now_dashboard_site_count()   {
+function epd_right_now_dashboard()   {
     $site_count = epd_get_registered_demo_sites_count();
 
-    if ( empty( $site_count ) ) {
-        return;
-    }
+	do_action( 'epd_before_right_now_dashboard' );
 
-    $sites    = sprintf( _n( '%s site', '%s sites', $site_count, 'easy-plugin-demo' ), number_format_i18n( $site_count ) );
-    $sentence = sprintf(
-        __( '%s have been provisioned by <a href="%s" target="_blank">Easy Plugin Demo</a>.', 'easy-plugin-demo' ),
-        $sites,
-        'https://wordpress.org/plugins/easy-plugin-demo/'
-    );
+	?><p><strong>Easy Plugin Demo</strong></p><?php
 
-    $settings = add_query_arg( 'page', 'epd-settings', network_admin_url( 'settings' ) );
+    if ( ! empty( $site_count ) ) {
+		$sites    = sprintf( _n( '%s site', '%s sites', $site_count, 'easy-plugin-demo' ), number_format_i18n( $site_count ) );
+		$sentence = sprintf(
+			__( '%s have been provisioned by <a href="%s" target="_blank">Easy Plugin Demo</a>.', 'easy-plugin-demo' ),
+			$sites,
+			'https://wordpress.org/plugins/easy-plugin-demo/'
+		);
 
-    ?>
-    <p class="youhave"><?php echo $sentence; ?></p>
-    <?php
-} // epd_right_now_dashboard_site_count
-add_action( 'mu_rightnow_end', 'epd_right_now_dashboard_site_count' );
+		$settings = add_query_arg( 'page', 'epd-settings', network_admin_url( 'settings' ) );
+
+		?>
+		<p class="youhave"><?php echo $sentence; ?></p>
+		<?php
+	}
+
+	do_action( 'epd_right_now_dashboard' );
+} // epd_right_now_dashboard
+add_action( 'mu_rightnow_end', 'epd_right_now_dashboard' );
