@@ -50,7 +50,7 @@ function epd_right_now_dashboard()   {
 
 	do_action( 'epd_before_right_now_dashboard' );
 
-	?><p><strong>Easy Plugin Demo</strong></p><?php
+	?><p><strong><?php _e( 'Easy Plugin Demo', 'easy-plugin-demo' ); ?></strong></p><?php
 
     if ( ! empty( $site_count ) ) {
 		$sites    = sprintf( _n( '%s site', '%s sites', $site_count, 'easy-plugin-demo' ), number_format_i18n( $site_count ) );
