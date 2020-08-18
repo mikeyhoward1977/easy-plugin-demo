@@ -2,9 +2,9 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Plugin Demo 1.3\n"
+"Project-Id-Version: Easy Plugin Demo 1.3.3\n"
 "Report-Msgid-Bugs-To: https://mikesplugins.co.uk/\n"
-"POT-Creation-Date: 2020-08-10 22:19:34+00:00\n"
+"POT-Creation-Date: 2020-08-18 13:28:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -177,18 +177,18 @@ msgid "Expires"
 msgstr ""
 
 #: includes/admin/admin-sites.php:49
-#: includes/admin/settings/register-settings.php:1460
+#: includes/admin/settings/register-settings.php:1462
 #: templates/register/list-sites.php:44
 msgid "Never"
 msgstr ""
 
-#: includes/admin/dashboard/dashboard-actions.php:55
+#: includes/admin/dashboard/dashboard-actions.php:56
 msgid "%s site"
 msgid_plural "%s sites"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/dashboard/dashboard-actions.php:57
+#: includes/admin/dashboard/dashboard-actions.php:58
 msgid ""
 "%s have been provisioned by <a href=\"%s\" target=\"_blank\">Easy Plugin "
 "Demo</a>."
@@ -485,7 +485,7 @@ msgid "Sites"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:544
-#: templates/register/register-form.php:47
+#: templates/register/register-form.php:58
 msgid "Email"
 msgstr ""
 
@@ -497,212 +497,212 @@ msgstr ""
 msgid "Misc"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:557
+#: includes/admin/settings/register-settings.php:559
 msgid "Premium License"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:600
+#: includes/admin/settings/register-settings.php:602
 msgid "General"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:601
+#: includes/admin/settings/register-settings.php:603
 msgid "Config"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:602
+#: includes/admin/settings/register-settings.php:604
 msgid "Themes"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:603
+#: includes/admin/settings/register-settings.php:605
 msgid "Plugins"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:604
+#: includes/admin/settings/register-settings.php:606
 msgid "Posts and Pages"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:607
+#: includes/admin/settings/register-settings.php:609
 msgid "Email Settings"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:610
+#: includes/admin/settings/register-settings.php:612
 msgid "Main"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:614
+#: includes/admin/settings/register-settings.php:616
 msgid "Misc Settings"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:818
+#: includes/admin/settings/register-settings.php:820
 msgid "Show Confirmation"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:819
+#: includes/admin/settings/register-settings.php:821
 msgid "Visit Home Page"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:820
+#: includes/admin/settings/register-settings.php:822
 msgid "Login to Admin"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:821
+#: includes/admin/settings/register-settings.php:823
 msgid "Redirect to Page"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:966
+#: includes/admin/settings/register-settings.php:968
 msgid "The callback function used for the %s setting is missing."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1148
+#: includes/admin/settings/register-settings.php:1150
 msgid ""
 "Your license key expired on %s. Please <a href=\"%s\" target=\"_blank\" "
 "title=\"Renew your license key\">renew your license key</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1161
+#: includes/admin/settings/register-settings.php:1163
 msgid ""
 "Your license key has been disabled. Please <a href=\"%s\" "
 "target=\"_blank\">contact support</a> for more information."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1173
+#: includes/admin/settings/register-settings.php:1175
 msgid ""
 "Invalid license. Please <a href=\"%s\" target=\"_blank\" title=\"Visit "
 "account page\">visit your account page</a> and verify it."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1186
+#: includes/admin/settings/register-settings.php:1188
 msgid ""
 "Your %s is not active for this URL. Please <a href=\"%s\" target=\"_blank\" "
 "title=\"Visit account page\">visit your account page</a> to manage your "
 "license key URLs."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1198
+#: includes/admin/settings/register-settings.php:1200
 msgid "This appears to be an invalid license key for %s."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1207
+#: includes/admin/settings/register-settings.php:1209
 msgid ""
 "Your license key has reached its activation limit. <a href=\"%s\">View "
 "possible upgrades</a> now."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1216
+#: includes/admin/settings/register-settings.php:1218
 msgid ""
 "The key you entered belongs to a bundle, please use the product specific "
 "license key."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1224
+#: includes/admin/settings/register-settings.php:1226
 msgid "unknown_error"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1225
+#: includes/admin/settings/register-settings.php:1227
 msgid ""
 "There was an error with this license key: %s. Please <a href=\"%s\">contact "
 "our support team</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1246
+#: includes/admin/settings/register-settings.php:1248
 msgid "License key never expires."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1253
+#: includes/admin/settings/register-settings.php:1255
 msgid ""
 "Your license key expires soon! It expires on %s. <a href=\"%s\" "
 "target=\"_blank\" title=\"Renew license\">Renew your license key</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1263
+#: includes/admin/settings/register-settings.php:1265
 msgid "Your license key expires on %s."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1281
+#: includes/admin/settings/register-settings.php:1283
 msgid "To receive updates, please enter your valid %s license key."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1294
+#: includes/admin/settings/register-settings.php:1296
 msgid "Deactivate License"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1369
+#: includes/admin/settings/register-settings.php:1371
 msgid "The following email tags can be used within email subject and content"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1461
+#: includes/admin/settings/register-settings.php:1463
 msgid "1 Hour"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1462
+#: includes/admin/settings/register-settings.php:1464
 msgid "2 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1463
+#: includes/admin/settings/register-settings.php:1465
 msgid "3 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1464
+#: includes/admin/settings/register-settings.php:1466
 msgid "4 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1465
+#: includes/admin/settings/register-settings.php:1467
 msgid "5 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1466
+#: includes/admin/settings/register-settings.php:1468
 msgid "6 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1467
+#: includes/admin/settings/register-settings.php:1469
 msgid "7 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1468
+#: includes/admin/settings/register-settings.php:1470
 msgid "8 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1469
+#: includes/admin/settings/register-settings.php:1471
 msgid "12 Hours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1470
+#: includes/admin/settings/register-settings.php:1472
 msgid "1 Day"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1471
+#: includes/admin/settings/register-settings.php:1473
 msgid "2 Days"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1472
+#: includes/admin/settings/register-settings.php:1474
 msgid "3 Days"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1473
+#: includes/admin/settings/register-settings.php:1475
 msgid "4 Days"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1474
+#: includes/admin/settings/register-settings.php:1476
 msgid "5 Days"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1475
+#: includes/admin/settings/register-settings.php:1477
 msgid "6 Days"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1476
+#: includes/admin/settings/register-settings.php:1478
 msgid "1 Week"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1477
+#: includes/admin/settings/register-settings.php:1479
 msgid "2 Weeks"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1478
+#: includes/admin/settings/register-settings.php:1480
 msgid "3 Weeks"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:1479
+#: includes/admin/settings/register-settings.php:1481
 msgid "4 Weeks"
 msgstr ""
 
@@ -856,11 +856,11 @@ msgstr ""
 msgid "Lost your password?"
 msgstr ""
 
-#: includes/register/register-actions.php:256
+#: includes/register/register-actions.php:257
 msgid "Please Wait..."
 msgstr ""
 
-#: includes/register/register-actions.php:332
+#: includes/register/register-actions.php:333
 msgid ""
 "This demo is powered by <a href=\"%s\" target=\"_blank\">Easy Plugin "
 "Demo</a> for WordPress"
@@ -925,17 +925,17 @@ msgid ""
 "expired."
 msgstr ""
 
-#: templates/register/register-form.php:37
-#: templates/register/register-form.php:38
+#: templates/register/register-form.php:42
+#: templates/register/register-form.php:43
 msgid "First Name"
 msgstr ""
 
-#: templates/register/register-form.php:42
-#: templates/register/register-form.php:43
+#: templates/register/register-form.php:51
+#: templates/register/register-form.php:52
 msgid "Last Name"
 msgstr ""
 
-#: templates/register/register-form.php:48
+#: templates/register/register-form.php:59
 msgid "Email Address"
 msgstr ""
 
