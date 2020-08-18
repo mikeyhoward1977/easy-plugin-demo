@@ -57,7 +57,7 @@ if ( $can_register ) :
 			<p>
 				<label for="epd-email"><?php _e( 'Email', 'easy-plugin-demo' ); ?></label>
 				<input id="epd-email" class="required epd-input" type="email" name="epd_email" title="<?php esc_attr_e( 'Email Address', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $email ); ?>"<?php echo $readonly; ?> />
-			</p>    
+			</p>
 
 			<?php do_action( 'epd_register_form_fields_before_submit' ); ?>
 

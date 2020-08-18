@@ -553,7 +553,9 @@ function epd_get_settings_tabs() {
 
 	$tabs['misc']   = __( 'Misc', 'easy-plugin-demo' );
 
-	if ( ! empty( $settings['licenses'] ) ) {
+    $tabs = apply_filters( 'epd_settings_tabs_before_licenses', $tabs );
+
+    if ( ! empty( $settings['licenses'] ) ) {
 		$tabs['licenses'] = __( 'Premium License', 'easy-plugin-demo' );
 	}
 
