@@ -180,6 +180,13 @@ function epd_get_registered_settings() {
 						'size'     => 'small',
 						'desc'     => __( 'Enter the maximum number of sites a single user can have active at any time.' , 'easy-plugin-demo' )
 					),
+					'require_activation' => array(
+						'id'       => 'require_activation',
+						'name'     => __( 'Require Activation?', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'std'      => '0',
+						'desc'     => __( 'If enabled, newly registered demo sites will be deactivated and unavailable until users click the registration link received via email.' , 'easy-plugin-demo' )
+					),
 					'registration_action' => array(
 						'id'       => 'registration_action',
 						'name'     => __( 'Registration Action', 'easy-plugin-demo' ),
