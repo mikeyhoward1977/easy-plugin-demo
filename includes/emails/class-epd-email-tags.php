@@ -406,7 +406,7 @@ function epd_email_tag_demo_site_activation_url( $blog_id, $user_id ) {
 	), epd_get_registration_page_url() );
 
 
-	return get_blog_details( $blog_id )->home;
+	return $registration_page;
 } // epd_email_tag_demo_site_activation_url
 
 /**
