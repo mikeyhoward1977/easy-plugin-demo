@@ -105,6 +105,30 @@ function epd_process_registration_action()	{
 add_action( 'init', 'epd_process_registration_action' );
 
 /**
+ * Filter new site args to apply activation settings if needed.
+ *
+ * @since	1.4
+ * @param	array	$args	New site arguments
+ * @return	array	New site arguments
+ */
+function epd_set_registration_activation_args_action( $args )	{
+	if ( epd_new_sites_need_activating() )	{
+		$args['meta']['public']         = 0;
+		$args['meta']['archived']       = 1;
+
+		/**
+		 * Hook in the filter to define the activation key.
+		 *
+		 * @since	1.4
+		 */
+		add_filter( 'epd_default_blog_meta', 'epd_set_site_activation_key_action', 999 );
+	}
+
+	return $args;
+} // epd_set_registration_activation_args_action
+add_filter( 'epd_site_registration_args', 'epd_set_registration_activation_args_action' );
+
+/**
  * Direct a user to the new sites home page after registration.
  *
  * After login, redirect to the new sites home page.
@@ -161,10 +185,13 @@ function epd_confirm_after_registration( $blog_id, $user_id )    {
     wp_set_current_user( $user_id );
     wp_set_auth_cookie( $user_id );
 
+	$message = is_archived( $blog_id ) ? 'pending' : 'created';
+
 	$redirect_url = remove_query_arg( array( 'epd-registered', 'site_id', 'epd-message', 'epd-result' ) );
+
 	$redirect_url = add_query_arg( array(
 		'epd-registered' => $blog_id,
-		'epd-message'    => 'created'
+		'epd-message'    => $message
 	) );
 
     $redirect_url = apply_filters( 'epd_after_registration_confirm_redirect_url', $redirect_url );

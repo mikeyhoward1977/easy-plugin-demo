@@ -195,6 +195,21 @@ function epd_set_blog_meta( $site_id, $args = array() )  {
 add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
 
 /**
+ * Sets the activation key for a site, if needed.
+ *
+ * This action is hooked via the epd_set_registration_activation_args_action() function.
+ *
+ * @since	1.4
+ * @param	array	$meta	Blog meta
+ * @return	array	Blog meta
+ */
+function epd_set_site_activation_key_action( $meta )	{
+	$meta['epd_activation_key'] = epd_create_site_activation_key( $meta['domain'] );
+
+	return $meta;
+} // epd_set_site_activation_key_action
+
+/**
  * Reset a site to its original state.
  *
  * @since   1.3
