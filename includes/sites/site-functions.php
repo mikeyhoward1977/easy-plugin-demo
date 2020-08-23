@@ -145,6 +145,29 @@ function epd_get_site_activation_key( $site_id )	{
 } // epd_get_site_activation_key
 
 /**
+ * Retrieve a site by its activation key.
+ *
+ * @since	1.4
+ * @param	string	$key	Activation key
+ * @return	int		Site ID
+ */
+function epd_get_site_id_by_activation_key( $key )	{
+	global $wpdb;
+
+	$site_id = $wpdb->get_var( $wpdb->prepare(
+        "
+            SELECT blog_id
+            FROM $wpdb->blogmeta
+            WHERE meta_key = 'epd_activation_key'
+			AND meta_value = '%s'
+        ",
+		$key
+	) );
+
+	return $site_id;
+} // epd_get_site_id_by_activation_key
+
+/**
  * Whether or not sites can be reset.
  *
  * @since   1.2
