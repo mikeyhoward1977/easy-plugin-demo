@@ -222,8 +222,9 @@ final class Easy_Plugin_Demo {
 	private function hooks()	{
 		// Admin notices
 		add_action( 'network_admin_notices', array( self::$instance, 'registration_page_notice' ) );
-		add_action( 'plugins_loaded', array( self::$instance, 'request_wp_5star_rating' ) );
-        add_action( 'plugins_loaded', array( self::$instance, 'notify_premium_pack' ) );
+		add_action( 'plugins_loaded',        array( self::$instance, 'request_wp_5star_rating'  ) );
+        add_action( 'plugins_loaded',        array( self::$instance, 'notify_premium_pack'      ) );
+        add_action( 'admin_notices',         array( self::$instance, 'admin_notices'            ) );
 
 		// Scripts
 		add_action( 'admin_enqueue_scripts', array( self::$instance, 'load_admin_scripts' ) );
@@ -435,6 +436,31 @@ final class Easy_Plugin_Demo {
 
         <?php echo ob_get_clean();
     } // admin_wp_premium_pack_upsell_notice
+
+    /**
+     * Admin notices.
+     *
+     * @since	1.4
+     * @return	void
+     */
+    public function admin_notices() {
+
+		if ( is_network_admin() )	{
+			return;
+		}
+
+        if ( isset( $_GET['epd-activated'] ) && 1 == $_GET['epd-activated'] ) {
+            $message = __( '<strong>Demo Site Activated</strong>. Your demo has been activated and is now ready to use.', 'easy-plugin-demo' );
+            $message = apply_filters( 'epd_site_activated_admin_notice', $message );
+            ob_start(); ?>
+            <div class="updated notice is-dismissible">
+				<p>
+					<?php echo $message; ?>
+				</p>
+			</div>
+            <?php echo ob_get_clean();
+        }
+    } // admin_notices
 
 /*****************************************
  -- SCRIPTS
