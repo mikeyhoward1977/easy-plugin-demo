@@ -233,12 +233,11 @@ function epd_activate_site_action() {
      *
      * @since   1.4
      */
-    add_filter( 'epd_after_registration_home_action',    'epd_add_url_param_after_activation_action' );
-    add_filter( 'epd_after_registration_admin_action',   'epd_add_url_param_after_activation_action' );
-    add_filter( 'epd_after_registration_confirm_action', 'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_home_redirect_url',    'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_admin_redirect_url',   'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_confirm_redirect_url', 'epd_add_url_param_after_activation_action' );
 
     epd_redirect_after_register( $site_id, $user_id );
-    exit;
 } // epd_activate_site_action
 add_action( 'init', 'epd_activate_site_action' );
 

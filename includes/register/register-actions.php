@@ -211,6 +211,7 @@ add_action( 'epd_after_registration_confirm_action', 'epd_confirm_after_registra
  * @return  string  Redirect URL
  */
 function epd_add_url_param_after_activation_action( $redirect_url )    {
+    $redirect_url = remove_query_arg( 'epd-activation', $redirect_url );
     $redirect_url = add_query_arg( 'epd-activated', 1, $redirect_url );
     $redirect_url = apply_filters( 'epd_after_activation_redirect_url', $redirect_url );
 
