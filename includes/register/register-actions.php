@@ -98,6 +98,7 @@ function epd_process_registration_action()	{
 	}
 
 	if ( $blog_id )	{
+		do_action( 'epd_registration', $blog_id, $user_id, $data );
         epd_redirect_after_register( $blog_id, $user_id );
 	}
 

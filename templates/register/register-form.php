@@ -22,6 +22,9 @@ $register_to_activate = apply_filters( 'epd_registration_form_heading', $registe
 $launch_demo_label    = epd_get_register_form_submit_label();
 $limit_reached        = __( 'You have reached the limit for how many sites you may have active at any time. You can register a new site when one of your existing sites has expired.', 'easy-plugin-demo' );
 
+$display_firstname = apply_filters( 'epd_register_display_firstname', true );
+$display_lastname  = apply_filters( 'epd_register_display_lastname', true );
+
 if ( $can_register ) :
 	do_action( 'epd_notices' );
 	do_action( 'epd_register_form_top' ); ?>
@@ -33,20 +36,28 @@ if ( $can_register ) :
 		<fieldset>
 			<?php do_action( 'epd_register_form_fields_before' ); ?>
 
+            <?php if ( $display_firstname ) : ?>
+
 			<p>
 				<label for="epd-firstname"><?php _e( 'First Name', 'easy-plugin-demo' ); ?></label>
 				<input id="epd-firstname" class="required epd-input" type="text" name="epd_first_name" title="<?php esc_attr_e( 'First Name', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $firstname ); ?>"<?php echo $readonly; ?> />
 			</p>
+
+            <?php endif; ?>
+
+            <?php if ( $display_lastname ) : ?>
 
 			<p>
 				<label for="epd-lastname"><?php _e( 'Last Name', 'easy-plugin-demo' ); ?></label>
 				<input id="epd-lastname" class="required epd-input" type="text" name="epd_last_name" title="<?php esc_attr_e( 'Last Name', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $lastname ); ?>"<?php echo $readonly; ?> />
 			</p>
 
+            <?php endif; ?>
+
 			<p>
 				<label for="epd-email"><?php _e( 'Email', 'easy-plugin-demo' ); ?></label>
 				<input id="epd-email" class="required epd-input" type="email" name="epd_email" title="<?php esc_attr_e( 'Email Address', 'easy-plugin-demo' ); ?>" value="<?php echo esc_attr( $email ); ?>"<?php echo $readonly; ?> />
-			</p>    
+			</p>
 
 			<?php do_action( 'epd_register_form_fields_before_submit' ); ?>
 
