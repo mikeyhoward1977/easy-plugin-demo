@@ -200,14 +200,47 @@ add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
  * This action is hooked via the epd_set_registration_activation_args_action() function.
  *
  * @since	1.4
- * @param	array	$meta	Blog meta
- * @return	array	Blog meta
+ * @param	int      $site_id	Site ID
+ * @param   array    $args      Array of arguments that were passed to wpmu_create_blog
+ * @return	void
  */
-function epd_set_site_activation_key_action( $meta )	{
-	$meta['epd_activation_key'] = epd_create_site_activation_key( $meta['domain'] );
-
-	return $meta;
+function epd_set_site_activation_key_action( $site_id, $args )	{
+    update_site_meta( $site_id, 'epd_activation_key', epd_create_site_activation_key( $args['domain'] ) );
 } // epd_set_site_activation_key_action
+
+/**
+ * Activate a site.
+ *
+ * @since   1.4
+ * @return  void
+ */
+function epd_activate_site_action() {
+    if ( ! isset( $_GET['epd-activation'] ) || ! isset( $_GET['epd-registered'] ) )   {
+        return;
+    }
+
+    $site_id = absint( $_GET['epd-registered'] );
+    $key     = sanitize_text_field( $_GET['epd-activation'] );
+
+    if ( ! epd_activate_site( $site_id, $key ) )  {
+        return;
+    }
+
+    $user_id = epd_get_site_primary_user_id( $site_id );
+
+    /**
+     * Hook into the redirect filters to append the activation confirmed URL param.
+     *
+     * @since   1.4
+     */
+    add_filter( 'epd_after_registration_home_action',    'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_admin_action',   'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_confirm_action', 'epd_add_url_param_after_activation_action' );
+
+    epd_redirect_after_register( $site_id, $user_id );
+    exit;
+} // epd_activate_site_action
+add_action( 'init', 'epd_activate_site_action' );
 
 /**
  * Reset a site to its original state.

@@ -168,6 +168,29 @@ function epd_get_site_id_by_activation_key( $key )	{
 } // epd_get_site_id_by_activation_key
 
 /**
+ * Activate a pending site.
+ *
+ * @since   1.4
+ * @param   int     $site_id    Site ID
+ * @param   string  $key        Activation key
+ * @return  bool    True if successfully activated, otherwise false
+ */
+function epd_activate_site( $site_id, $key )    {
+    if ( $site_id != epd_get_site_id_by_activation_key( $key ) )    {
+        return false;
+    }
+
+    $args = array( 'archived' => 0 );
+    $args = apply_filters( 'epd_activate_site_args', $args, $site_id, $key );
+
+    if ( delete_site_meta( $site_id, 'epd_activation_key' ) )   {
+        return wp_update_site( $site_id, $args );
+    }
+
+    return false;
+} // epd_activate_site
+
+/**
  * Whether or not sites can be reset.
  *
  * @since   1.2

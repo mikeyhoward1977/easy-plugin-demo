@@ -117,11 +117,11 @@ function epd_set_registration_activation_args_action( $args )	{
 		$args['meta']['archived']       = 1;
 
 		/**
-		 * Hook in the filter to define the activation key.
+		 * Hook in to define the activation key.
 		 *
 		 * @since	1.4
 		 */
-		add_filter( 'epd_default_blog_meta', 'epd_set_site_activation_key_action', 999 );
+		add_action( 'epd_create_demo_site', 'epd_set_site_activation_key_action', 10, 2 );
 	}
 
 	return $args;
@@ -200,6 +200,22 @@ function epd_confirm_after_registration( $blog_id, $user_id )    {
     exit;
 } // epd_confirm_after_registration
 add_action( 'epd_after_registration_confirm_action', 'epd_confirm_after_registration', 100, 2 );
+
+/**
+ * Adds an additional paramater to the URL following redirection when a site is activated.
+ *
+ * This function is hooked from the  epd_activate_site_action() function.
+ *
+ * @since   1.4
+ * @param   string  $redirect_url   Redirect URL
+ * @return  string  Redirect URL
+ */
+function epd_add_url_param_after_activation_action( $redirect_url )    {
+    $redirect_url = add_query_arg( 'epd-activated', 1, $redirect_url );
+    $redirect_url = apply_filters( 'epd_after_activation_redirect_url', $redirect_url );
+
+    return $redirect_url;
+} // epd_add_url_param_after_activation
 
 /**
  * Redirect user to selected page after registration.
