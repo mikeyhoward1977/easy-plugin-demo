@@ -5,7 +5,7 @@
 
 $class        = 'success';
 $confirmation = __( 'The site was deleted successfully.', 'easy-plugin-demo' );
-$confirmation = apply_filters( 'epd_site_deleted_confirmation' );
+$confirmation = apply_filters( 'epd_site_deleted_confirmation', $confirmation );
 
 if ( empty( $_GET['epd-result'] ) )	{
 	$class        = 'error';
