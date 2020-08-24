@@ -108,7 +108,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 			add_action( 'epd_saved_settings', array( $this, 'deactivate_license' ) );
 	
 			// Check that license is valid once per week
-			add_action( 'epd_weekly_scheduled_events', array( $this, 'weekly_license_check' ) );
+			add_action( 'epd_twicedaily_scheduled_events', array( $this, 'license_check' ) );
 	
 			// For testing license notices, uncomment this line to force checks on every page load
 			//add_action( 'admin_init', array( $this, 'weekly_license_check' ) );
@@ -353,13 +353,13 @@ if ( ! class_exists( 'EPD_License' ) )	{
 	
 	
 		/**
-		 * Check if license key is valid once per week
+		 * Check if license key is valid
 		 *
 		 * @access	public
 		 * @since	1.0
 		 * @return	void
 		 */
-		public function weekly_license_check()	{
+		public function license_check()	{
 	
 			if ( ! empty( $_POST['epd_settings'] ) ) {
 				return; // Don't fire when saving settings
@@ -368,7 +368,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 			if ( empty( $this->license ) )	{
 				return;
 			}
-	
+
 			// data to send in our API request
 			$api_params = array(
 				'edd_action' => 'check_license',
@@ -396,7 +396,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
 	
 			update_site_option( $this->item_shortname . '_license_active', $license_data );
 	
-		} // weekly_license_check
+		} // license_check
 	
 	
 		/**
