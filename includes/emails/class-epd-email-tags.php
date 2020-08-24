@@ -282,6 +282,11 @@ function epd_setup_email_tags() {
 			'function'    => 'epd_email_tag_demo_site_user_login'
 		),
 		array(
+			'tag'         => 'demo_site_activation_url',
+			'description' => __( 'The URL to for a user to activate their demo site', 'easy-plugin-demo' ),
+			'function'    => 'epd_email_tag_demo_site_activation_url'
+		),
+		array(
 			'tag'         => 'demo_site_url',
 			'description' => __( 'The URL to a users demo site', 'easy-plugin-demo' ),
 			'function'    => 'epd_email_tag_demo_site_url'
@@ -383,6 +388,25 @@ function epd_email_tag_demo_site_password( $blog_id, $user_id ) {
 
 	return $password ? $password : '';
 } // epd_email_tag_demo_site_password
+
+/**
+ * Email template tag: demo_site_activation_url
+ * The site activation URL
+ *
+ * @since	1.3.4
+ * @param	int		$blog_id
+ * @param	int		$user_id
+ * @return	string	Demo site activation URL
+ */
+function epd_email_tag_demo_site_activation_url( $blog_id, $user_id ) {
+	$activation_key    = epd_get_site_activation_key( $blog_id );
+	$registration_page = add_query_arg( array(
+		'epd-registered' => $blog_id,
+		'epd-activation' => $activation_key
+	), epd_get_registration_page_url() );
+
+	return $registration_page;
+} // epd_email_tag_demo_site_activation_url
 
 /**
  * Email template tag: demo_site_url

@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.5
 Requires PHP: 5.4
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,19 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.4 =
+
+**Monday, 24th August 2020**
+
+* **New**: Added **Require Activation** option. Users are required to activate their new demo sites if enabled. [More information](https://easy-plugin-demo.com/articles/requiring-demo-site-activation/)
+* **New**: Added the `{demo_site_activation_url}` template tag to support the new **Require Activation** option
+* **New**: Added a custom message displayed when a site that has not been activated is accessed
+* **New**: Added template file `register-pending.php` which is used if the **Require Activation** feature is enabled
+
+* **Bug**: Confirmation email may be resent during site reset
+
+* **Tweak**: Enabled filtering of front end registration confirmation notices
 
 = 1.3.3 =
 

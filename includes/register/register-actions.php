@@ -106,6 +106,30 @@ function epd_process_registration_action()	{
 add_action( 'init', 'epd_process_registration_action' );
 
 /**
+ * Filter new site args to apply activation settings if needed.
+ *
+ * @since	1.3.4
+ * @param	array	$args	New site arguments
+ * @return	array	New site arguments
+ */
+function epd_set_registration_activation_args_action( $args )	{
+	if ( epd_new_sites_need_activating() )	{
+		$args['meta']['public']         = 0;
+		$args['meta']['archived']       = 1;
+
+		/**
+		 * Hook in to define the activation key.
+		 *
+		 * @since	1.3.4
+		 */
+		add_action( 'epd_create_demo_site', 'epd_set_site_activation_key_action', 10, 2 );
+	}
+
+	return $args;
+} // epd_set_registration_activation_args_action
+add_filter( 'epd_site_registration_args', 'epd_set_registration_activation_args_action' );
+
+/**
  * Direct a user to the new sites home page after registration.
  *
  * After login, redirect to the new sites home page.
@@ -162,10 +186,13 @@ function epd_confirm_after_registration( $blog_id, $user_id )    {
     wp_set_current_user( $user_id );
     wp_set_auth_cookie( $user_id );
 
+	$message = is_archived( $blog_id ) ? 'pending' : 'created';
+
 	$redirect_url = remove_query_arg( array( 'epd-registered', 'site_id', 'epd-message', 'epd-result' ) );
+
 	$redirect_url = add_query_arg( array(
 		'epd-registered' => $blog_id,
-		'epd-message'    => 'created'
+		'epd-message'    => $message
 	) );
 
     $redirect_url = apply_filters( 'epd_after_registration_confirm_redirect_url', $redirect_url );
@@ -174,6 +201,23 @@ function epd_confirm_after_registration( $blog_id, $user_id )    {
     exit;
 } // epd_confirm_after_registration
 add_action( 'epd_after_registration_confirm_action', 'epd_confirm_after_registration', 100, 2 );
+
+/**
+ * Adds an additional paramater to the URL following redirection when a site is activated.
+ *
+ * This function is hooked from the  epd_activate_site_action() function.
+ *
+ * @since   1.3.4
+ * @param   string  $redirect_url   Redirect URL
+ * @return  string  Redirect URL
+ */
+function epd_add_url_param_after_activation_action( $redirect_url )    {
+    $redirect_url = remove_query_arg( 'epd-activation', $redirect_url );
+    $redirect_url = add_query_arg( 'epd-activated', 1, $redirect_url );
+    $redirect_url = apply_filters( 'epd_after_activation_redirect_url', $redirect_url );
+
+    return $redirect_url;
+} // epd_add_url_param_after_activation
 
 /**
  * Redirect user to selected page after registration.

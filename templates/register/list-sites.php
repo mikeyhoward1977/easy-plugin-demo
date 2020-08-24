@@ -10,6 +10,13 @@ if ( is_user_logged_in() ) :
 	$blog_id    = get_current_blog_id();
 	$user_blogs = get_blogs_of_user( $user_id );
 
+	$visit              = __( 'Visit', 'easy-plugin-demo' );
+	$visit              = apply_filters( 'epd_visit_site_text', $visit );
+	$admin              = __( 'Admin', 'easy-plugin-demo' );
+	$admin              = apply_filters( 'epd_admin_site_text', $admin );
+	$delete             = __( 'Delete', 'easy-plugin-demo' );
+	$delete             = apply_filters( 'epd_delete_site_text', $delete );
+
 	if ( ! empty( $user_blogs ) ) :
 
 		$strings = array(
@@ -49,23 +56,23 @@ if ( is_user_logged_in() ) :
 						), 'delete_site', 'epd_nonce'
 					);
 					$actions    = array();
-                    if ( ! epd_site_has_expired( $user_blog->userblog_id ) ) :
+					if ( ! epd_site_has_expired( $user_blog->userblog_id ) ) :
 						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
 							esc_url( $user_blog->siteurl ),
-							__( 'Visit', 'easy-plugin-demo' )
+							$visit
 						);
 						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
 							esc_url( get_admin_url( $user_blog->userblog_id ) ),
-							__( 'Admin', 'easy-plugin-demo' )
+							$admin
 						);
 					endif;
 					if ( ! is_main_site( $user_blog->userblog_id ) )	{
 						$actions[] = sprintf(
 							'<a href="%s">%s</a>',
 							esc_url( $delete_url ),
-							__( 'Delete', 'easy-plugin-demo' )
+							$delete
 						);
 					}
 				?>

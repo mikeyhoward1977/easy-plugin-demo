@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) )
  * @return  string  URL of registration page
  */
 function epd_get_registration_page_url()    {
-    switch_to_blog(get_network()->blog_id );
+    switch_to_blog( get_network()->blog_id );
     $registration_url = get_permalink( epd_get_option( 'registration_page' ) );
     restore_current_blog();
 

@@ -160,6 +160,9 @@ class EPD_Reset_Site {
 		// Prevent site count incrementing during reset
 		add_filter( 'epd_increment_site_count', '__return_false' );
 
+        // Prevent registration email
+        remove_action( 'epd_create_demo_site', 'epd_email_registration_confirmation', 100, 2 );
+
 		// Restore site meta
 		add_filter( 'epd_default_blog_meta', array( $this, 'set_site_meta' ), 999 );
 
