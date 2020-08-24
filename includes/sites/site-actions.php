@@ -245,6 +245,30 @@ function epd_activate_site_action() {
 add_action( 'init', 'epd_activate_site_action' );
 
 /**
+ * If a site is pending activation, display a custom message when it is requested.
+ *
+ * @since   1.4
+ * @return  void
+ */
+function epd_custom_pending_site_message_action()   {
+    if ( is_super_admin() ) {
+        return true;
+    }
+
+    $site = get_site();
+
+    if ( '1' == $site->archived )   {
+        $url = epd_get_registration_page_url();
+
+        wp_safe_redirect( add_query_arg(
+            'epd-message', 'pending', $url
+        ) );
+        exit;
+    }
+} // epd_custom_pending_site_message_action
+add_filter( 'ms_site_check', 'epd_custom_pending_site_message_action' );
+
+/**
  * Reset a site to its original state.
  *
  * @since   1.3
