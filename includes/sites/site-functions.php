@@ -14,6 +14,19 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
+ * Whether or not new sites require activation.
+ *
+ * @since	1.4
+ * @return	bool	True if activation is required
+ */
+function epd_new_sites_need_activating()	{
+	$activate = epd_get_option( 'require_activation' );
+	$activate = apply_filters( 'epd_new_sites_need_activating', $activate );
+
+	return $activate;
+} // epd_new_sites_need_activating
+
+/**
  * Get the lifetime of a site.
  *
  * @since	1.2
@@ -116,6 +129,66 @@ function epd_site_has_expired( $site_id )   {
 
     return $current > $expires;
 } // epd_site_has_expired
+
+/**
+ * Retrieve a sites activation key.
+ *
+ * @since	1.4
+ * @param	int		$site_id	Site ID
+ * @return	string	Activation key
+ */
+function epd_get_site_activation_key( $site_id )	{
+	$key = get_site_meta( $site_id, 'epd_activation_key', true );
+	$key = apply_filters( 'epd_site_activation_key', $key );
+
+	return $key;
+} // epd_get_site_activation_key
+
+/**
+ * Retrieve a site by its activation key.
+ *
+ * @since	1.4
+ * @param	string	$key	Activation key
+ * @return	int		Site ID
+ */
+function epd_get_site_id_by_activation_key( $key )	{
+	global $wpdb;
+
+	$site_id = $wpdb->get_var( $wpdb->prepare(
+        "
+            SELECT blog_id
+            FROM $wpdb->blogmeta
+            WHERE meta_key = 'epd_activation_key'
+			AND meta_value = '%s'
+        ",
+		$key
+	) );
+
+	return $site_id;
+} // epd_get_site_id_by_activation_key
+
+/**
+ * Activate a pending site.
+ *
+ * @since   1.4
+ * @param   int     $site_id    Site ID
+ * @param   string  $key        Activation key
+ * @return  bool    True if successfully activated, otherwise false
+ */
+function epd_activate_site( $site_id, $key )    {
+    if ( $site_id != epd_get_site_id_by_activation_key( $key ) )    {
+        return false;
+    }
+
+    $args = array( 'archived' => 0 );
+    $args = apply_filters( 'epd_activate_site_args', $args, $site_id, $key );
+
+    if ( delete_site_meta( $site_id, 'epd_activation_key' ) )   {
+        return wp_update_site( $site_id, $args );
+    }
+
+    return false;
+} // epd_activate_site
 
 /**
  * Whether or not sites can be reset.
@@ -308,6 +381,21 @@ function epd_validate_new_site_args( $args )	{
 
     return $args;
 } // epd_validate_new_site_args
+
+/**
+ * Create a site activation key.
+ *
+ * @since	1.4
+ * @param	string	$domain		Domain of new site
+ * @return	string	Activation key
+ */
+function epd_create_site_activation_key( $domain )	{
+	$auth_key     = defined( 'AUTH_KEY' ) ? AUTH_KEY : '';
+	$string       = $domain . date( 'Y-m-d H:i:s' ) . $auth_key . uniqid( 'epd', true );
+	$activate_key = strtolower( md5( $string ) );
+
+	return $activate_key;
+} // epd_create_site_activation_key
 
 /**
  * Get sites excluded from deletion.

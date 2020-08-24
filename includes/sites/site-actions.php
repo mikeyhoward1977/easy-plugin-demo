@@ -195,6 +195,80 @@ function epd_set_blog_meta( $site_id, $args = array() )  {
 add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
 
 /**
+ * Sets the activation key for a site, if needed.
+ *
+ * This action is hooked via the epd_set_registration_activation_args_action() function.
+ *
+ * @since	1.4
+ * @param	int      $site_id	Site ID
+ * @param   array    $args      Array of arguments that were passed to wpmu_create_blog
+ * @return	void
+ */
+function epd_set_site_activation_key_action( $site_id, $args )	{
+    update_site_meta( $site_id, 'epd_activation_key', epd_create_site_activation_key( $args['domain'] ) );
+} // epd_set_site_activation_key_action
+
+/**
+ * Activate a site.
+ *
+ * @since   1.4
+ * @return  void
+ */
+function epd_activate_site_action() {
+    if ( ! isset( $_GET['epd-activation'] ) || ! isset( $_GET['epd-registered'] ) )   {
+        return;
+    }
+
+    $site_id = absint( $_GET['epd-registered'] );
+    $key     = sanitize_text_field( $_GET['epd-activation'] );
+
+    if ( ! epd_activate_site( $site_id, $key ) )  {
+        wp_die(
+            __( 'Oops! Something went wrong.', 'easy-plugin-demo' ),
+            __( 'Activation Error.', 'easy-plugin-demo' )
+        );
+    }
+
+    $user_id = epd_get_site_primary_user_id( $site_id );
+
+    /**
+     * Hook into the redirect filters to append the activation confirmed URL param.
+     *
+     * @since   1.4
+     */
+    add_filter( 'epd_after_registration_home_redirect_url',    'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_admin_redirect_url',   'epd_add_url_param_after_activation_action' );
+    add_filter( 'epd_after_registration_confirm_redirect_url', 'epd_add_url_param_after_activation_action' );
+
+    epd_redirect_after_register( $site_id, $user_id );
+} // epd_activate_site_action
+add_action( 'init', 'epd_activate_site_action' );
+
+/**
+ * If a site is pending activation, display a custom message when it is requested.
+ *
+ * @since   1.4
+ * @return  void
+ */
+function epd_custom_pending_site_message_action()   {
+    if ( is_super_admin() ) {
+        return true;
+    }
+
+    $site = get_site();
+
+    if ( '1' == $site->archived )   {
+        $url = epd_get_registration_page_url();
+
+        wp_safe_redirect( add_query_arg(
+            'epd-message', 'pending', $url
+        ) );
+        exit;
+    }
+} // epd_custom_pending_site_message_action
+add_filter( 'ms_site_check', 'epd_custom_pending_site_message_action' );
+
+/**
  * Reset a site to its original state.
  *
  * @since   1.3

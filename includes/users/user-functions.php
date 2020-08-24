@@ -32,7 +32,7 @@ function epd_can_user_register( $user_id )    {
 	}
 
 	if ( $user_id )	{
-		$current = count( get_blogs_of_user( $user_id ) );
+		$current = count( get_blogs_of_user( $user_id, true ) );
 		$allowed = epd_get_option( 'max_user_sites' );
 
 		if ( $current >= $allowed ) {
