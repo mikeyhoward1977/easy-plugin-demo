@@ -223,7 +223,10 @@ function epd_activate_site_action() {
     $key     = sanitize_text_field( $_GET['epd-activation'] );
 
     if ( ! epd_activate_site( $site_id, $key ) )  {
-        return;
+        wp_die(
+            __( 'Oops! Something went wrong.', 'easy-plugin-demo' ),
+            __( 'Activation Error.', 'easy-plugin-demo' )
+        );
     }
 
     $user_id = epd_get_site_primary_user_id( $site_id );
