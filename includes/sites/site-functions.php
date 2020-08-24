@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) )
 /**
  * Whether or not new sites require activation.
  *
- * @since	1.4
+ * @since	1.3.4
  * @return	bool	True if activation is required
  */
 function epd_new_sites_need_activating()	{
@@ -133,7 +133,7 @@ function epd_site_has_expired( $site_id )   {
 /**
  * Retrieve a sites activation key.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	int		$site_id	Site ID
  * @return	string	Activation key
  */
@@ -147,7 +147,7 @@ function epd_get_site_activation_key( $site_id )	{
 /**
  * Retrieve a site by its activation key.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	string	$key	Activation key
  * @return	int		Site ID
  */
@@ -170,7 +170,7 @@ function epd_get_site_id_by_activation_key( $key )	{
 /**
  * Activate a pending site.
  *
- * @since   1.4
+ * @since   1.3.4
  * @param   int     $site_id    Site ID
  * @param   string  $key        Activation key
  * @return  bool    True if successfully activated, otherwise false
@@ -385,7 +385,7 @@ function epd_validate_new_site_args( $args )	{
 /**
  * Create a site activation key.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	string	$domain		Domain of new site
  * @return	string	Activation key
  */

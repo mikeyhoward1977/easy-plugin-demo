@@ -393,7 +393,7 @@ function epd_email_tag_demo_site_password( $blog_id, $user_id ) {
  * Email template tag: demo_site_activation_url
  * The site activation URL
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	int		$blog_id
  * @param	int		$user_id
  * @return	string	Demo site activation URL

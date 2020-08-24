@@ -25,7 +25,7 @@ function epd_email_registration_confirmation( $site_id, $args ) {
     /**
      * Randomly this hook gets processed twice sometimes so we'll remove it here to avoid.
      *
-     * @since   1.4
+     * @since   1.3.4
      */
     remove_action( 'epd_create_demo_site', 'epd_email_registration_confirmation', 100, 2 );
 

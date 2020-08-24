@@ -108,7 +108,7 @@ add_action( 'init', 'epd_process_registration_action' );
 /**
  * Filter new site args to apply activation settings if needed.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	array	$args	New site arguments
  * @return	array	New site arguments
  */
@@ -120,7 +120,7 @@ function epd_set_registration_activation_args_action( $args )	{
 		/**
 		 * Hook in to define the activation key.
 		 *
-		 * @since	1.4
+		 * @since	1.3.4
 		 */
 		add_action( 'epd_create_demo_site', 'epd_set_site_activation_key_action', 10, 2 );
 	}
@@ -207,7 +207,7 @@ add_action( 'epd_after_registration_confirm_action', 'epd_confirm_after_registra
  *
  * This function is hooked from the  epd_activate_site_action() function.
  *
- * @since   1.4
+ * @since   1.3.4
  * @param   string  $redirect_url   Redirect URL
  * @return  string  Redirect URL
  */

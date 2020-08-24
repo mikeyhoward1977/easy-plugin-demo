@@ -199,7 +199,7 @@ add_action( 'epd_create_demo_site', 'epd_set_blog_meta', 10, 2 );
  *
  * This action is hooked via the epd_set_registration_activation_args_action() function.
  *
- * @since	1.4
+ * @since	1.3.4
  * @param	int      $site_id	Site ID
  * @param   array    $args      Array of arguments that were passed to wpmu_create_blog
  * @return	void
@@ -211,7 +211,7 @@ function epd_set_site_activation_key_action( $site_id, $args )	{
 /**
  * Activate a site.
  *
- * @since   1.4
+ * @since   1.3.4
  * @return  void
  */
 function epd_activate_site_action() {
@@ -234,7 +234,7 @@ function epd_activate_site_action() {
     /**
      * Hook into the redirect filters to append the activation confirmed URL param.
      *
-     * @since   1.4
+     * @since   1.3.4
      */
     add_filter( 'epd_after_registration_home_redirect_url',    'epd_add_url_param_after_activation_action' );
     add_filter( 'epd_after_registration_admin_redirect_url',   'epd_add_url_param_after_activation_action' );
@@ -247,7 +247,7 @@ add_action( 'init', 'epd_activate_site_action' );
 /**
  * If a site is pending activation, display a custom message when it is requested.
  *
- * @since   1.4
+ * @since   1.3.4
  * @return  void
  */
 function epd_custom_pending_site_message_action()   {
