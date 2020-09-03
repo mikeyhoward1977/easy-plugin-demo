@@ -458,7 +458,9 @@ function epd_delete_site( $site_id )	{
 			}
 		}
 
+        do_action( 'epd_before_delete_site', $site_id );
 		wpmu_delete_blog( $site_id, true );
+        do_action( 'epd_delete_site', $site_id );
 
 		$delete_users = apply_filters( 'epd_delete_site_delete_users', $delete_users, $site_id );
 

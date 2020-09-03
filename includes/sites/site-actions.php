@@ -425,7 +425,9 @@ function epd_delete_expired_sites()	{
                         }
                     }
 
+                    do_action( 'epd_before_delete_site', $site->blog_id );
                     wpmu_delete_blog( $site->blog_id, true );
+                    do_action( 'epd_delete_site', $site->blog_id );
                 }
             }
 
@@ -445,3 +447,33 @@ function epd_delete_expired_sites()	{
     }
 } // epd_delete_expired_sites
 add_action( 'epd_twicedaily_scheduled_events', 'epd_delete_expired_sites' );
+
+/**
+ * Remove left over DB tables from database on site deletion.
+ *
+ * This takes care of custom tables created by plugins.
+ *
+ * @since   1.3.5
+ * @param   int     $site_id   Site ID
+ * @return  void
+ */
+function epd_delete_site_remove_custom_db_tables_action( $site_id )    {
+    global $wpdb;
+
+    $prefix = $wpdb->get_blog_prefix( $site_id );
+    $tables = $wpdb->get_results(
+        "
+        SELECT table_schema as database_name, table_name
+        FROM information_schema.tables
+        WHERE table_type = 'BASE TABLE'
+        AND table_name like '{$prefix}%'
+        ORDER BY table_schema,
+        table_name;
+        "
+    );
+
+    foreach( $tables as $table )   {
+        $wpdb->query( "DROP TABLE IF EXISTS {$table->table_name}" );
+    }
+} // epd_delete_site_remove_custom_db_tables_action
+add_action( 'epd_delete_site', 'epd_delete_site_remove_custom_db_tables_action' );
