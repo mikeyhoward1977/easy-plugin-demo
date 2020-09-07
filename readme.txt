@@ -2,9 +2,9 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
-Tested up to: 5.5
+Tested up to: 5.5.1
 Requires PHP: 5.4
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,13 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.5 =
+
+**Tuesday, 7th September 2020**
+
+* **Bug**: Users may not be deleted when a site is deleted
+* **Tweak**: Check for, and delete, custom tables when a site is deleted
 
 = 1.3.4 =
 
