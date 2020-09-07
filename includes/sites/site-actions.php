@@ -435,10 +435,10 @@ function epd_delete_expired_sites()	{
                 $delete_users = array_unique( $delete_users );
 
                 foreach( $delete_users as $user_id )	{
-                    $user_blogs  = get_blogs_of_user( $blog_user->ID );
+                    $user_blogs  = get_blogs_of_user( $blog_user->ID, true );
 					$delete_user = apply_filters( 'epd_delete_site_delete_user', true, $user_id );
 
-                    if ( $delete_user && ( $user_blogs ) )	{
+                    if ( $delete_user && empty( $user_blogs ) )	{
                         wpmu_delete_user( $user_id );
                     }
                 }
