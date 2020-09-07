@@ -468,9 +468,10 @@ function epd_delete_site( $site_id )	{
 			$delete_users = array_unique( $delete_users );
 
 			foreach( $delete_users as $user_id )	{
-				$user_blogs = get_blogs_of_user( $user_id );
+				$user_blogs  = get_blogs_of_user( $user_id, true );
+                $delete_user = apply_filters( 'epd_delete_site_delete_user', true, $user_id );
 
-				if ( empty( $user_blogs ) )	{
+				if ( $delete_user && empty( $user_blogs ) )	{
 					if ( $user_id == get_current_user_id() )	{
 						wp_logout();
 					}
