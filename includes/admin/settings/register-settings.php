@@ -138,7 +138,6 @@ function epd_get_registered_settings() {
     $current_theme   = wp_get_theme();
 	$network         = get_network();
     $upload_quota    = esc_attr( get_site_option( 'blog_upload_space', 100 ) );
-    $max_upload_size = esc_attr( get_site_option( 'fileupload_maxk', 1500 ) );
 	$welcome_example = add_query_arg( 'epd_action', 'add_welcome_example', admin_url() );
 
 	/**
@@ -231,24 +230,12 @@ function epd_get_registered_settings() {
 						'id'       => 'upload_space',
 						'name'     => __( 'Site Upload Space', 'easy-plugin-demo' ),
 						'type'     => 'number',
-                        'std'      => $upload_quota,
+                        'std'      => 0,
                         'size'     => 'small',
                         'append'   => __( 'MB', 'easy-plugin-demo' ),
 						'desc'     => sprintf(
                             __( 'Limit the total size of files uploaded to demo sites to this value. Enter <code>0</code> to honor the network default of <code>%s MB</code>.' , 'easy-plugin-demo' ),
                             $upload_quota
-                        )
-					),
-                    'max_file_size' => array(
-						'id'       => 'max_file_size',
-						'name'     => __( 'Max Upload File Size', 'easy-plugin-demo' ),
-						'type'     => 'number',
-                        'std'      => $max_upload_size,
-                        'size'     => 'small',
-                        'append'   => __( 'KB', 'easy-plugin-demo' ),
-						'desc'     => sprintf(
-                            __( 'Limit total size of files uploaded. Enter <code>0</code> to honor the network default of <code>%s KB</code>.' , 'easy-plugin-demo' ),
-                            $max_upload_size
                         )
 					),
 					'hide_welcome' => array(
