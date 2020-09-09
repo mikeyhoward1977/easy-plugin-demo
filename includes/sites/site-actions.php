@@ -104,12 +104,6 @@ add_filter( 'epd_validate_new_site_title', 'epd_validate_site_title', 10, 3 );
  * @return	void
  */
 function epd_set_new_site_defaults( $site )	{
-	$default_delete = epd_get_default_site_lifetime();
-
-	if ( ! empty( $default_delete ) )	{
-		$default_delete = date( 'Y-m-d H:i:s', current_time( 'timestamp' ) + epd_get_default_site_lifetime() );
-	}
-
     $allowed_themes = epd_get_option( 'allowed_themes', array() );
     $theme          = wp_get_theme( epd_get_option( 'theme' ) );
     $themes         = array();
@@ -138,12 +132,17 @@ function epd_set_new_site_defaults( $site )	{
 		'blog_public'   => epd_get_option( 'discourage_search' ) ? 0 : 1
 	);
 
+	$quota = epd_get_default_site_upload_quota();
+
+	if ( ! empty( $quota ) )	{
+		$args['blog_upload_space'] = $quota;
+	}
+
 	$args = apply_filters( 'epd_set_new_site_defaults', $args, $site );
 
 	foreach( $args as $key => $value )	{
         update_blog_option( $site->blog_id, $key, $value );
 	}
-
 } // epd_set_new_site_defaults
 add_action( 'wp_initialize_site', 'epd_set_new_site_defaults' );
 

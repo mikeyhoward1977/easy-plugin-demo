@@ -55,6 +55,19 @@ function epd_get_default_site_lifetime()	{
 } // epd_get_default_site_lifetime
 
 /**
+ * Retrieve the default site upload quota.
+ *
+ * @since   1.3.6
+ * @return  int  The site upload quote in MB
+ */
+function epd_get_default_site_upload_quota()    {
+    $quota = absint( epd_get_option( 'upload_space', 0 ) );
+    $quota = apply_filters( 'epd_site_upload_quota', $quota );
+
+    return $quota;
+} // epd_get_default_site_upload_quota
+
+/**
  * Get the date/time the site was registered.
  *
  * @since	1.2
