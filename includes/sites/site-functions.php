@@ -55,6 +55,32 @@ function epd_get_default_site_lifetime()	{
 } // epd_get_default_site_lifetime
 
 /**
+ * Retrieve the default site upload quota.
+ *
+ * @since   1.3.6
+ * @return  int  The site upload quote in MB
+ */
+function epd_get_default_site_upload_quota()    {
+    $quota = epd_get_option( 'upload_space', get_site_option( 'blog_upload_space', 100 ) );
+    $quota = apply_filters( 'epd_site_upload_quota', $quota );
+
+    return $quota;
+} // epd_get_default_site_upload_quota
+
+/**
+ * Retrieve the default site max upload size for files.
+ *
+ * @since   1.3.6
+ * @return  int  The max upload size in KB
+ */
+function epd_get_default_site_max_file_size()    {
+    $max_size = epd_get_option( 'max_file_size', get_site_option( 'fileupload_maxk', 1500 ) );
+    $max_size = apply_filters( 'epd_site_upload_quota', $max_size );
+
+    return $max_size;
+} // epd_get_default_site_max_file_size
+
+/**
  * Get the date/time the site was registered.
  *
  * @since	1.2
