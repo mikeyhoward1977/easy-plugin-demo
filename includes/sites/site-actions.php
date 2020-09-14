@@ -259,9 +259,10 @@ function epd_custom_pending_site_message_action()   {
     if ( '1' == $site->archived )   {
         $url = epd_get_registration_page_url();
 
-        wp_safe_redirect( add_query_arg(
-            'epd-message', 'pending', $url
-        ) );
+        wp_safe_redirect( add_query_arg( array(
+            'epd-message'    => 'pending',
+            'epd-registered' => $site->blog_id
+        ), $url ) );
         exit;
     }
 } // epd_custom_pending_site_message_action
