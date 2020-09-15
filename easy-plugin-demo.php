@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Easy Plugin Demo
  * Plugin URI: https://easy-plugin-demo.com/
- * Description: Easily create and manage demo sites for your WordPress plugin and/or theme
+ * Description: A WordPress demo builder plugin that fully automates the creation of sandbox sites for you to showcase your plugins, themes and content to customers.
  * Version: 1.3.5
  * Date: 7th September 2020
  * Author: Mike Howard

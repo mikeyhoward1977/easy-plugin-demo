@@ -8,36 +8,38 @@ Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automate the provisioning and management of a plugin or theme demo environment to showcase your WordPress products.
+A WordPress demo builder plugin that fully automates the creation of sandbox sites for you to showcase your plugins, themes and content to customers.
 
 == Description ==
 
-With Easy Plugin Demo (EPD), showcasing your plugin or themes has never been easier!
+With Easy Plugin Demo (EPD), showcasing your plugins, themes, and content has never been easier!
 
 **EPD requires that you are running a WordPress multisite instance**
 
-EPD enables you to easily provide an individual WordPress instance for users who would like to demo your plugin or theme without making changes or adding content that is visible to other users wishing to access the demo.
+EPD enables you to automate the process of creating sandbox demo environments for customers who wish to try your product(s) before they download or buy. With EPD you can **increase** your customers and your sales.
 
-Simply adding the `[epd_register]` shortcode to your page is sufficient to get started once the plugin is installed and activated. Once a user enters their details, a new site is created and configured per the options you define within the settings page.
+Once you've added the `[epd_register]` shortcode to a page, users simply enter their details into the registration form and a new demo site is created just for them in a matter of seconds. All configured with the options you define. You choose the plugins, themes, posts, pages and settings and Easy Plugin Demo takes care of the rest.
 
-Once the defined lifetime period of the site has passed, it will be automatically deleted together with the associated demo user account.
+Each demo site is automatically deleted, together with all its custom content and user accounts once the lifetime you set, has passed.
 
 You can add further customizations via the plugin settings page such as:
 
 * Select the name for each new demo site created
 * Choose which theme should be activated for the new site by default
+* Choose which additional theme(s) can be activated within new demo sites
+* Select which plugins should be activated for the new demo site
 * Specify the maximum number of sites a single user can register at any given time
 * Choose where to direct the user upon successful registration
+* Require users to activate their demo's to validate their email address
 * Automatically delete a site after a given period
 * Define a custom welcome panel message to be displayed on new sites
 * Send a customized email message to the user once their registration completes
-* Select which plugins should be activated for the new demo site
-* Define which theme(s) can be used within new demo sites
 * Duplicate posts from the primary blog to the newly created demo site (3 posts per post type unless the Premium extension is installed)
 
 The Easy Plugin Demo [Premium Pack](https://easy-plugin-demo.com/downloads/premium-pack) extension unlocks a host of additional features including;
 
 * Cloning of a master site for all new demo sites
+* Demo Templates enable you to create multiple demo configurations which users can select
 * Duplication of posts from any post type
 * Duplicate an unlimited number of posts
 * Include taxonomies and terms as part of post duplication
@@ -46,15 +48,14 @@ The Easy Plugin Demo [Premium Pack](https://easy-plugin-demo.com/downloads/premi
 * Define author for replicated posts
 * Clone database tables, including custom ones
 * Choose to automatically add users to new sites and their roles
+* Schedule notices and provide information to users, or upsell your product(s)
 
 We've also included a number of hooks and filters for further customizations by developers.
 
 **Follow this plugin on [GitHub](https://github.com/mikeyhoward1977/easy-plugin-demo)**
 
-**See this plugin in action**
-We have a real world instance of this plugin running at [https://testdrive.kb-support.net/]('https://testdrive.kb-support.net/'). Alternatively check out the brief video below which shows the user registration process.
-
-https://youtu.be/W7yVotr-FIE
+**Check out Easy Plugin Demo for yourself!**
+Our demo site provides a number of demos to give you an idea of how powerful Easy Plugin Demo is [https://demos.easy-plugin-demo.com/]('https://demos.easy-plugin-demo.com/').
 
 **Languages**
 
@@ -107,7 +108,7 @@ Either is fine. EPD supports both installation methods.
 
 = Is there a demo of Easy Plugin Demo? =
 
-Yes. Visit [https://testdrive.kb-support.net/register/](https://testdrive.kb-support.net/register/) to experience the registration process for a user when creating a new demo site.
+Yes. Visit [https://demo.kb-support.com/](https://demo.kb-support.com/) to experience the registration process for a user when creating a new demo site.
 
 = Where can I find support? =
 
@@ -125,7 +126,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 = 1.3.5 =
 
-**Tuesday, 7th September 2020**
+**Tuesday, 8th September 2020**
 
 * **Bug**: Users may not be deleted when a site is deleted
 * **Tweak**: Check for, and delete, custom tables when a site is deleted
