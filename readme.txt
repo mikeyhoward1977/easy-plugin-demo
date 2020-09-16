@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.5.1
 Requires PHP: 5.4
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,14 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.6 =
+
+**Thursday, 17th September 2020**
+
+* **New**: Added a site upload quota setting. The number entered here will limit the total size of files uploaded to demo sites
+* **Bug**: PHP notice generated when activation is required
+* **Tweak**: Added the `$blog_id` variable to the `epd_after_registration_redirect_url` filter
 
 = 1.3.5 =
 
