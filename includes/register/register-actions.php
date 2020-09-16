@@ -237,7 +237,7 @@ function epd_redirect_after_registration( $blog_id, $user_id )    {
 		epd_redirect_home_after_registration( $blog_id, $user_id );
 	}
 
-    $redirect_url = apply_filters( 'epd_after_registration_redirect_url', $redirect_url );
+    $redirect_url = apply_filters( 'epd_after_registration_redirect_url', $redirect_url, $blog_id );
 
     wp_safe_redirect( $redirect_url );
     exit;

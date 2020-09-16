@@ -268,3 +268,17 @@ function epd_restore_notice( $notice ) {
 	return $update;
 
 } // epd_restore_notice
+
+/**
+ * Whether or not the Premium Pack is installed.
+ *
+ * @since   1.3.5
+ * @return  bool    True if installed and active, otherwise false
+ */
+function epd_has_premium_pack() {
+    if ( ! function_exists( 'is_plugin_active_for_network' ) )  {
+        require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+    }
+
+    return is_plugin_active_for_network( 'epd-premium/epd-premium.php' );
+} // epd_has_premium_pack

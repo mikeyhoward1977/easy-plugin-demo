@@ -137,6 +137,7 @@ function epd_get_registered_settings() {
 
     $current_theme   = wp_get_theme();
 	$network         = get_network();
+    $upload_quota    = esc_attr( get_site_option( 'blog_upload_space', 100 ) );
 	$welcome_example = add_query_arg( 'epd_action', 'add_welcome_example', admin_url() );
 
 	/**
@@ -224,6 +225,18 @@ function epd_get_registered_settings() {
 						'type'     => 'checkbox',
 						'std'      => 1,
 						'desc'     => __( 'Select to disable users from changing search engine visibility settings. Does not apply to the primary site or if the current user can manage networks.' , 'easy-plugin-demo' )
+					),
+                    'upload_space' => array(
+						'id'       => 'upload_space',
+						'name'     => __( 'Site Upload Space', 'easy-plugin-demo' ),
+						'type'     => 'number',
+                        'std'      => 0,
+                        'size'     => 'small',
+                        'append'   => __( 'MB', 'easy-plugin-demo' ),
+						'desc'     => sprintf(
+                            __( 'Limit the total size of files uploaded to demo sites to this value. Enter <code>0</code> to honor the network default of <code>%s MB</code>.' , 'easy-plugin-demo' ),
+                            $upload_quota
+                        )
 					),
 					'hide_welcome' => array(
 						'id'       => 'hide_welcome',
@@ -922,13 +935,23 @@ function epd_number_callback( $args ) {
 	}
 
 	$class = epd_sanitize_html_class( $args['field_class'] );
+	$max    = isset( $args['max'] )  ? $args['max']  : 999999;
+	$min    = isset( $args['min'] )  ? $args['min']  : 0;
+	$step   = isset( $args['step'] ) ? $args['step'] : 1;
+	$size   = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+    $append = isset( $args['append'] ) ? ' ' . $args['append'] : '';
 
-	$max  = isset( $args['max'] ) ? $args['max'] : 999999;
-	$min  = isset( $args['min'] ) ? $args['min'] : 0;
-	$step = isset( $args['step'] ) ? $args['step'] : 1;
-
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html = '<input type="number" step="' . esc_attr( $step ) . '" max="' . esc_attr( $max ) . '" min="' . esc_attr( $min ) . '" class="' . $class . ' ' . sanitize_html_class( $size ) . '-text" id="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']" ' . $name . ' value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+    $html = sprintf(
+        '<input type="number" step="%1$s" max="%2$s" min="%3$s" class="%4$s" id="%5$s" %6$s value="%7$s"/>%8$s',
+        esc_attr( $step ),
+        esc_attr( $max ),
+        esc_attr( $min ),
+        $class . ' ' . sanitize_html_class( $size ) . '-text',
+        'epd_settings[' . epd_sanitize_key( $args['id'] ) . ']',
+        $name,
+        esc_attr( stripslashes( $value ) ),
+        $append
+    );
 	$html .= '<p class="description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
 
 	echo apply_filters( 'epd_after_setting_output', $html, $args );
