@@ -31,7 +31,6 @@ function epd_get_non_network_enabled_plugins()	{
 
 	return $not_active;
 } // epd_get_non_network_enabled_plugins
-add_action( 'admin_init', 'epd_get_non_network_enabled_plugins' );
 
 /**
  * Retrieve plugins that need activating on new sites.
