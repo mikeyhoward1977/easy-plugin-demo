@@ -1,4 +1,4 @@
-=== Easy Plugin Demo ===
+=== Easy Plugin Demo Builder ===
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
