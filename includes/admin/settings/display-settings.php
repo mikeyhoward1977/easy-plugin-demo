@@ -231,8 +231,10 @@ function epd_render_settings_fields() {
 			'field_class'   => ''
 		) );
 
+		$field_id = "epd_setting_{$args['id']}";
+
 		?>
-		<tr>
+		<tr id="<?php echo $field_id; ?>">
 			<th scope="row">
 				<label for="<?php echo esc_attr( $args['id'] ); ?>">
 					<?php echo esc_html( $args['name'] ); ?>

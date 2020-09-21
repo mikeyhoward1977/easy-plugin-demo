@@ -213,6 +213,12 @@ function epd_get_registered_settings() {
 					),
 				),
 				'config' => array(
+					'hide_admin_bar' => array(
+						'id'       => 'hide_admin_bar',
+						'name'     => __( 'Hide Admin Toolbar?', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'When enabled, the admin toolbar will be hidden when the demo site is being viewed.' , 'easy-plugin-demo' )
+					),
 					'discourage_search' => array(
 						'id'       => 'discourage_search',
 						'name'     => __( 'Discourage Search Engines', 'easy-plugin-demo' ),
