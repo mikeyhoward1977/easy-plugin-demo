@@ -1212,7 +1212,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 						$messages[] = sprintf(
 							__( 'Your license key expired on %s. Please <a href="%s" target="_blank" title="Renew your license key">renew your license key</a>.', 'easy-plugin-demo' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
-							'http://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
+							'https://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
 						);
 
 						$license_status = 'license-' . $class . '-notice';
@@ -1233,7 +1233,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 
 					case 'missing' :
 
-						$class = 'error';
+						$class = 'missing';
 						$messages[] = sprintf(
 							__( 'Invalid license. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> and verify it.', 'easy-plugin-demo' ),
 							'https://easy-plugin-demo.com/your-account'
@@ -1269,7 +1269,10 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 					case 'no_activations_left':
 
 						$class = 'error';
-						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'easy-plugin-demo' ), 'http://easy-plugin-demo.com/your-account/' );
+						$messages[] = sprintf(
+							__( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'easy-plugin-demo' ),
+							'https://easy-plugin-demo.com/your-account/'
+						);
 
 						$license_status = 'license-' . $class . '-notice';
 
@@ -1300,50 +1303,50 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 
 					case 'valid' :
 					default:
-
-						$class = 'valid';
-
+						$class      = 'valid';
 						$now        = current_time( 'timestamp' );
 						$expiration = strtotime( $license->expires, current_time( 'timestamp' ) );
 
-						if( 'lifetime' === $license->expires ) {
+						if ( 'lifetime' === $license->expires ) {
 
-							$messages[] = __( 'Your license key is valid and never expires.', 'easy-plugin-demo' );
+							$messages[] = __( 'Your lifetime license key is valid.', 'easy-plugin-demo' );
 
 							$license_status = 'license-lifetime-notice';
 
 						} elseif( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
 
 							$messages[] = sprintf(
-								__( 'Your license key expires soon! It expires on %s. <a href="%s" target="_blank" title="Renew license">Renew your license key</a>.', 'easy-plugin-demo' ),
-								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
+								__( 'Your license key expires on %s. <a href="%s" target="_blank" title="Renew license">Renew your license key</a> to continue receiving updates and support.', 'easy-plugin-demo' ),
+								date_i18n(
+									get_option( 'date_format' ),
+									strtotime( $license->expires, current_time( 'timestamp' ) )
+								),
 								'https://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
 							);
 
 							$license_status = 'license-expires-soon-notice';
 
 						} else {
-
 							$messages[] = sprintf(
 								__( 'Your license key expires on %s.', 'easy-plugin-demo' ),
-								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+								date_i18n(
+									get_option( 'date_format' ),
+									strtotime( $license->expires, current_time( 'timestamp' ) )
+								)
 							);
 
 							$license_status = 'license-expiration-date-notice';
-
 						}
 
 						break;
-
 				}
-
 			}
-
 		} else	{
-			$class = 'empty';
+			$class = 'missing';
 
 			$messages[] = sprintf(
-				__( 'To receive updates, please enter your valid %s license key.', 'easy-plugin-demo' ),
+				__( 'Enter a valid <a href="%s" target="_blank">license key</a> to receive updates for %s.', 'easy-plugin-demo' ),
+                'https://easy-plugin-demo.com/your-account/',
 				$args['name']
 			);
 
