@@ -1,7 +1,7 @@
 /**
  * EPD Admin CSS
  *
- * @package     KBS
+ * @package     EPD
  * @subpackage  Admin CSS
  * @copyright   Copyright (c) 2019, Mike Howard
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
@@ -50,4 +50,123 @@
 .epd-nav-tab-active:focus:active {
 	background: #f77f00;
 	color: #fff;
+}
+
+.wrap-licenses .form-table,
+.wrap-licenses thead,
+.wrap-licenses tbody,
+.wrap-licenses tfoot,
+.wrap-licenses tr,
+.wrap-licenses td,
+.wrap-licenses th,
+.wrap-licenses caption {
+	display: block;
+}
+.wrap-licenses .form-table tr {
+	float: left;
+	margin: 0 15px 15px 0;
+	background: #fff;
+	border: 1px solid #ccc;
+	width: 30.5%;
+	max-width: 350px;
+	padding: 14px;
+	min-height: 220px;
+	position: relative;
+	box-sizing: border-box;
+}
+.wrap-licenses .form-table th {
+	background: #f9f9f9;
+	padding: 14px;
+	border-bottom: 1px solid #ccc;
+	margin: -14px -14px 20px;
+	width: 100%;
+}
+.wrap-licenses .form-table td {
+	padding: 0;
+}
+.wrap-licenses td input.regular-text {
+	margin: 0 0 8px;
+	width: 100%;
+}
+.wrap-licenses .epd-license-data[class*="epd-license-"] {
+	position: absolute;
+	background: #fafafa;
+	padding: 14px;
+	border-top: 1px solid #eee;
+	margin: 20px -14px -14px;
+	min-height: 67px;
+	width: 100%;
+	bottom: 14px;
+	box-sizing: border-box;
+}
+.wrap-licenses .epd-license-data[class*="epd-license-"] a {
+	color: #444;
+}
+.wrap-licenses .epd-license-data[class*="epd-license-"] a:hover {
+	text-decoration: none;
+}
+.wrap-licenses .epd-license-data.license-expires-soon-notice {
+	background-color: #00a0d2;
+	color: #fff;
+	border-color: #00a0d2;
+}
+.wrap-licenses .epd-license-data.epd-license-expired,
+.wrap-licenses .epd-license-data.epd-license-missing,
+.wrap-licenses .epd-license-data.epd-license-error,
+.wrap-licenses .epd-license-data.epd-license-invalid,
+.wrap-licenses .epd-license-data.epd-license-site_inactive {
+	background-color: #e24e4e;
+	color: #fff;
+	border-color: #e24e4e;
+}
+.wrap-licenses .epd-license-data.epd-license-not-installed,
+.wrap-licenses .epd-license-data.epd-license-item_name_mismatch {
+	background-color: #ffebcd;
+	border-color: #ffebcd;
+}
+.wrap-licenses .epd-license-data p {
+	font-size: 13px;
+	margin-top: 0;
+}
+.wrap-licenses .epd-license-data.license-expires-soon-notice a,
+.wrap-licenses .epd-license-data.epd-license-expired a {
+	color: #fff;
+}
+.wrap-licenses .epd-license-data.license-expires-soon-notice a:hover,
+.wrap-licenses .epd-license-data.epd-license-expired a:hover {
+	text-decoration: none;
+}
+.wrap-licenses p.submit {
+	clear: both;
+}
+
+.wrap-licenses .epd-no-license-overlay {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	background: rgba(255,255,255,.64);
+	text-align: center;
+	vertical-align: middle;
+}
+
+.wrap-licenses .epd-no-license-overlay a {
+	padding: 9px 15px;
+	background: #0073aa;
+	color: #FFF;
+	text-decoration: none;
+	border-radius: 3px;
+	font-size: 14px;
+	display: inline-block;
+}
+
+.epd-no-license-button-wrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	min-width: 200px;
 }

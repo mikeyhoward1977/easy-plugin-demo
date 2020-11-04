@@ -282,3 +282,23 @@ function epd_has_premium_pack() {
 
     return is_plugin_active_for_network( 'epd-premium/epd-premium.php' );
 } // epd_has_premium_pack
+
+/**
+ * Premium extensions data.
+ *
+ * @since	1.4.6
+ * @return	array	Array of premium extension data
+ */
+function epd_get_premium_extension_data()	{
+	$extensions = array(
+		'premium_pack' => array(
+			'name'         => 'Premium Pack',
+			'desc'         => __( 'Power up Easy Plugin Demo with site cloning, demo templates and much more!', 'easy-plugin-demo' ),
+			'plugin_url'   => 'epd-premium/epd-premium.php',
+			'demo_url'     => 'https://demos.easy-plugin-demo.com',
+			'purchase_url' => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+		)
+	);
+
+	return $extensions;
+} // epd_get_premium_extension_data

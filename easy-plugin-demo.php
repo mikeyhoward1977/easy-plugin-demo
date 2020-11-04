@@ -9,7 +9,6 @@
  * Author URI: https://easy-plugin-demo.com/
  * Text Domain: easy-plugin-demo
  * Domain Path: /languages
- * Network: true
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * GitHub Plugin URI: https://github.com/mikeyhoward1977/easy-plugin-demo

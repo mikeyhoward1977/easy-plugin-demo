@@ -395,6 +395,33 @@ function epd_get_registered_settings() {
 } // epd_get_registered_settings
 
 /**
+ * Adds premium extensions not yet installed to license settings.
+ *
+ * Enables upsell opportunity
+ *
+ * @since   1.4.6
+ * @param   array   $settings   Array of license settings
+ * @return  array   Array of license settings
+ */
+function epd_add_premium_extension_license_fields( $settings )   {
+	$plugins          = epd_get_premium_extension_data();
+	$plugins          = apply_filters( 'epd_upsell_extensions_settings', $plugins );
+	$license_settings = array();
+
+	foreach( $plugins as $plugin => $data ) {
+		$license_settings[] = array(
+			'id'   => "{$plugin}_license_upsell",
+			'name' => sprintf( __( '%1$s', 'easy-plugin-demo' ), $data['name'] ),
+			'type' => 'premium_extension',
+			'data' => $data
+		);
+	}
+
+	return array_merge( $settings, $license_settings );
+} // epd_add_premium_extension_license_fields
+add_filter( 'epd_settings_licenses', 'epd_add_premium_extension_license_fields', 100 );
+
+/**
  * Add all settings sections and fields.
  *
  * @since	1.0
@@ -1281,7 +1308,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 
 						if( 'lifetime' === $license->expires ) {
 
-							$messages[] = __( 'License key never expires.', 'easy-plugin-demo' );
+							$messages[] = __( 'Your license key is valid and never expires.', 'easy-plugin-demo' );
 
 							$license_status = 'license-lifetime-notice';
 
@@ -1332,15 +1359,13 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 			$html .= '<input type="submit" class="button-secondary" name="' . $args['id'] . '_deactivate" value="' . __( 'Deactivate License',  'easy-plugin-demo' ) . '"/>';
 		}
 
-		$html .= '<p class="description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
+        $html .= '<label for="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
 		if ( ! empty( $messages ) ) {
 			foreach( $messages as $message ) {
-
 				$html .= '<div class="epd-license-data epd-license-' . $class . ' ' . $license_status . '">';
 					$html .= '<p>' . $message . '</p>';
 				$html .= '</div>';
-
 			}
 		}
 
@@ -1350,6 +1375,57 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 	}
 
 } // epd_license_key_callback
+
+/**
+ * Registers the premium extension field callback.
+ *
+ * @since	1.3.7
+ * @param	array	$args	Arguments passed by the setting
+ * @global	$epd_options	Array of all the EPD options
+ * @return void
+ */
+if ( ! function_exists( 'epd_premium_extension_callback' ) ) {
+	function epd_premium_extension_callback( $args )	{
+        $data = $args['data'];
+        $demo = false;
+
+        $html = sprintf(
+            '<input type="text" class="regular-text" id="epd_settings[%1$s]" name="epd_settings[%1$s]" value="" placeholder="%2$s" disabled="disabled" />',
+            epd_sanitize_key( $args['name'] ),
+            __( 'Enter your license key', 'easy-plugin-demo' )
+        );
+
+		if ( isset( $data['demo_url'] ) ) {
+            $demo = true;
+
+			$html .= sprintf(
+                '<a href="%s" class="button button-secondary epd-extension-demo" target="_blank">%s</a>',
+                esc_url( $data['demo_url'] ),
+                __( 'Demo', 'easy-plugin-demo' )
+            );
+		}
+
+        if ( isset( $data['purchase_url'] ) ) {
+            if ( $demo )    {
+                $html .= '&nbsp;&nbsp;&nbsp;';
+            }
+
+			$html .= sprintf(
+                '<a href="%s" class="button button-secondary epd-extension-purchase" target="_blank">%s</a>',
+                esc_url( $data['purchase_url'] ),
+                __( 'Buy Extension', 'easy-plugin-demo' )
+            );
+		}
+
+		$html .= '<label for="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
+
+        $html .= '<div class="epd-license-data epd-license-not-installed license-not-installed-notice">';
+            $html .= '<p>' . $data['desc'] . '</p>';
+        $html .= '</div>';
+
+        echo $html;
+	}
+} // epd_premium_extension_callback
 
 /**
  * Hook Callback
