@@ -105,34 +105,42 @@
 .wrap-licenses .epd-license-data[class*="epd-license-"] a:hover {
 	text-decoration: none;
 }
-.wrap-licenses .epd-license-data.license-expires-soon-notice {
-	background-color: #00a0d2;
-	color: #fff;
+.wrap-licenses .epd-license-data.epd-license-expires-soon-notice {
+	background-color: #e5f5fa;
 	border-color: #00a0d2;
 }
 .wrap-licenses .epd-license-data.epd-license-expired,
 .wrap-licenses .epd-license-data.epd-license-missing,
 .wrap-licenses .epd-license-data.epd-license-error,
 .wrap-licenses .epd-license-data.epd-license-invalid,
-.wrap-licenses .epd-license-data.epd-license-site_inactive {
-	background-color: #e24e4e;
-	color: #fff;
+.wrap-licenses .epd-license-data.epd-license-site_inactive,
+.wrap-licenses .epd-license-data.epd-license-item_name_mismatch {
+	background-color: #fbeaea;
 	border-color: #e24e4e;
 }
-.wrap-licenses .epd-license-data.epd-license-not-installed,
-.wrap-licenses .epd-license-data.epd-license-item_name_mismatch {
+.wrap-licenses .epd-license-data.epd-license-not-installed {
 	background-color: #ffebcd;
-	border-color: #ffebcd;
+	border-color: #ffb900;
+}
+.wrap-licenses .epd-license-data.epd-license-valid	{
+	border-color: #46b450;
+	background-color: #ecf7ed;
 }
 .wrap-licenses .epd-license-data p {
 	font-size: 13px;
 	margin-top: 0;
 }
-.wrap-licenses .epd-license-data.license-expires-soon-notice a,
-.wrap-licenses .epd-license-data.epd-license-expired a {
+.wrap-licenses .epd-license-data.epd-license-expires-soon-notice a {
 	color: #fff;
 }
-.wrap-licenses .epd-license-data.license-expires-soon-notice a:hover,
+.wrap-licenses .epd-license-data.epd-license-expired a:hover,
+.wrap-licenses .epd-license-data.epd-license-missing a:hover,
+.wrap-licenses .epd-license-data.epd-license-error a:hover,
+.wrap-licenses .epd-license-data.epd-license-invalid a:hover,
+.wrap-licenses .epd-license-data.epd-license-site_inactive a:hover,
+.wrap-licenses .epd-license-data.epd-license-not-installed a:hover,
+.wrap-licenses .epd-license-data.epd-license-item_name_mismatch a:hover,
+.wrap-licenses .epd-license-data.epd-license-expires-soon-notice a:hover,
 .wrap-licenses .epd-license-data.epd-license-expired a:hover {
 	text-decoration: none;
 }
