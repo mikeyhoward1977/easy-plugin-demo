@@ -310,6 +310,25 @@ function epd_reset_site_action( $site_id ) {
 add_action( 'admin_init', 'epd_reset_site_action' );
 
 /**
+ * Maybe hide the admin bar from the demo site.
+ *
+ * @since	1.4
+ * @return	void
+ */
+function epd_maybe_hide_admin_bar()	{
+	if ( is_super_admin() )	{
+		return;
+	}
+
+	$hide = epd_get_option( 'hide_admin_bar' );
+
+	if ( $hide )	{
+		show_admin_bar( false );
+	}
+} // epd_maybe_hide_admin_bar
+add_action( 'after_setup_theme', 'epd_maybe_hide_admin_bar' );
+
+/**
  * Deletes a site from the front end.
  *
  * @since	1.0

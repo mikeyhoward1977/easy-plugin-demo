@@ -93,35 +93,36 @@ if ( ! class_exists( 'EPD_License' ) )	{
 		 * @since	1.0
 		 * @return  void
 		 */
-		private function hooks() {
-	
-			// Register settings
-			add_filter( 'epd_settings_licenses', array( $this, 'settings' ), 1 );
-	
-			// Display help text at the top of the Licenses tab
-			add_action( 'epd_settings_tab_top', array( $this, 'license_help_text' ) );
-	
-			// Activate license key on settings save
-			add_action( 'epd_saved_settings', array( $this, 'activate_license' ) );
-	
-			// Deactivate license key
-			add_action( 'epd_saved_settings', array( $this, 'deactivate_license' ) );
-	
-			// Check that license is valid once per week
-			add_action( 'epd_twicedaily_scheduled_events', array( $this, 'license_check' ) );
-	
-			// For testing license notices, uncomment this line to force checks on every page load
-			//add_action( 'admin_init', array( $this, 'weekly_license_check' ) );
-	
-			// Updater
-			add_action( 'admin_init', array( $this, 'auto_updater' ), 0 );
-	
-			// Display notices to admins
-			add_action( 'admin_notices', array( $this, 'notices' ) );
-	
-			add_action( 'in_plugin_update_message-' . plugin_basename( $this->file ), array( $this, 'plugin_row_license_missing' ), 10, 2 );
-	
-		}
+        private function hooks() {
+            // Register settings
+            add_filter( 'epd_settings_licenses', array( $this, 'settings' ), 1 );
+
+            // Remove installed premium extensions from plugin upsells
+            add_filter( 'epd_upsell_extensions_settings', array( $this, 'filter_upsells' ) );
+
+            // Display help text at the top of the Licenses tab
+            add_action( 'epd_settings_tab_top', array( $this, 'license_help_text' ) );
+
+            // Activate license key on settings save
+            add_action( 'epd_saved_settings', array( $this, 'activate_license' ) );
+
+            // Deactivate license key
+            add_action( 'epd_saved_settings', array( $this, 'deactivate_license' ) );
+
+            // Check that license is valid once per week
+            add_action( 'epd_twicedaily_scheduled_events', array( $this, 'license_check' ) );
+
+            // For testing license notices, uncomment this line to force checks on every page load
+            //add_action( 'admin_init', array( $this, 'weekly_license_check' ) );
+
+            // Updater
+            add_action( 'admin_init', array( $this, 'auto_updater' ), 0 );
+
+            // Display notices to admins
+            add_action( 'admin_notices', array( $this, 'notices' ) );
+
+            add_action( 'in_plugin_update_message-' . plugin_basename( $this->file ), array( $this, 'plugin_row_license_missing' ), 10, 2 );
+        } // hooks
 	
 		/**
 		 * Auto updater
@@ -175,8 +176,24 @@ if ( ! class_exists( 'EPD_License' ) )	{
 	
 			return array_merge( $settings, $epd_license_settings );
 		} // settings
-	
-	
+
+        /**
+         * If a premium extension is installed, remove it from the upsells array.
+         *
+         * @since   1.4.6
+         * @param   array   $plugins    Array of available premium extensions
+         * @return  array   Array of available premium extensions
+         */
+        public function filter_upsells( $plugins )  {
+            $key = str_replace( 'epd_', '', $this->item_shortname );
+
+            if ( array_key_exists( $key, $plugins ) )   {
+                unset( $plugins[ $key ] );
+            }
+
+            return $plugins;
+        } // filter_upsells
+
 		/**
 		 * Display help text at the top of the Licenses settings tab.
 		 *
@@ -197,11 +214,23 @@ if ( ! class_exists( 'EPD_License' ) )	{
 				return;
 			}
 	
-			echo '<p>' . sprintf(
-				__( 'Enter your extension <a href="%s" target="_blank">license keys</a> here to receive updates for purchased extensions. If your license key has expired, please <a href="%s" target="_blank">renew your license</a>.', 'easy-plugin-demo' ),
-				'https://easy-plugin-demo.com/your-account/',
-				'https://easy-plugin-demo.com/articles/software-license-renewals-extensions/'
-			) . '</p>';
+			echo '<h1 class="wp-heading-inline">' . __( 'Manage Licenses', 'easy-plugin-demo' ) . '</h1>';
+            printf(
+                '<a href="%s" target="_blank" class="page-title-action">%s</a>',
+                'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
+                __( 'Visit Extension Store', 'easy-plugin-demo' )
+            );
+
+			printf(
+				'<p>' . __( 'Enter your <a href="%s" target="_blank">license keys</a> here to receive updates for extensions you have purchased. If your license key has expired, please renew your license.', 'easy-plugin-demo' ) . '</p>',
+				'https://easy-plugin-demo.com/your-account/'
+			);
+
+            printf(
+				'<p>' . __( '<a href="%1$s" target="_blank">Visit our store</a> and receive a %2$s discount on all purchases.', 'easy-plugin-demo' ) . '</p>',
+				'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15offnow',
+                '15%'
+			);
 	
 			$has_ran = true;
 	

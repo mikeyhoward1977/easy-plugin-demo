@@ -213,6 +213,12 @@ function epd_get_registered_settings() {
 					),
 				),
 				'config' => array(
+					'hide_admin_bar' => array(
+						'id'       => 'hide_admin_bar',
+						'name'     => __( 'Hide Admin Toolbar?', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'When enabled, the admin toolbar will be hidden when the demo site is being viewed.' , 'easy-plugin-demo' )
+					),
 					'discourage_search' => array(
 						'id'       => 'discourage_search',
 						'name'     => __( 'Discourage Search Engines', 'easy-plugin-demo' ),
@@ -387,6 +393,33 @@ function epd_get_registered_settings() {
 
 	return apply_filters( 'epd_registered_settings', $epd_settings );
 } // epd_get_registered_settings
+
+/**
+ * Adds premium extensions not yet installed to license settings.
+ *
+ * Enables upsell opportunity
+ *
+ * @since   1.4.6
+ * @param   array   $settings   Array of license settings
+ * @return  array   Array of license settings
+ */
+function epd_add_premium_extension_license_fields( $settings )   {
+	$plugins          = epd_get_premium_extension_data();
+	$plugins          = apply_filters( 'epd_upsell_extensions_settings', $plugins );
+	$license_settings = array();
+
+	foreach( $plugins as $plugin => $data ) {
+		$license_settings[] = array(
+			'id'   => "{$plugin}_license_upsell",
+			'name' => sprintf( __( '%1$s', 'easy-plugin-demo' ), $data['name'] ),
+			'type' => 'premium_extension',
+			'data' => $data
+		);
+	}
+
+	return array_merge( $settings, $license_settings );
+} // epd_add_premium_extension_license_fields
+add_filter( 'epd_settings_licenses', 'epd_add_premium_extension_license_fields', 100 );
 
 /**
  * Add all settings sections and fields.
@@ -1179,7 +1212,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 						$messages[] = sprintf(
 							__( 'Your license key expired on %s. Please <a href="%s" target="_blank" title="Renew your license key">renew your license key</a>.', 'easy-plugin-demo' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
-							'http://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
+							'https://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
 						);
 
 						$license_status = 'license-' . $class . '-notice';
@@ -1200,7 +1233,7 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 
 					case 'missing' :
 
-						$class = 'error';
+						$class = 'missing';
 						$messages[] = sprintf(
 							__( 'Invalid license. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> and verify it.', 'easy-plugin-demo' ),
 							'https://easy-plugin-demo.com/your-account'
@@ -1236,7 +1269,10 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 					case 'no_activations_left':
 
 						$class = 'error';
-						$messages[] = sprintf( __( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'easy-plugin-demo' ), 'http://easy-plugin-demo.com/your-account/' );
+						$messages[] = sprintf(
+							__( 'Your license key has reached its activation limit. <a href="%s">View possible upgrades</a> now.', 'easy-plugin-demo' ),
+							'https://easy-plugin-demo.com/your-account/'
+						);
 
 						$license_status = 'license-' . $class . '-notice';
 
@@ -1267,50 +1303,50 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 
 					case 'valid' :
 					default:
-
-						$class = 'valid';
-
+						$class      = 'valid';
 						$now        = current_time( 'timestamp' );
 						$expiration = strtotime( $license->expires, current_time( 'timestamp' ) );
 
-						if( 'lifetime' === $license->expires ) {
+						if ( 'lifetime' === $license->expires ) {
 
-							$messages[] = __( 'License key never expires.', 'easy-plugin-demo' );
+							$messages[] = __( 'Your lifetime license key is valid.', 'easy-plugin-demo' );
 
 							$license_status = 'license-lifetime-notice';
 
 						} elseif( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
 
 							$messages[] = sprintf(
-								__( 'Your license key expires soon! It expires on %s. <a href="%s" target="_blank" title="Renew license">Renew your license key</a>.', 'easy-plugin-demo' ),
-								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
+								__( 'Your license key expires on %s. <a href="%s" target="_blank" title="Renew license">Renew your license key</a> to continue receiving updates and support.', 'easy-plugin-demo' ),
+								date_i18n(
+									get_option( 'date_format' ),
+									strtotime( $license->expires, current_time( 'timestamp' ) )
+								),
 								'https://easy-plugin-demo.com/checkout/?edd_license_key=' . $value
 							);
 
 							$license_status = 'license-expires-soon-notice';
 
 						} else {
-
 							$messages[] = sprintf(
 								__( 'Your license key expires on %s.', 'easy-plugin-demo' ),
-								date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+								date_i18n(
+									get_option( 'date_format' ),
+									strtotime( $license->expires, current_time( 'timestamp' ) )
+								)
 							);
 
 							$license_status = 'license-expiration-date-notice';
-
 						}
 
 						break;
-
 				}
-
 			}
-
 		} else	{
-			$class = 'empty';
+			$class = 'missing';
 
 			$messages[] = sprintf(
-				__( 'To receive updates, please enter your valid %s license key.', 'easy-plugin-demo' ),
+				__( 'Enter a valid <a href="%s" target="_blank">license key</a> to receive updates for %s.', 'easy-plugin-demo' ),
+                'https://easy-plugin-demo.com/your-account/',
 				$args['name']
 			);
 
@@ -1326,15 +1362,13 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 			$html .= '<input type="submit" class="button-secondary" name="' . $args['id'] . '_deactivate" value="' . __( 'Deactivate License',  'easy-plugin-demo' ) . '"/>';
 		}
 
-		$html .= '<p class="description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
+        $html .= '<label for="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
 
 		if ( ! empty( $messages ) ) {
 			foreach( $messages as $message ) {
-
 				$html .= '<div class="epd-license-data epd-license-' . $class . ' ' . $license_status . '">';
 					$html .= '<p>' . $message . '</p>';
 				$html .= '</div>';
-
 			}
 		}
 
@@ -1344,6 +1378,57 @@ if ( ! function_exists( 'epd_license_key_callback' ) ) {
 	}
 
 } // epd_license_key_callback
+
+/**
+ * Registers the premium extension field callback.
+ *
+ * @since	1.3.7
+ * @param	array	$args	Arguments passed by the setting
+ * @global	$epd_options	Array of all the EPD options
+ * @return void
+ */
+if ( ! function_exists( 'epd_premium_extension_callback' ) ) {
+	function epd_premium_extension_callback( $args )	{
+        $data = $args['data'];
+        $demo = false;
+
+        $html = sprintf(
+            '<input type="text" class="regular-text" id="epd_settings[%1$s]" name="epd_settings[%1$s]" value="" placeholder="%2$s" disabled="disabled" />',
+            epd_sanitize_key( $args['name'] ),
+            __( 'Enter your license key', 'easy-plugin-demo' )
+        );
+
+		if ( isset( $data['demo_url'] ) ) {
+            $demo = true;
+
+			$html .= sprintf(
+                '<a href="%s" class="button button-secondary epd-extension-demo" target="_blank">%s</a>',
+                esc_url( $data['demo_url'] ),
+                __( 'Demo', 'easy-plugin-demo' )
+            );
+		}
+
+        if ( isset( $data['purchase_url'] ) ) {
+            if ( $demo )    {
+                $html .= '&nbsp;&nbsp;&nbsp;';
+            }
+
+			$html .= sprintf(
+                '<a href="%s" class="button button-secondary epd-extension-purchase" target="_blank">%s</a>',
+                esc_url( $data['purchase_url'] ),
+                __( 'Buy Extension', 'easy-plugin-demo' )
+            );
+		}
+
+		$html .= '<label for="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']"> '  . wp_kses_post( $args['desc'] ) . '</label>';
+
+        $html .= '<div class="epd-license-data epd-license-not-installed license-not-installed-notice">';
+            $html .= '<p>' . $data['desc'] . '</p>';
+        $html .= '</div>';
+
+        echo $html;
+	}
+} // epd_premium_extension_callback
 
 /**
  * Hook Callback

@@ -1,10 +1,10 @@
-=== Easy Plugin Demo ===
+=== Easy Plugin Demo Builder ===
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
-Tested up to: 5.5.1
+Tested up to: 5.5.3
 Requires PHP: 5.4
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,16 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.7 =
+
+**Thursday, 5th November 2020**
+
+* **New**: Added option to hide the WordPress admin bar during demos
+* **Tweak**: Better styling for the licensing setting page
+* **Tweak**: Incremented WordPress tested up to value
+* **Tweak**: Added the network value to the readme file
+* **Tweak**: Corrected plugin name within readme description
 
 = 1.3.6 =
 
