@@ -941,6 +941,41 @@ function epd_text_callback( $args ) {
 } // epd_text_callback
 
 /**
+ * Password Callback
+ *
+ * Renders password fields.
+ *
+ * @since	1.0
+ * @param	arr		$args	Arguments passed by the setting
+ * @global	$epd_options	Array of all the EPD Options
+ * @return	void
+ */
+function epd_password_callback( $args ) {
+	$epd_option = epd_get_option( $args['id'] );
+
+	if ( $epd_option )	{
+		$value = $epd_option;
+	} else	{
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+    $name  = 'epd_settings[' . esc_attr( $args['id'] ) . ']';
+	$class = epd_sanitize_html_class( $args['field_class'] );
+    $size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+
+	$html  = sprintf(
+        '<input type="password" class="%s" id="%s" name="%s" value="%s" />',
+        $class . ' ' . sanitize_html_class( $size ) . '-text',
+        'epd_settings[' . epd_sanitize_key( $args['id'] ) . ']',
+        $name,
+        esc_attr( stripslashes( $value ) )
+    );
+	$html    .= '<p class="description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
+
+	echo apply_filters( 'epd_after_setting_output', $html, $args );
+} // epd_password_callback
+
+/**
  * Number Callback
  *
  * Renders number fields.
