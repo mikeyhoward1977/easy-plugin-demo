@@ -108,6 +108,84 @@ function epd_registration_form( $redirect = '' ) {
 } // epd_registration_form
 
 /**
+ * Process a registration.
+ *
+ * @since   1.5
+ * @param   array   $data   Array of data to process for the registration
+ * @return  void
+ */
+function epd_process_registration( $data )  {
+    do_action( 'epd_before_registration' );
+
+    $data = apply_filters( 'epd_user_registration_data', $data );
+    $user = get_user_by( 'email', $data['email'] );
+
+    if ( $user )    {
+        $user_id        = $user->ID;
+		$reset_password = sprintf(
+			'<a href="%s">%s</a>',
+			wp_lostpassword_url(),
+			apply_filters( 'epd_reset_password_string',
+				__( 'Lost your password?', 'easy-plugin-demo' )
+			)
+		);
+
+		update_user_option( $user_id, 'epd_mu_pw', $reset_password, true );
+    } else  {
+        $user_id = epd_create_demo_user( $data );
+    }
+
+	if ( $user_id )	{
+        $network_id = get_current_network_id();
+        $net_domain = get_network()->domain;
+        $user       = get_userdata( $user_id );
+		$blog       = preg_replace( "/[^A-Za-z0-9 ]/", '', $user->user_login );
+
+		if ( is_subdomain_install() )	{
+			$domain   = $blog . $net_domain;
+			$path     = '/';
+            $i        = 1;
+
+            while( domain_exists( $domain, $path, $network_id ) )   {
+                $domain = $blog . "-{$i}" . $net_domain;
+                $i++;
+            }
+		} else	{
+			$domain = preg_replace( '|^www\.|', '', $net_domain );
+			$path   = '/' . $blog . '/';
+            $i      = 1;
+
+            while( domain_exists( $domain, $path, $network_id ) )   {
+                $path = '/' . $blog . "-{$i}" . '/';
+                $i++;
+            }
+		}
+
+		$args = array(
+			'domain'     => $domain,
+			'path'       => untrailingslashit( get_network()->path ) . $path,
+			'title'      => esc_attr( epd_get_option( 'title' ) ),
+			'user_id'    => $user_id,
+			'meta'       => array(),
+			'network_id' => $network_id
+		);
+
+		$args = apply_filters( 'epd_site_registration_args', $args );
+
+		$blog_id = epd_create_demo_site( $args );
+	} else	{
+		$blog_id = false;
+	}
+
+	if ( $blog_id )	{
+		do_action( 'epd_registration', $blog_id, $user_id, $data );
+        epd_redirect_after_register( $blog_id, $user_id );
+	}
+
+    return $blog_id;
+} // epd_process_registration
+
+/**
  * Redirect user after registration.
  *
  * @since	1.3
@@ -116,8 +194,10 @@ function epd_registration_form( $redirect = '' ) {
  * @return	void
  */
 function epd_redirect_after_register( $site_id, $user_id )	{
-	$action = epd_get_option( 'registration_action' );
-	$action = apply_filters( 'epd_after_user_registration_action', $action, $site_id );
+    if ( ! defined( 'REST_REQUEST' ) )  {
+        $action = epd_get_option( 'registration_action' );
+        $action = apply_filters( 'epd_after_user_registration_action', $action, $site_id );
 
-	do_action( "epd_after_registration_{$action}_action", $site_id, $user_id );
+        do_action( "epd_after_registration_{$action}_action", $site_id, $user_id );
+    }
 } // epd_redirect_after_register
