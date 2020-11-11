@@ -377,7 +377,7 @@ function epd_get_registered_settings() {
                             'https://www.google.com/recaptcha/admin'
                         )
                     ),
-                    'secret' => array(
+                    'secret_key' => array(
                         'id'       => 'secret_key',
                         'name'     => __( 'Secret Key', 'easy-plugin-demo' ),
                         'type'     => 'text',
@@ -1083,9 +1083,11 @@ function epd_secret_callback( $args ) {
     if ( empty( $value ) )  {
         epd_text_callback( $args );
     } else  {
-        $html = sprintf(
-            '<button id="epd-%s-button" type="button" class="button">%s</button>',
+		$class = isset( $args['field_class'] ) ? ' ' . epd_sanitize_html_class( $args['field_class'] ) : '';
+        $html  = sprintf(
+            '<button id="epd-%s-button" type="button" class="button%s">%s</button>',
             str_replace( '_', '-', epd_sanitize_key( $args['id'] ) ),
+			$class,
             __( 'Re-enter Remote Secret', 'easy-plugin-demo' )
         );
 
