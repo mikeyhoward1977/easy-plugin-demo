@@ -52,6 +52,10 @@
 	color: #fff;
 }
 
+.settings_page_epd-settings .form-table button.epd-button {
+	width: 175px;
+}
+
 .wrap-licenses .form-table,
 .wrap-licenses thead,
 .wrap-licenses tbody,

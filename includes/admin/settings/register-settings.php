@@ -346,7 +346,7 @@ function epd_get_registered_settings() {
 			array()
 		),
 		/** Misc Settings */
-		'misc' => apply_filters( 'epd_settings_general',
+		'misc' => apply_filters( 'epd_settings_misc',
 			array(
 				'main' => array(
                     'remove_on_uninstall' => array(
@@ -377,7 +377,7 @@ function epd_get_registered_settings() {
                             'https://www.google.com/recaptcha/admin'
                         )
                     ),
-                    'secret' => array(
+                    'secret_key' => array(
                         'id'       => 'secret_key',
                         'name'     => __( 'Secret Key', 'easy-plugin-demo' ),
                         'type'     => 'text',
@@ -930,15 +930,59 @@ function epd_text_callback( $args ) {
 		$name = 'name="epd_settings[' . esc_attr( $args['id'] ) . ']"';
 	}
 
-	$class = epd_sanitize_html_class( $args['field_class'] );
-
-	$readonly = $args['readonly'] === true ? ' readonly="readonly"' : '';
+	$class    = isset( $args['field_class'] ) ? epd_sanitize_html_class( $args['field_class'] ) . ' ' : '';
+	$readonly = isset( $args['readonly'] ) && $args['readonly'] === true ? ' readonly="readonly"' : '';
 	$size     = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-	$html     = '<input type="text" class="' . $class . ' ' . sanitize_html_class( $size ) . '-text" id="epd_settings[' . epd_sanitize_key( $args['id'] ) . ']" ' . $name . ' value="' . esc_attr( stripslashes( $value ) ) . '"' . $readonly . '/>';
-	$html    .= '<p class="description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
+	$html     = sprintf(
+        '<input type="text" class="%s" id="epd_settings[%s]" %s value="%s"%s />',
+        $class . ' ' . sanitize_html_class( $size ) . '-text',
+        epd_sanitize_key( $args['id'] ),
+        $name,
+        esc_attr( stripslashes( $value ) ),
+        $readonly
+    );
+	$html    .= sprintf(
+        '<p class="description">%s</p>',
+        wp_kses_post( $args['desc'] )
+    );
 
 	echo apply_filters( 'epd_after_setting_output', $html, $args );
 } // epd_text_callback
+
+/**
+ * Password Callback
+ *
+ * Renders password fields.
+ *
+ * @since	1.0
+ * @param	arr		$args	Arguments passed by the setting
+ * @global	$epd_options	Array of all the EPD Options
+ * @return	void
+ */
+function epd_password_callback( $args ) {
+	$epd_option = epd_get_option( $args['id'] );
+
+	if ( $epd_option )	{
+		$value = $epd_option;
+	} else	{
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+    $name  = 'epd_settings[' . esc_attr( $args['id'] ) . ']';
+	$class = epd_sanitize_html_class( $args['field_class'] );
+    $size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+
+	$html  = sprintf(
+        '<input type="password" class="%s" id="%s" name="%s" value="%s" />',
+        $class . ' ' . sanitize_html_class( $size ) . '-text',
+        'epd_settings[' . epd_sanitize_key( $args['id'] ) . ']',
+        $name,
+        esc_attr( stripslashes( $value ) )
+    );
+	$html    .= '<p class="description"> '  . wp_kses_post( $args['desc'] ) . '</p>';
+
+	echo apply_filters( 'epd_after_setting_output', $html, $args );
+} // epd_password_callback
 
 /**
  * Number Callback
@@ -1016,6 +1060,53 @@ function epd_textarea_callback( $args ) {
 
 	echo apply_filters( 'epd_after_setting_output', $html, $args );
 } // epd_textarea_callback
+
+/**
+ * Secret Callback
+ *
+ * Renders text field if setting is empty, otherwise a button enabling a change of the option value.
+ *
+ * @since	1.3.8
+ * @param	arr		$args	Arguments passed by the setting
+ * @global	$epd_options	Array of all the EPD Remote Options
+ * @return	void
+ */
+function epd_secret_callback( $args ) {
+	$epd_option = epd_get_option( $args['id'] );
+
+	if ( $epd_option )	{
+		$value = $epd_option;
+	} else	{
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+    if ( empty( $value ) )  {
+        epd_text_callback( $args );
+    } else  {
+		$class = isset( $args['field_class'] ) ? ' ' . epd_sanitize_html_class( $args['field_class'] ) : '';
+        $html  = sprintf(
+            '<button id="epd-%s-button" type="button" class="button%s">%s</button>',
+            str_replace( '_', '-', epd_sanitize_key( $args['id'] ) ),
+			$class,
+            __( 'Re-enter Remote Secret', 'easy-plugin-demo' )
+        );
+
+        $html .= sprintf(
+            '<div id="epd-%s-div">',
+            str_replace( '_', '-', epd_sanitize_key( $args['id'] ) )
+        );
+
+        $html .= sprintf(
+            '<input type="hidden" id="epd_settings[%s]" name="epd_settings[%s]" value="%s" />',
+            epd_sanitize_key( $args['id'] ),
+            esc_attr( $args['id'] ),
+            esc_attr( stripslashes( $value ) )
+        );
+
+        $html .= '</div>';
+        echo apply_filters( 'epd_after_setting_output', $html, $args );
+    }
+} // epd_secret_callback
 
 /**
  * Missing Callback

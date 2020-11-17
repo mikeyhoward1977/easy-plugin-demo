@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.5.3
 Requires PHP: 5.4
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,17 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.8 =
+
+**Wednesday, 18th November 2020**
+
+* **New**: Added support for the [Easy Plugin Demo API](https://easy-plugin-demo.com/articles/the-epd-rest-api/) provided within the [EPD Premium Pack](https://easy-plugin-demo.com/downloads/epd-premium-pack/)
+
+* **Tweak**: Seperate the demo registration process from initial data santization
+* **Tweak**: Corrected filter name within settings API
+* **Tweak**: Added the secret field type to settings
+* **Tweak**: Standardized the width of buttons within settings CSS
 
 = 1.3.7 =
 
