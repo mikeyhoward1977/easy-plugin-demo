@@ -346,7 +346,7 @@ function epd_get_registered_settings() {
 			array()
 		),
 		/** Misc Settings */
-		'misc' => apply_filters( 'epd_settings_general',
+		'misc' => apply_filters( 'epd_settings_misc',
 			array(
 				'main' => array(
                     'remove_on_uninstall' => array(
