@@ -11,6 +11,7 @@
  * Domain Path: /languages
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Network: true
  * GitHub Plugin URI: https://github.com/mikeyhoward1977/easy-plugin-demo
  * Tags: demo, plugin, theme, multisite, wpmu
  *
