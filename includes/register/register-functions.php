@@ -186,6 +186,21 @@ function epd_process_registration( $data )  {
 } // epd_process_registration
 
 /**
+ * Retrieve registration action.
+ *
+ * @since   1.4
+ * @param   int     $site_id    ID of new demo site
+ * @param   int     $user_id    ID of new demo user
+ * @return  string  Registration action
+ */
+function epd_get_registration_action( $site_id = 0, $user_id = 0 ) {
+    $action = epd_get_option( 'registration_action' );
+    $action = apply_filters( 'epd_after_user_registration_action', $action, $site_id, $user_id );
+
+    return $action;
+} // epd_get_registration_action
+
+/**
  * Redirect user after registration.
  *
  * @since	1.3
@@ -195,8 +210,7 @@ function epd_process_registration( $data )  {
  */
 function epd_redirect_after_register( $site_id, $user_id )	{
     if ( ! defined( 'REST_REQUEST' ) )  {
-        $action = epd_get_option( 'registration_action' );
-        $action = apply_filters( 'epd_after_user_registration_action', $action, $site_id );
+        $action = epd_get_registration_action( $site_id, $user_id );
 
         do_action( "epd_after_registration_{$action}_action", $site_id, $user_id );
     }
