@@ -32,12 +32,18 @@ function epd_can_user_register( $user_id )    {
 	}
 
 	if ( $user_id )	{
-		$current = count( get_blogs_of_user( $user_id, true ) );
-		$allowed = epd_get_option( 'max_user_sites' );
+        if ( user_can( $user_id, 'super_admin' ) )    {
+            $can_register = false;
+        }
 
-		if ( $current >= $allowed ) {
-			$can_register = false;
-		}
+        if ( $can_register )    {
+            $current = count( get_blogs_of_user( $user_id, true ) );
+            $allowed = epd_get_option( 'max_user_sites' );
+
+            if ( $current >= $allowed ) {
+                $can_register = false;
+            }
+        }
 	}
 
     $can_register = apply_filters( 'epd_can_user_register', $can_register, $user_id );
