@@ -145,7 +145,6 @@ final class Easy_Plugin_Demo {
 	 * @return	void
 	 */
 	private function setup_constants()	{
-
 		if ( ! defined( 'EPD_VERSION' ) )	{
 			define( 'EPD_VERSION', '1.3.9' );
 		}
@@ -161,7 +160,6 @@ final class Easy_Plugin_Demo {
 		if ( ! defined( 'EPD_PLUGIN_FILE' ) )	{
 			define( 'EPD_PLUGIN_FILE', __FILE__ );
 		}
-
 	} // setup_constants
 			
 	/**
@@ -172,7 +170,6 @@ final class Easy_Plugin_Demo {
 	 * @return	void
 	 */
 	private function includes()	{
-
         global $epd_options;
 
         require_once EPD_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';
@@ -211,7 +208,6 @@ final class Easy_Plugin_Demo {
         }
 
 		require_once EPD_PLUGIN_DIR . 'includes/install.php';
-		
 	} // includes
 
 	/**
@@ -238,7 +234,6 @@ final class Easy_Plugin_Demo {
 	 * @return	void
 	 */
 	public function load_textdomain()	{
-
         // Set filter for plugin's languages directory.
 		$epd_lang_dir  = dirname( plugin_basename( EPD_PLUGIN_FILE ) ) . '/languages/';
 		$epd_lang_dir  = apply_filters( 'epd_languages_directory', $epd_lang_dir );
@@ -249,14 +244,12 @@ final class Easy_Plugin_Demo {
 
         load_textdomain( 'easy-plugin-demo', WP_LANG_DIR . '/easy-plugin-demo/easy-plugin-demo-' . $locale . '.mo' );
         load_plugin_textdomain( 'easy-plugin-demo', false, $epd_lang_dir );
-
 	} // load_textdomain
 
 /*****************************************
  -- SCRIPTS
 *****************************************/
 	public function load_admin_scripts( $hook )	{
-
 		$load_page_hook = array(
 			'options-reading.php',
 			'settings_page_epd-settings',
@@ -328,12 +321,19 @@ final class Easy_Plugin_Demo {
      * @return	void
     */
     public function upgrades() {
-
         $did_upgrade = false;
         $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
 
 		if ( version_compare( $epd_version, '1.2', '<' ) ) {
 			epd_update_option( 'registration_page', false );
+		}
+
+		if ( version_compare( $epd_version, '1.4', '<' ) ) {
+			$redirect = epd_get_option( 'registration_action' );
+
+			if ( 'redirect' != $redirect )	{
+				epd_update_option( 'auto_login', true );
+			}
 		}
 
         if ( version_compare( $epd_version, EPD_VERSION, '<' ) )	{
@@ -345,7 +345,6 @@ final class Easy_Plugin_Demo {
             update_site_option( 'epd_version_upgraded_from', $epd_version );
             update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EPD_VERSION ) );
         }
-
     } // upgrades
 
 } // class Easy_Plugin_Demo
