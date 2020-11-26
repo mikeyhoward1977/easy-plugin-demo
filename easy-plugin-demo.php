@@ -85,11 +85,6 @@ final class Easy_Plugin_Demo {
 	 * @return	obj	Easy_Plugin_Demo	The one true Easy_Plugin_Demo
 	 */
 	public static function instance() {
-
-		if ( ! is_multisite() )	{
-			return;
-		}
-
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Easy_Plugin_Demo ) )	{
 			do_action( 'before_epd_init' );
 
@@ -107,8 +102,7 @@ final class Easy_Plugin_Demo {
 		}
 
 		return self::$instance;
-
-	}
+	} // instance
 	
 	/**
 	 * Throw error on object clone.
