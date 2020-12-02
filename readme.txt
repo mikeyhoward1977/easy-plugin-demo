@@ -2,7 +2,7 @@
 Contributors: mikeyhoward1977
 Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
-Tested up to: 5.5.3
+Tested up to: 5.6
 Requires PHP: 5.4
 Stable tag: 1.3.9
 License: GPLv2 or later
