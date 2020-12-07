@@ -76,8 +76,7 @@ add_filter( 'epd_site_registration_args', 'epd_set_registration_activation_args_
  */
 function epd_redirect_home_after_registration( $blog_id, $user_id )    {
     switch_to_blog( $blog_id );
-    wp_set_current_user( $user_id );
-    wp_set_auth_cookie( $user_id );
+    epd_process_auto_user_login( $user_id, $user_id );
 
     $redirect_url = apply_filters( 'epd_after_registration_home_redirect_url', get_home_url( $blog_id ) );
     wp_safe_redirect( $redirect_url );
@@ -97,8 +96,7 @@ add_action( 'epd_after_registration_home_action', 'epd_redirect_home_after_regis
  */
 function epd_redirect_admin_after_registration( $blog_id, $user_id )    {
     switch_to_blog( $blog_id );
-    wp_set_current_user( $user_id );
-    wp_set_auth_cookie( $user_id );
+    epd_process_auto_user_login( $user_id, $user_id );
 
     $redirect_url = apply_filters( 'epd_after_registration_admin_redirect_url', get_admin_url( $blog_id ) );
     wp_safe_redirect( $redirect_url );
@@ -118,8 +116,7 @@ add_action( 'epd_after_registration_admin_action', 'epd_redirect_admin_after_reg
  */
 function epd_confirm_after_registration( $blog_id, $user_id )    {
     switch_to_blog( $blog_id );
-    wp_set_current_user( $user_id );
-    wp_set_auth_cookie( $user_id );
+    epd_process_auto_user_login( $user_id, $user_id );
 
 	$message = is_archived( $blog_id ) ? 'pending' : 'created';
 

@@ -52,6 +52,34 @@ function epd_can_user_register( $user_id )    {
 } // epd_can_user_register
 
 /**
+ * Whether or not a user should auto log in after registration.
+ *
+ * @since   1.3.10
+ * @param   int     $user_id    ID of demo user
+ * @param   int     $site_id    ID of new demo site
+ * @return  bool
+ */
+function epd_get_user_auto_login( $user_id = 0, $site_id = 0 )    {
+    $auto_login = epd_get_option( 'auto_login', false );
+    $auto_login = apply_filters( 'epd_user_auto_login', $auto_login, $user_id, $site_id );
+
+    return $auto_login;
+} // epd_get_user_auto_login
+
+/**
+ * Maybe log in a user once registeration is completed.
+ *
+ * @since   1.3.10
+ * @return  void
+ */
+function epd_process_auto_user_login( $user_id = 0, $site_id = 0 ) {
+    if ( epd_get_user_auto_login( $user_id, $site_id ) )  {
+        wp_set_current_user( $user_id );
+        wp_set_auth_cookie( $user_id );
+    }
+} // epd_process_auto_log_user_in
+
+/**
  * Creates a new user within the Multisite installation.
  *
  * @since	1.0

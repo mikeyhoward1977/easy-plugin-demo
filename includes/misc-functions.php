@@ -286,7 +286,7 @@ function epd_has_premium_pack() {
 /**
  * Premium extensions data.
  *
- * @since	1.4.6
+ * @since	1.3.10
  * @return	array	Array of premium extension data
  */
 function epd_get_premium_extension_data()	{

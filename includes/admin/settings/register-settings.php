@@ -135,11 +135,10 @@ function epd_get_settings() {
 */
 function epd_get_registered_settings() {
 
-    $current_theme   = wp_get_theme();
-	$network         = get_network();
-    $upload_quota    = esc_attr( get_site_option( 'blog_upload_space', 100 ) );
-	$welcome_example = add_query_arg( 'epd_action', 'add_welcome_example', admin_url() );
-
+    $current_theme       = wp_get_theme();
+	$network             = get_network();
+    $upload_quota        = esc_attr( get_site_option( 'blog_upload_space', 100 ) );
+	$welcome_example     = add_query_arg( 'epd_action', 'add_welcome_example', admin_url() );
 	/**
 	 * 'Whitelisted' EPD settings, filters are provided for each settings
 	 * section to allow extensions and other plugins to add their own settings.
@@ -194,6 +193,12 @@ function epd_get_registered_settings() {
 						'type'     => 'registration_actions',
 						'std'      => 'login',
 						'desc'     => __( 'Choose where to send the user once they have successfully registered their demo site.', 'easy-plugin-demo' )
+					),
+                    'auto_login' => array(
+						'id'       => 'auto_login',
+						'name'     => __( 'Auto Login', 'easy-plugin-demo' ),
+						'type'     => 'checkbox',
+						'desc'     => __( 'If enabled, EPD will try to log in users once their demo site is successfully registered.', 'easy-plugin-demo' )
 					),
 					'allow_reset' => array(
 						'id'       => 'allow_reset',
@@ -399,7 +404,7 @@ function epd_get_registered_settings() {
  *
  * Enables upsell opportunity
  *
- * @since   1.4.6
+ * @since   1.3.10
  * @param   array   $settings   Array of license settings
  * @return  array   Array of license settings
  */
@@ -872,7 +877,7 @@ function epd_registration_actions_callback( $args ) {
 	$options = apply_filters( 'epd_registration_actions', array(
 		'confirm'  => __( 'Show Confirmation', 'easy-plugin-demo' ),
 		'home'     => __( 'Visit Home Page', 'easy-plugin-demo' ),
-		'admin'    => __( 'Login to Admin', 'easy-plugin-demo' ),
+		'admin'    => __( 'Visit Admin', 'easy-plugin-demo' ),
 		'redirect' => __( 'Redirect to Page', 'easy-plugin-demo' )
 	) );
 

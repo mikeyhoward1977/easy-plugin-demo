@@ -312,7 +312,7 @@ add_action( 'admin_init', 'epd_reset_site_action' );
 /**
  * Maybe hide the admin bar from the demo site.
  *
- * @since	1.4
+ * @since	1.3.10
  * @return	void
  */
 function epd_maybe_hide_admin_bar()	{

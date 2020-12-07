@@ -3,15 +3,15 @@
  * Plugin Name: Easy Plugin Demo Builder
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: A WordPress demo builder plugin that fully automates the creation of sandbox sites for you to showcase your plugins, themes and content to customers.
- * Version: 1.3.9
- * Date: 20th November 2020
+ * Version: 1.3.10
+ * Date: 8th December 2020
  * Author: Mike Howard
  * Author URI: https://easy-plugin-demo.com/
  * Text Domain: easy-plugin-demo
  * Domain Path: /languages
- * Network: true
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Network: true
  * GitHub Plugin URI: https://github.com/mikeyhoward1977/easy-plugin-demo
  * Tags: demo, plugin, theme, multisite, wpmu
  *
@@ -31,7 +31,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.3.9
+ * @version		1.3.10
  */
 
 // Exit if accessed directly.
@@ -77,19 +77,14 @@ final class Easy_Plugin_Demo {
 	 *
 	 * @since	1.0
 	 * @static
-	 * @static	var		arr		$instance
+	 * @static	var		array						$instance
 	 * @uses	Easy_Plugin_Demo::setup_constants()	Setup the constants needed.
-	 * @uses	Easy_Plugin_Demo::includes()			Include the required files.
+	 * @uses	Easy_Plugin_Demo::includes()		Include the required files.
 	 * @uses	Easy_Plugin_Demo::load_textdomain()	Load the language files.
 	 * @see EPD()
 	 * @return	obj	Easy_Plugin_Demo	The one true Easy_Plugin_Demo
 	 */
 	public static function instance() {
-
-		if ( ! is_multisite() )	{
-			return;
-		}
-
 		if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Easy_Plugin_Demo ) )	{
 			do_action( 'before_epd_init' );
 
@@ -107,8 +102,7 @@ final class Easy_Plugin_Demo {
 		}
 
 		return self::$instance;
-
-	}
+	} // instance
 	
 	/**
 	 * Throw error on object clone.
@@ -145,9 +139,8 @@ final class Easy_Plugin_Demo {
 	 * @return	void
 	 */
 	private function setup_constants()	{
-
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.3.9' );
+			define( 'EPD_VERSION', '1.3.10' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
@@ -161,7 +154,6 @@ final class Easy_Plugin_Demo {
 		if ( ! defined( 'EPD_PLUGIN_FILE' ) )	{
 			define( 'EPD_PLUGIN_FILE', __FILE__ );
 		}
-
 	} // setup_constants
 			
 	/**
@@ -172,7 +164,6 @@ final class Easy_Plugin_Demo {
 	 * @return	void
 	 */
 	private function includes()	{
-
         global $epd_options;
 
         require_once EPD_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';
@@ -211,7 +202,6 @@ final class Easy_Plugin_Demo {
         }
 
 		require_once EPD_PLUGIN_DIR . 'includes/install.php';
-		
 	} // includes
 
 	/**
@@ -238,7 +228,6 @@ final class Easy_Plugin_Demo {
 	 * @return	void
 	 */
 	public function load_textdomain()	{
-
         // Set filter for plugin's languages directory.
 		$epd_lang_dir  = dirname( plugin_basename( EPD_PLUGIN_FILE ) ) . '/languages/';
 		$epd_lang_dir  = apply_filters( 'epd_languages_directory', $epd_lang_dir );
@@ -249,14 +238,12 @@ final class Easy_Plugin_Demo {
 
         load_textdomain( 'easy-plugin-demo', WP_LANG_DIR . '/easy-plugin-demo/easy-plugin-demo-' . $locale . '.mo' );
         load_plugin_textdomain( 'easy-plugin-demo', false, $epd_lang_dir );
-
 	} // load_textdomain
 
 /*****************************************
  -- SCRIPTS
 *****************************************/
 	public function load_admin_scripts( $hook )	{
-
 		$load_page_hook = array(
 			'options-reading.php',
 			'settings_page_epd-settings',
@@ -328,12 +315,19 @@ final class Easy_Plugin_Demo {
      * @return	void
     */
     public function upgrades() {
-
         $did_upgrade = false;
         $epd_version = preg_replace( '/[^0-9.].*/', '', get_site_option( 'epd_version' ) );
 
 		if ( version_compare( $epd_version, '1.2', '<' ) ) {
 			epd_update_option( 'registration_page', false );
+		}
+
+		if ( version_compare( $epd_version, '1.3.10', '<' ) ) {
+			$redirect = epd_get_option( 'registration_action' );
+
+			if ( 'redirect' != $redirect )	{
+				epd_update_option( 'auto_login', true );
+			}
 		}
 
         if ( version_compare( $epd_version, EPD_VERSION, '<' ) )	{
@@ -345,7 +339,6 @@ final class Easy_Plugin_Demo {
             update_site_option( 'epd_version_upgraded_from', $epd_version );
             update_site_option( 'epd_version', preg_replace( '/[^0-9.].*/', '', EPD_VERSION ) );
         }
-
     } // upgrades
 
 } // class Easy_Plugin_Demo
