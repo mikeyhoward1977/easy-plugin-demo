@@ -259,8 +259,8 @@ class EPD_Admin_Notices	{
         <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_upsell_premium_pack">
             <p>
                 <?php printf(
-                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as demo site templates, EDD integration, Woocommerce integration, button shortcodes, site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/premium-pack/'
+                    __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as demo site templates, EDD integration, Woocommerce integration, Zapier integration, button shortcodes, site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
+                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
                 ); ?>
             </p>
             <p>
