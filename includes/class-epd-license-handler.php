@@ -181,7 +181,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
         /**
          * If a premium extension is installed, remove it from the upsells array.
          *
-         * @since   1.4.6
+         * @since   1.3.10
          * @param   array   $plugins    Array of available premium extensions
          * @return  array   Array of available premium extensions
          */

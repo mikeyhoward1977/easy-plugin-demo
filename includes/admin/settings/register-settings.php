@@ -404,7 +404,7 @@ function epd_get_registered_settings() {
  *
  * Enables upsell opportunity
  *
- * @since   1.4.6
+ * @since   1.3.10
  * @param   array   $settings   Array of license settings
  * @return  array   Array of license settings
  */

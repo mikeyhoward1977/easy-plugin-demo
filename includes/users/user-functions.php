@@ -54,7 +54,7 @@ function epd_can_user_register( $user_id )    {
 /**
  * Whether or not a user should auto log in after registration.
  *
- * @since   1.4
+ * @since   1.3.10
  * @param   int     $user_id    ID of demo user
  * @param   int     $site_id    ID of new demo site
  * @return  bool
@@ -69,7 +69,7 @@ function epd_get_user_auto_login( $user_id = 0, $site_id = 0 )    {
 /**
  * Maybe log in a user once registeration is completed.
  *
- * @since   1.4
+ * @since   1.3.10
  * @return  void
  */
 function epd_process_auto_user_login( $user_id = 0, $site_id = 0 ) {

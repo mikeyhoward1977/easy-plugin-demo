@@ -4,7 +4,7 @@ Tags: demo, plugin, theme, multisite, wpmu
 Requires at least: 5.3
 Tested up to: 5.6
 Requires PHP: 5.4
-Stable tag: 1.3.9
+Stable tag: 1.3.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,8 @@ The Easy Plugin Demo [Premium Pack](https://easy-plugin-demo.com/downloads/premi
 * Define author for replicated posts
 * Clone database tables, including custom ones
 * Choose to automatically add users to new sites and their roles
+* Zapier integration to integrate Easy Plugin Demo with other a thousand third party applications
+* MailChimp integration
 * Schedule notices and provide information to users, or upsell your product(s)
 
 We've also included a number of hooks and filters for further customizations by developers.
@@ -123,6 +125,15 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 3. Completed registration with confirmation. Fresh WordPress installation with default Twenty Seventeen theme.
 
 == Changelog ==
+
+= 1.3.10 =
+
+**Tuesday, 8th December 2020**
+
+* **New**: Added option to auto login users when their demo site is registered. For fresh installations, this option is off. For existing installations, it is set to on to maintain current feature
+
+* **Tweak**: Throw an error if the plugin is being activated in a non-multisite environment
+* **Tweak**: Incremented WordPress tested up to version
 
 = 1.3.9 =
 

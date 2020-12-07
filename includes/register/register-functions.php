@@ -188,7 +188,7 @@ function epd_process_registration( $data )  {
 /**
  * Retrieve registration action.
  *
- * @since   1.4
+ * @since   1.3.10
  * @param   int     $site_id    ID of new demo site
  * @param   int     $user_id    ID of new demo user
  * @return  string  Registration action
