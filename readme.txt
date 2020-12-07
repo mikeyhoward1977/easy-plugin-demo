@@ -78,7 +78,7 @@ Would you like to help translate the plugin into more languages? [Join the WP-Tr
 
 Once you have downloaded the plugin zip file, follow these simple instructions to get going;
 
-1. Go to the the Synchronized Post Publisher WordPress plugin page at [https://wordpress.org/plugins/easy-plugin-demo/](https://wordpress.org/plugins/easy-plugin-demo/) and click the **Download** button to download the zip file
+1. Go to the the Easy Plugin Demo WordPress plugin page at [https://wordpress.org/plugins/easy-plugin-demo/](https://wordpress.org/plugins/easy-plugin-demo/) and click the **Download** button to download the zip file
 1. Login to your WordPress multisite network administration screen and select "Plugins" -> "Add New" from the menu
 1. Select "Upload Plugin" from the top of the main page
 1. Click "Choose File" and select the **easy-plugin-demo.zip** file you downloaded
