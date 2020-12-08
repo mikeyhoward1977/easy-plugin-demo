@@ -20,11 +20,6 @@ if ( ! defined( 'ABSPATH' ) )
  * @return	void
  */
 function epd_add_options_link() {
-
-    if ( ! is_super_admin() )   {
-        return;
-    }
-
 	global $epd_settings_page;
 
 	$epd_settings_page = add_submenu_page(

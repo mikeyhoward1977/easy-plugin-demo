@@ -99,7 +99,7 @@ if ( ! class_exists( 'EPD_License' ) )	{
             add_filter( 'epd_upsell_extensions_settings', array( $this, 'filter_upsells' ) );
 
             // Display help text at the top of the Licenses tab
-            add_action( 'epd_settings_tab_top', array( $this, 'license_help_text' ) );
+            add_action( 'epd_settings_tab_top_licenses_main', array( $this, 'license_help_text' ) );
 
             // Activate license key on settings save
             add_action( 'epd_saved_settings', array( $this, 'activate_license' ) );
@@ -200,36 +200,18 @@ if ( ! class_exists( 'EPD_License' ) )	{
 		 *
 		 * @access	public
 		 * @since   1.0
-		 * @param	str		$active_tab		The currently active settings tab
 		 * @return	void
 		 */
-		public function license_help_text( $active_tab = '' ) {
+		public function license_help_text() {
             static $has_ran;
-
-            if ( 'licenses' !== $active_tab ) {
-                return;
-            }
 
             if ( ! empty( $has_ran ) ) {
                 return;
             }
 
-            echo '<h1 class="wp-heading-inline">' . __( 'Manage Licenses', 'easy-plugin-demo' ) . '</h1>';
-            printf(
-                '<a href="%s" target="_blank" class="page-title-action">%s</a>',
-                'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
-                __( 'Visit Extension Store', 'easy-plugin-demo' )
-            );
-
             printf(
                 '<p>' . __( 'Enter your <a href="%s" target="_blank">license keys</a> here to receive updates for extensions you have purchased. If your license key has expired, please renew your license.', 'easy-plugin-demo' ) . '</p>',
                 'https://easy-plugin-demo.com/your-account/'
-            );
-
-            printf(
-                '<p>' . __( '<a href="%1$s" target="_blank">Visit our store</a> and receive a %2$s discount on all purchases.', 'easy-plugin-demo' ) . '</p>',
-                'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15offnow',
-                '15%'
             );
 
             $has_ran = true;

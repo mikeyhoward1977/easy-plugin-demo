@@ -302,3 +302,42 @@ function epd_get_premium_extension_data()	{
 
 	return $extensions;
 } // epd_get_premium_extension_data
+
+/**
+ * Retrieve current promotions.
+ *
+ * @since   1.3.11
+ * @param   bool    $active_only    True to retrieve only active promotions
+ * @return  array   Array of promotion data, or an empty array
+ */
+function epd_get_current_promotions( $active_only = true )   {
+    $promotions = array(
+        'BF2020' => array(
+            'name'        => __( 'Black Friday & Cyber Monday', 'easy-plugin-demo' ),
+            'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
+            'start'       => strtotime( '2020-11-29 00:00:00' ),
+            'finish'      => strtotime( '2020-12-07 23:59:59' ),
+            'timezone'    => 'UTC',
+            'discount'    => '33%',
+            'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
+            'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+        )
+    );
+
+    if ( $active_only ) {
+        $now = time();
+
+        foreach( $promotions as $promotion => $data )   {
+            $start  = $data['start'];
+            $finish = $data['finish'];
+
+            if ( ( $now > $start ) && ( $now < $finish ) ) {
+                continue;
+            }
+
+            unset( $promotions[ $promotion ] );
+        }
+    }
+
+    return $promotions;
+} // epd_get_current_promotions
