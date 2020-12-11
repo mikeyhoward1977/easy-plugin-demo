@@ -14,27 +14,6 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
- * Creates the admin submenu settings page within the MU network admin menu
- *
- * @since	1.0
- * @return	void
- */
-function epd_add_options_link() {
-	global $epd_settings_page;
-
-	$epd_settings_page = add_submenu_page(
-        'settings.php',
-        __( 'EPD Settings', 'easy-plugin-demo' ),
-        __( 'Easy Plugin Demo', 'easy-plugin-demo' ),
-        'manage_sites',
-        'epd-settings',
-        'epd_options_page'
-    );
-
-} // epd_add_options_link
-add_action( 'network_admin_menu', 'epd_add_options_link', 20 );
-
-/**
  * Adds a reset site option to the tools menu
  *
  * @since	1.3
