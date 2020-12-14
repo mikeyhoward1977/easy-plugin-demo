@@ -627,14 +627,13 @@ function epd_get_settings_tabs() {
  * @return	arr		$section
  */
 function epd_get_settings_tab_sections( $tab = false ) {
-
-	$tabs     = false;
+	$tabs     = array();
 	$sections = epd_get_registered_settings_sections();
 
 	if ( $tab && ! empty( $sections[ $tab ] ) ) {
 		$tabs = $sections[ $tab ];
-	} else if ( $tab ) {
-		$tabs = false;
+	} elseif ( $tab ) {
+		$tabs = array();
 	}
 
 	return $tabs;
@@ -1640,7 +1639,6 @@ function epd_get_primary_pages()	{
  * @return	array	An array of the pages
  */
 function epd_get_themes( $allowed = null ) {
-
 	$themes_options = array( '' => '' ); // Blank option
 
 	if ( ! isset( $_GET['page'] ) || 'epd-settings' != $_GET['page'] ) {
@@ -1659,7 +1657,6 @@ function epd_get_themes( $allowed = null ) {
     }
 
 	return $themes_options;
-
 } // epd_get_themes
 
 /**

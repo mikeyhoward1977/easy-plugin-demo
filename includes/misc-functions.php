@@ -302,3 +302,70 @@ function epd_get_premium_extension_data()	{
 
 	return $extensions;
 } // epd_get_premium_extension_data
+
+/**
+ * Retrieve current promotions.
+ *
+ * @since   1.3.11
+ * @param   bool    $active_only    True to retrieve only active promotions
+ * @return  array   Array of promotion data, or an empty array
+ */
+function epd_get_current_promotions( $active_only = true )   {
+    $promotions = array(
+        'BF2020' => array(
+            'name'        => __( 'Black Friday & Cyber Monday', 'easy-plugin-demo' ),
+            'image'       => 'bfcm-header.svg',
+            'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
+            'start'       => strtotime( '2020-11-29 00:00:00' ),
+            'finish'      => strtotime( '2020-12-07 23:59:59' ),
+            'timezone'    => 'GMT',
+            'discount'    => '40%',
+            'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
+            'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+        ),
+        'FLASH2020' => array(
+            'name'        => __( 'Flash Sale', 'easy-plugin-demo' ),
+            'image'       => 'flash-sale-header.svg',
+            'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
+            'start'       => strtotime( '2020-12-21 00:00:00' ),
+            'finish'      => strtotime( '2021-01-03 23:59:59' ),
+            'timezone'    => 'GMT',
+            'discount'    => '33%',
+            'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
+            'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
+            'description' => __( 'Save %7$s when purchasing the %3$s <strong>now</strong>.<br>Including renewals and upgrades!', 'easy-plugin-demo' )
+        )
+    );
+
+    foreach( $promotions as $promotion => $data )  {
+        if ( ! empty( $data['description'] ) )  {
+            $promotions[ $promotion ]['description'] = sprintf(
+                $data['description'],
+                $data['name'],
+                $data['image'],
+                $data['product'],
+                $data['start'],
+                $data['finish'],
+                $data['timezone'],
+                $data['discount'],
+                $data['cta'],
+                $data['cta_url'],
+                $data['description']
+            );
+        }
+
+        if ( $active_only ) {
+            $now    = time();
+            $start  = $data['start'];
+            $finish = $data['finish'];
+
+            if ( ( $now > $start ) && ( $now < $finish ) ) {
+                continue;
+            }
+
+            unset( $promotions[ $promotion ] );
+        }
+    }
+
+    return $promotions;
+} // epd_get_current_promotions
