@@ -3,7 +3,7 @@
  * Plugin Name: Easy Plugin Demo Builder
  * Plugin URI: https://easy-plugin-demo.com/
  * Description: A WordPress demo builder plugin that fully automates the creation of sandbox sites for you to showcase your plugins, themes and content to customers.
- * Version: 1.3.10
+ * Version: 1.3.11
  * Date: 8th December 2020
  * Author: Mike Howard
  * Author URI: https://easy-plugin-demo.com/
@@ -31,7 +31,7 @@
  * @package		EPD
  * @category	Core
  * @author		Mike Howard
- * @version		1.3.10
+ * @version		1.3.11
  */
 
 // Exit if accessed directly.
@@ -140,7 +140,7 @@ final class Easy_Plugin_Demo {
 	 */
 	private function setup_constants()	{
 		if ( ! defined( 'EPD_VERSION' ) )	{
-			define( 'EPD_VERSION', '1.3.10' );
+			define( 'EPD_VERSION', '1.3.11' );
 		}
 
 		if ( ! defined( 'EPD_PLUGIN_DIR' ) )	{
