@@ -260,7 +260,7 @@ class EPD_Display_Settings	{
                         do_action( 'epd_settings_tab_top', $this->active_tab );
                     }
 
-                    do_action( 'edd_settings_tab_top_' . $suffix );
+                    do_action( 'epd_settings_tab_top_' . $suffix );
 
                     do_settings_sections( 'epd_settings_' . $suffix );
 
@@ -342,7 +342,7 @@ class EPD_Display_Settings	{
                     <div class="epd-sidebar-header-section">
                         <?php if ( ! empty( $image ) )  {
                             printf(
-                                '<img class="edd-bfcm-header" src="%s">',
+                                '<img class="epd-bfcm-header" src="%s">',
                                 esc_url( EPD_PLUGIN_URL . "assets/images/promo/{$image}" )
                             );
                         } else  {
@@ -393,7 +393,7 @@ class EPD_Display_Settings	{
                 <div class="epd-settings-sidebar-content">
                     <div class="epd-sidebar-header-section">
                         <?php printf(
-							'<img class="edd-bfcm-header" src="%s">',
+							'<img class="epd-bfcm-header" src="%s">',
 							esc_url( EPD_PLUGIN_URL . 'assets/images/promo/go-premium-header.svg' )
 						); ?>
                     </div>
