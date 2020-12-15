@@ -244,7 +244,7 @@ class EPD_Display_Settings	{
     public function output_form()   {
         // Setup the action & section suffix
         $suffix          = ! empty( $this->section ) ? $this->active_tab . '_' . $this->section : $this->active_tab . '_main';
-        $wrapper_class   = ! empty( $this->promotions || ! $this->has_premium_pack ) ? array( ' epd-has-sidebar' ) : array();
+        $wrapper_class   = ! empty( $this->promotions ) || ! $this->has_premium_pack ? array( ' epd-has-sidebar' ) : array();
         ?>
 
         <div class="epd-settings-wrap<?php echo esc_attr( implode( ' ', $wrapper_class ) ); ?> wp-clearfix">
