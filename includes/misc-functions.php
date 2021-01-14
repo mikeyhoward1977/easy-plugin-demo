@@ -341,6 +341,19 @@ function epd_get_current_promotions( $active_only = true )   {
             'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
             'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
             'description' => __( 'Save %7$s when purchasing the %3$s <strong>now</strong>.<br>Including renewals and upgrades!', 'easy-plugin-demo' )
+        ),
+        'STAYSAFE' => array(
+            'name'        => __( 'Flash Sale', 'easy-plugin-demo' ),
+            'campaign'    => 'flash-sale',
+            'image'       => 'flash-sale-header.svg',
+            'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
+            'start'       => strtotime( '2021-01-14 00:00:00' ),
+            'finish'      => strtotime( '2021-02-28 23:59:59' ),
+            'timezone'    => 'GMT',
+            'discount'    => '33%',
+            'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
+            'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
+            'description' => __( 'We are supporting small businesses during the pandemic. Save <strong>%7$s</strong> when purchasing the %3$s <strong>now</strong>. Including renewals and upgrades!', 'easy-plugin-demo' )
         )
     );
 
