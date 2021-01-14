@@ -296,7 +296,12 @@ function epd_get_premium_extension_data()	{
 			'desc'         => __( 'Power up Easy Plugin Demo with site cloning, demo templates and much more!', 'easy-plugin-demo' ),
 			'plugin_url'   => 'epd-premium/epd-premium.php',
 			'demo_url'     => 'https://demos.easy-plugin-demo.com',
-			'purchase_url' => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+			'purchase_url' => add_query_arg( array(
+                'utm_source'   => 'settings',
+                'utm_medium'   => 'wp-admin',
+                'utm_campaign' => 'license_notice',
+                'utm_content'  => 'licensing'
+            ), 'https://easy-plugin-demo.com/downloads/epd-premium-pack/' )
 		)
 	);
 
@@ -314,6 +319,7 @@ function epd_get_current_promotions( $active_only = true )   {
     $promotions = array(
         'BF2020' => array(
             'name'        => __( 'Black Friday & Cyber Monday', 'easy-plugin-demo' ),
+            'campaign'    => 'bfcm2021',
             'image'       => 'bfcm-header.svg',
             'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
             'start'       => strtotime( '2020-11-29 00:00:00' ),
@@ -325,6 +331,7 @@ function epd_get_current_promotions( $active_only = true )   {
         ),
         'FLASH2020' => array(
             'name'        => __( 'Flash Sale', 'easy-plugin-demo' ),
+            'campaign'    => 'flash-sale',
             'image'       => 'flash-sale-header.svg',
             'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
             'start'       => strtotime( '2020-12-21 00:00:00' ),
@@ -334,6 +341,19 @@ function epd_get_current_promotions( $active_only = true )   {
             'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
             'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
             'description' => __( 'Save %7$s when purchasing the %3$s <strong>now</strong>.<br>Including renewals and upgrades!', 'easy-plugin-demo' )
+        ),
+        'STAYSAFE' => array(
+            'name'        => __( 'Flash Sale', 'easy-plugin-demo' ),
+            'campaign'    => 'flash-sale',
+            'image'       => 'flash-sale-header.svg',
+            'product'     => __( 'EPD Premium Pack', 'easy-plugin-demo' ),
+            'start'       => strtotime( '2021-01-14 00:00:00' ),
+            'finish'      => strtotime( '2021-02-28 23:59:59' ),
+            'timezone'    => 'GMT',
+            'discount'    => '33%',
+            'cta'         => __( 'Shop Now!', 'easy-plugin-demo' ),
+            'cta_url'     => 'https://easy-plugin-demo.com/downloads/epd-premium-pack/',
+            'description' => __( 'We are supporting small businesses during the pandemic. Save <strong>%7$s</strong> when purchasing the %3$s <strong>now</strong>. Including renewals and upgrades!', 'easy-plugin-demo' )
         )
     );
 

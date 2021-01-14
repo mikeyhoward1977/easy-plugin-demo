@@ -244,7 +244,7 @@ class EPD_Display_Settings	{
     public function output_form()   {
         // Setup the action & section suffix
         $suffix          = ! empty( $this->section ) ? $this->active_tab . '_' . $this->section : $this->active_tab . '_main';
-        $wrapper_class   = ! empty( $this->promotions || ! $this->has_premium_pack ) ? array( ' epd-has-sidebar' ) : array();
+        $wrapper_class   = ! empty( $this->promotions ) || ! $this->has_premium_pack ? array( ' epd-has-sidebar' ) : array();
         ?>
 
         <div class="epd-settings-wrap<?php echo esc_attr( implode( ' ', $wrapper_class ) ); ?> wp-clearfix">
@@ -260,7 +260,7 @@ class EPD_Display_Settings	{
                         do_action( 'epd_settings_tab_top', $this->active_tab );
                     }
 
-                    do_action( 'edd_settings_tab_top_' . $suffix );
+                    do_action( 'epd_settings_tab_top_' . $suffix );
 
                     do_settings_sections( 'epd_settings_' . $suffix );
 
@@ -325,17 +325,24 @@ class EPD_Display_Settings	{
             return;
         }
 
-        $url            = 'https://easy-plugin-demo.com/downloads/epd-premium-pack/';
-        $date_format    = 'H:i A F jS';
+        $date_format = 'H:i A F jS';
 
         foreach( $this->promotions as $code => $data ) : ?>
-            <?php extract( $data ); ?>
+            <?php
+            extract( $data );
+            $cta_url = add_query_arg( array(
+                'utm_source'   => 'settings',
+                'utm_medium'   => 'wp-admin',
+                'utm_campaign' => $campaign,
+                'utm_content'  => 'sidebar-promo-' . $this->active_tab . '-' . $this->section
+            ), $cta_url );
+            ?>
             <div class="epd-settings-sidebar">
                 <div class="epd-settings-sidebar-content">
                     <div class="epd-sidebar-header-section">
                         <?php if ( ! empty( $image ) )  {
                             printf(
-                                '<img class="edd-bfcm-header" src="%s">',
+                                '<img class="epd-bfcm-header" src="%s">',
                                 esc_url( EPD_PLUGIN_URL . "assets/images/promo/{$image}" )
                             );
                         } else  {
@@ -374,11 +381,19 @@ class EPD_Display_Settings	{
         <?php endforeach; ?>
 
         <?php if ( empty( $this->promotions ) && ! $this->has_premium_pack ) : ?>
+            <?php
+            $url = add_query_arg( array(
+                'utm_source'   => 'settings',
+                'utm_medium'   => 'wp-admin',
+                'utm_campaign' => 'premium-pack-upsell',
+                'utm_content'  => 'sidebar-promo-' . $this->active_tab . '-' . $this->section
+            ), 'https://easy-plugin-demo.com/downloads/epd-premium-pack/' );
+            ?>
             <div class="epd-settings-sidebar">
                 <div class="epd-settings-sidebar-content">
                     <div class="epd-sidebar-header-section">
                         <?php printf(
-							'<img class="edd-bfcm-header" src="%s">',
+							'<img class="epd-bfcm-header" src="%s">',
 							esc_url( EPD_PLUGIN_URL . 'assets/images/promo/go-premium-header.svg' )
 						); ?>
                     </div>
@@ -395,7 +410,7 @@ class EPD_Display_Settings	{
                         </ul>
                     </div>
                     <div class="epd-sidebar-footer-section epd-sidebar-promo-footer">
-                        <a class="button button-primary epd-cta-button" href="https://easy-plugin-demo.com/downloads/epd-premium-pack/" target="_blank"><?php _e( 'Shop Now!', 'easy-plugin-demo' ); ?></a>
+                        <a class="button button-primary epd-cta-button" href="<?php echo esc_url( $url ); ?>" target="_blank"><?php _e( 'Shop Now!', 'easy-plugin-demo' ); ?></a>
                     </div>
                 </div>
             </div>

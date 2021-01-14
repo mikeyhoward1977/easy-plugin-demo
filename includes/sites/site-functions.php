@@ -49,7 +49,7 @@ function epd_get_site_lifetime( $site_id )	{
  */
 function epd_get_default_site_lifetime()	{
 	$lifetime = epd_get_option( 'delete_after' );
-    $lifetime = apply_filters( 'epd_site_lifetime', $lifetime );
+    $lifetime = apply_filters( 'epd_default_site_lifetime', $lifetime );
 
 	return $lifetime;
 } // epd_get_default_site_lifetime

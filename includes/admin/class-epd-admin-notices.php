@@ -42,6 +42,7 @@ class EPD_Admin_Notices	{
         if ( ! $this->premium_pack )    {
             add_action( 'plugins_loaded', array( $this, 'notify_premium_pack'     ) );
             add_action( 'plugins_loaded', array( $this, 'demo_templates_upsell'   ) );
+            add_action( 'plugins_loaded', array( $this, 'zapier_upsell'           ) );
         }
 	} // __construct
 
@@ -182,34 +183,44 @@ class EPD_Admin_Notices	{
     } // demo_templates_upsell
 
     /**
+     * Notify users that Zapier integration is available in the Premium Pack.
+     *
+     * After 15 sites are registered via EPD we notify admins of Zapier integration
+     *
+     * @since	1.3.5
+     * @return	void
+     */
+    public function zapier_upsell() {
+		if ( ! is_network_admin() && get_network()->site_id != get_current_blog_id() )	{
+			return;
+		}
+
+        if ( ! current_user_can( 'manage_network' ) )	{
+            return;
+        }
+
+        if ( epd_is_notice_dismissed( 'epd_zapier_upsell' ) )   {
+            return;
+        }
+
+        $epd_registered = epd_get_registered_demo_sites_count();
+
+        if ( $epd_registered >= 15 ) {
+            add_action( 'admin_notices', array( $this, 'admin_wp_zapier_upsell_notice' ) );
+            add_action( 'network_admin_notices', array( $this, 'admin_wp_zapier_upsell_notice' ) );
+        }
+    } // zapier_upsell
+
+    /**
      * Admin WP Rating Request Notice
      *
      * @since	1.1
      * @return	void
     */
     function admin_wp_5star_rating_notice() {
-        ob_start(); ?>
+        ob_start();
 
-		<script>
-		jQuery(document).ready(function ($) {
-			// Dismiss admin notices
-			$( document ).on( 'click', '.notice-epd-dismiss .notice-dismiss', function () {
-				var notice = $( this ).closest( '.notice-epd-dismiss' ).data( 'notice' );
-
-				var postData = {
-					notice : notice,
-					action : 'epd_dismiss_notice'
-				};
-
-				$.ajax({
-					type: 'POST',
-					dataType: 'json',
-					data: postData,
-					url: ajaxurl
-				});
-			});
-		});
-		</script>
+		echo $this->dismiss_notice_js(); ?>
 
         <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_request_wp_5star_rating">
             <p>
@@ -233,40 +244,27 @@ class EPD_Admin_Notices	{
      * @return	void
     */
     function admin_wp_premium_pack_upsell_notice() {
-        ob_start(); ?>
+        ob_start();
 
-		<script>
-		jQuery(document).ready(function ($) {
-			// Dismiss admin notices
-			$( document ).on( 'click', '.notice-epd-dismiss .notice-dismiss', function () {
-				var notice = $( this ).closest( '.notice-epd-dismiss' ).data( 'notice' );
-
-				var postData = {
-					notice : notice,
-					action : 'epd_dismiss_notice'
-				};
-
-				$.ajax({
-					type: 'POST',
-					dataType: 'json',
-					data: postData,
-					url: ajaxurl
-				});
-			});
-		});
-		</script>
+		echo $this->dismiss_notice_js(); ?>
 
         <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_upsell_premium_pack">
             <p>
                 <?php printf(
                     __( '<strong>Go Premium with Easy Plugin Demo!</strong> Purchase our <a href="%1$s" target="_blank">Premium Pack</a> extension to enable additional features such as demo site templates, EDD integration, Woocommerce integration, Zapier integration, button shortcodes, site cloning, post duplication, enhanced user management and much more.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'premium-pack', '15OFFNOW' ),
+                        'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+                    )
                 ); ?>
             </p>
             <p>
                 <?php printf(
                     __( '<a href="%1$s" target="_blank">Click here</a> for more information and to secure a %2$s discount.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15OFFNOW',
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'premium-pack', '15OFFNOW' ),
+                        'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+                    ),
                     '15%'
                 ); ?>
             </p>
@@ -282,9 +280,84 @@ class EPD_Admin_Notices	{
      * @return	void
     */
     function admin_wp_demo_templates_upsell_notice() {
+        ob_start();
+
+		echo $this->dismiss_notice_js(); ?>
+
+        <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_demo_templates_upsell">
+            <p>
+                <?php printf(
+                    __( 'Demo templates enable you to create multiple demo site templates, each with fully customized settings, content, plugins and themes. Showcase all your products and content in one place! Purchase the <a href="%1$s" target="_blank">EPD Premium Pack</a> now.', 'easy-plugin-demo' ),
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'demo-templates', '15OFFNOW' ),
+                        'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+                    )
+                ); ?>
+            </p>
+            <p>
+                <?php printf(
+                    __( '<a class="button button-small button-primary" href="%1$s" target="_blank">Click here</a> for more information and to secure a %2$s discount.', 'easy-plugin-demo' ),
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'demo-templates', '15OFFNOW' ),
+                        'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+                    ),
+                    '15%'
+                ); ?>
+            </p>
+        </div>
+
+        <?php echo ob_get_clean();
+    } // admin_wp_demo_templates_upsell_notice
+
+    /**
+     * Admin WP Upsell Zapier Notice
+     *
+     * @since	1.3.12
+     * @return	void
+    */
+    function admin_wp_zapier_upsell_notice() {
+        ob_start();
+
+		echo $this->dismiss_notice_js(); ?>
+
+        <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_zapier_upsell">
+            <p>
+                <?php printf(
+                    __( 'Integrate Easy Plugin Demo with over a thousand 3rd party applications with our <a href="%1$s" target="_blank">Zapier integration</a>. Purchase the <a href="%2$s" target="_blank">EPD Premium Pack</a> now!', 'easy-plugin-demo' ),
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'zapier-integration' ),
+                        'https://easy-plugin-demo.com/articles/zapier-integration/'
+                    ),
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'zapier-integration' ),
+                        'https://easy-plugin-demo.com/downloads/epd-premium-pack/'
+                    )
+                ); ?>
+            </p>
+            <p>
+                <?php printf(
+                    __( '<a class="button button-small button-primary" href="%1$s" target="_blank">Click here</a> for more information.', 'easy-plugin-demo' ),
+                    add_query_arg(
+                        $this->get_campaign_url_args( 'zapier-integration' ),
+                        'https://easy-plugin-demo.com/articles/zapier-integration/'
+                    )
+                ); ?>
+            </p>
+        </div>
+
+        <?php echo ob_get_clean();
+    } // admin_wp_zapier_upsell_notice
+
+    /**
+     * Adds code to dismiss a notice.
+     *
+     * @since   1.3.11
+     * @return  string
+     */
+    public function dismiss_notice_js() {
         ob_start(); ?>
 
-		<script>
+        <script>
 		jQuery(document).ready(function ($) {
 			// Dismiss admin notices
 			$( document ).on( 'click', '.notice-epd-dismiss .notice-dismiss', function () {
@@ -305,24 +378,8 @@ class EPD_Admin_Notices	{
 		});
 		</script>
 
-        <div class="updated notice notice-epd-dismiss is-dismissible" data-notice="epd_demo_templates_upsell">
-            <p>
-                <?php printf(
-                    __( 'Demo templates enable you to create multiple demo site templates, each with fully customized settings, content, plugins and themes. Showcase all your products and content in one place! Purchase the <a href="%1$s" target="_blank">EPD Premium Pack</a> now.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15OFFNOW'
-                ); ?>
-            </p>
-            <p>
-                <?php printf(
-                    __( '<a class="button button-small button-primary" href="%1$s" target="_blank">Click here</a> for more information and to secure a %2$s discount.', 'easy-plugin-demo' ),
-                    'https://easy-plugin-demo.com/downloads/epd-premium-pack/?discount=15OFFNOW',
-                    '15%'
-                ); ?>
-            </p>
-        </div>
-
-        <?php echo ob_get_clean();
-    } // admin_wp_demo_templates_upsell_notice
+        <?php return ob_get_clean();
+    } // dismiss_notice_js
 
     /**
      * Check if there is a notice to dismiss.
@@ -359,6 +416,29 @@ class EPD_Admin_Notices	{
         wp_redirect( remove_query_arg( array( 'epd_action', 'epd_notice' ) ) );
         exit;
     } // dismiss_notices
+
+    /**
+     * Campaign URL args
+     *
+     * @since   1.3.12
+     * @param   string      $notice     The notice being displayed
+     * @param   bool|int    $discount   False, or the discount code to include in the URL
+     * @return  string      Campaign URL
+     */
+    public function get_campaign_url_args( $notice, $discount = false )    {
+        $args = array(
+            'utm_source'   => is_network_admin() ? 'network-admin' : 'wp-admin',
+            'utm_medium'   => $notice,
+            'utm_campaign' => 'plugin_upsell',
+            'utm_content'  => 'admin_notice'
+        );
+
+        if ( $discount )    {
+            $args['discount'] = $discount;
+        }
+
+        return $args;
+    } // get_campaign_url_args
 
 } // EPD_Admin_Notices
 
