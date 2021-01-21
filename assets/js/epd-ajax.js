@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
 
     /* = reCaptcha V3
 	====================================================================================== */
-    if ( $( '#recaptcha-action' ).length ) {
+    if ( $( '#epd-recaptcha-action' ).length ) {
         epd_recaptcha_V3();
     }
 
@@ -66,7 +66,7 @@ function epd_recaptcha_V3()  {
                 action: 'submit_epd_form'
             }).then(function(token) {
                 jQuery('#g-recaptcha-response').val( token );
-                jQuery('#recaptcha-action').val( 'submit_epd_form' );
+                jQuery('#epd-recaptcha-action').val( 'submit_epd_form' );
             });
         });
 
@@ -76,7 +76,7 @@ function epd_recaptcha_V3()  {
                     action: 'submit_epd_form'
                 }).then(function(token) {
                     jQuery('#g-recaptcha-response').val( token );
-                    jQuery('#recaptcha-action').val( 'submit_epd_form' );
+                    jQuery('#epd-recaptcha-action').val( 'submit_epd_form' );
                 });
             });
         }, 90 * 1000);

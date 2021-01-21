@@ -239,7 +239,12 @@ function epd_load_front_styles_scripts()    {
         }
     }
 
-	wp_register_script( 'epd-ajax', $js_dir . 'epd-ajax' . $suffix . '.js', array( 'jquery' ), EPD_VERSION );
+	wp_register_script(
+        'epd-ajax',
+        $js_dir . 'epd-ajax' . $suffix . '.js',
+        array( 'jquery' ),
+        EPD_VERSION
+    );
 	wp_enqueue_script( 'epd-ajax' );
 
 	wp_localize_script( 'epd-ajax', 'epd_vars', apply_filters( 'epd_ajax_vars', $script_args ) );
@@ -298,7 +303,7 @@ function epd_insert_recaptcha_script_for_registration_form()	{
 
     <?php if ( 'v3' === $recaptcha['version'] ) : ?>
         <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" value="" />
-        <input type="hidden" name="recaptcha_action" id="recaptcha-action" value="" />
+        <input type="hidden" name="epd_recaptcha_action" id="epd-recaptcha-action" value="" />
     <?php else : ?>
         <div id="epd-recaptcha">
             <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha['site_key']; ?>"></div>
