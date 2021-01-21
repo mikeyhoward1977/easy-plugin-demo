@@ -370,8 +370,21 @@ function epd_get_registered_settings() {
 					),
                     'recaptcha' => array(
                         'id'       => 'recaptcha',
-                        'name'     => __( 'reCaptcha v2 Keys', 'easy-plugin-demo' ),
+                        'name'     => __( 'reCaptcha Settings', 'easy-plugin-demo' ),
                         'type'     => 'header'
+                    ),
+                    'recaptcha_version' => array(
+                        'id'      => 'recaptcha_version',
+                        'name'    => __( 'reCaptcha Version', 'easy-plugin-demo' ),
+						'desc'    => __( 'Select reCaptcha version. Be sure to use the correct keys for the version you select.', 'easy-plugin-demo' ),
+						'type'    => 'select',
+                        'chosen'  => true,
+						'options' => array(
+                            'v2' => __( 'Version 2 Checkbox', 'easy-plugin-demo' ),
+                            'v3' => __( 'Version 3', 'easy-plugin-demo' )
+                        ),
+                        'field_class' => 'recaptcha_version',
+						'std'     => 'v2'
                     ),
                     'site_key' => array(
                         'id'       => 'site_key',
@@ -479,7 +492,8 @@ function epd_register_settings() {
 				    'faux'          => false,
 				    'tooltip_title' => false,
 				    'tooltip_desc'  => false,
-				    'field_class'   => ''
+				    'field_class'   => '',
+                    'class'         => 'epd_option_' . str_replace( '-', '_', $option['id'] )
 				) );
 
 				add_settings_field(

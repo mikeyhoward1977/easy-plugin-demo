@@ -1,6 +1,12 @@
 var epd_vars;
 jQuery(document).ready(function ($) {
 
+    /* = reCaptcha V3
+	====================================================================================== */
+    if ( $( '#recaptcha-action' ).length ) {
+        epd_recaptcha_V3();
+    }
+
 	/* = Registration form validation and submission
 	====================================================================================== */
 	$(document).on('click', '#epd-register-submit', function(e) {
@@ -47,3 +53,32 @@ jQuery(document).ready(function ($) {
 
 	});
 });
+
+/* = reCaptcha V3
+====================================================================================== */
+function epd_recaptcha_V3()  {
+    var recaptcha_version  = epd_vars.recaptcha_version,
+        recaptcha_site_key = epd_vars.recaptcha_site_key;
+
+    if ( 'v3' === recaptcha_version && false !== recaptcha_site_key )  {
+        grecaptcha.ready(function() {
+            grecaptcha.execute(recaptcha_site_key, {
+                action: 'submit_epd_form'
+            }).then(function(token) {
+                jQuery('#g-recaptcha-response').val( token );
+                jQuery('#recaptcha-action').val( 'submit_epd_form' );
+            });
+        });
+
+        setInterval(function () {
+            grecaptcha.ready(function() {
+                grecaptcha.execute(recaptcha_site_key, {
+                    action: 'submit_epd_form'
+                }).then(function(token) {
+                    jQuery('#g-recaptcha-response').val( token );
+                    jQuery('#recaptcha-action').val( 'submit_epd_form' );
+                });
+            });
+        }, 90 * 1000);
+    }
+}

@@ -222,16 +222,27 @@ function epd_load_front_styles_scripts()    {
 	$suffix        = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
     $css_file      = 'epd' . $suffix . '.css';
     $templates_dir = epd_get_theme_template_dir_name();
+    $use_recaptcha = epd_use_google_recaptcha();
 
-	wp_register_script( 'epd-ajax', $js_dir . 'epd-ajax' . $suffix . '.js', array( 'jquery' ), EPD_VERSION );
-	wp_enqueue_script( 'epd-ajax' );
-
-	wp_localize_script( 'epd-ajax', 'epd_vars', apply_filters( 'epd_ajax_vars', array(
+    $script_args = array(
         'ajax_loader'             => EPD_PLUGIN_URL . 'assets/images/loading.gif',
 		'ajaxurl'                 => epd_get_ajax_url(),
         'submit_register'         => epd_get_register_form_submit_label(),
 		'submit_register_loading' => __( 'Please Wait...', 'easy-plugin-demo' )
-	) ) );
+	);
+
+    if ( $use_recaptcha )   {
+        $script_args['recaptcha_version'] = $use_recaptcha['version'];
+
+        if ( 'v3' === $use_recaptcha['version'] )   {
+            $script_args['recaptcha_site_key'] = $use_recaptcha['site_key'];
+        }
+    }
+
+	wp_register_script( 'epd-ajax', $js_dir . 'epd-ajax' . $suffix . '.js', array( 'jquery' ), EPD_VERSION );
+	wp_enqueue_script( 'epd-ajax' );
+
+	wp_localize_script( 'epd-ajax', 'epd_vars', apply_filters( 'epd_ajax_vars', $script_args ) );
 
     $child_theme_style_sheet    = trailingslashit( get_stylesheet_directory() ) . $templates_dir . $css_file;
 	$child_theme_style_sheet_2  = trailingslashit( get_stylesheet_directory() ) . $templates_dir . 'epd.css';
@@ -245,21 +256,17 @@ function epd_load_front_styles_scripts()    {
 	 * This allows users to copy just epd.css to their theme
      */
 	if ( file_exists( $child_theme_style_sheet ) || ( ! empty( $suffix ) && ( $nonmin = file_exists( $child_theme_style_sheet_2 ) ) ) ) {
-
 		if ( ! empty( $nonmin ) ) {
 			$url = trailingslashit( get_stylesheet_directory_uri() ) . $templates_dir . 'epd.css';
 		} else {
 			$url = trailingslashit( get_stylesheet_directory_uri() ) . $templates_dir . $css_file;
 		}
-
 	} elseif ( file_exists( $parent_theme_style_sheet ) || ( ! empty( $suffix ) && ( $nonmin = file_exists( $parent_theme_style_sheet_2 ) ) ) ) {
-
 		if ( ! empty( $nonmin ) ) {
 			$url = trailingslashit( get_template_directory_uri() ) . $templates_dir . 'epd.css';
 		} else {
 			$url = trailingslashit( get_template_directory_uri() ) . $templates_dir . $css_file;
 		}
-
 	} elseif ( file_exists( $epd_plugin_style_sheet ) || file_exists( $epd_plugin_style_sheet ) ) {
 		$url = trailingslashit( epd_get_templates_url() ) . $css_file;
 	}
@@ -267,14 +274,14 @@ function epd_load_front_styles_scripts()    {
 	wp_register_style( 'epd-styles', $url, array(), EPD_VERSION, 'all' );
 	wp_enqueue_style( 'epd-styles' );
 
-	// reCaptcha
-	$recaptcha = epd_use_google_recaptcha();
+	if ( $use_recaptcha )	{
+        $script = 'https://www.google.com/recaptcha/api.js';
 
-	if ( $recaptcha )	{
-		wp_register_script(
-			'google-recaptcha',
-			'https://www.google.com/recaptcha/api.js'
-		);
+        if ( 'v3' === $use_recaptcha['version'] )    {
+            $script = add_query_arg( 'render', $use_recaptcha['site_key'], $script );
+        }
+
+		wp_register_script( 'google-recaptcha', $script );
 		wp_enqueue_script( 'google-recaptcha' );
 	}
 } // epd_load_front_styles_scripts
@@ -289,9 +296,14 @@ function epd_insert_recaptcha_script_for_registration_form()	{
 
 	ob_start(); ?>
 
-	<div id="epd-recaptcha">
-		<div class="g-recaptcha" data-sitekey="<?php echo $recaptcha['site_key']; ?>"></div>
-	</div>
+    <?php if ( 'v3' === $recaptcha['version'] ) : ?>
+        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" value="" />
+        <input type="hidden" name="recaptcha_action" id="recaptcha-action" value="" />
+    <?php else : ?>
+        <div id="epd-recaptcha">
+            <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha['site_key']; ?>"></div>
+        </div>
+    <?php endif; ?>
 
 	<?php echo ob_get_clean();
 } // epd_insert_recaptcha_script_for_registration_form
