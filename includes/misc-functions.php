@@ -14,27 +14,37 @@ if ( ! defined( 'ABSPATH' ) )
 	exit;
 
 /**
- * Retrieve the Google reCaptcha site key
+ * Retrieve reCAPTCHA version.
+ *
+ * @since   1.3.13
+ * @return  string  reCAPTCHA version
+ */
+function epd_get_recaptcha_version()    {
+    return epd_get_option( 'recaptcha_version', 'v2' );
+} // epd_get_recaptcha_version
+
+/**
+ * Retrieve the Google reCAPTCHA site key
  *
  * @since	1.0.1
- * @return	bool|string		reCaptcha site key or false
+ * @return	bool|string		reCAPTCHA site key or false
  */
 function epd_get_google_recaptcha_site_key()	{
 	return epd_get_option( 'site_key', false );
 } // epd_get_google_recaptcha_site_key
 
 /**
- * Retrieve the Google reCaptcha secret key
+ * Retrieve the Google reCAPTCHA secret key
  *
  * @since	1.0.1
- * @return	bool|string		reCaptcha secret key or false
+ * @return	bool|string		reCAPTCHA secret key or false
  */
 function epd_get_google_recaptcha_secret_key()	{
 	return epd_get_option( 'secret_key', false );
 } // epd_get_google_recaptcha_secret_key
 
 /**
- * Whether or not to use a Google reCaptcha
+ * Whether or not to use a Google reCAPTCHA
  *
  * @since	1.0.1
  * @return	bool|array	Array containing site and secret keys or false
@@ -42,11 +52,13 @@ function epd_get_google_recaptcha_secret_key()	{
 function epd_use_google_recaptcha()	{
 	$site_key = epd_get_google_recaptcha_site_key();
 	$secret   = epd_get_google_recaptcha_secret_key();
+    $version  = epd_get_recaptcha_version();
 
 	if ( $site_key && $secret )	{
 		return array(
 			'site_key' => esc_attr( $site_key ),
-			'secret'   => esc_attr( $secret )
+			'secret'   => esc_attr( $secret ),
+            'version'  => esc_attr( $version )
 		);
 	}
 
@@ -54,13 +66,14 @@ function epd_use_google_recaptcha()	{
 } // epd_use_google_recaptcha
 
 /**
- * Validate reCaptcha.
+ * Validate reCAPTCHA.
  *
  * @since	1.0.1
- * @param	str		$response	reCaptcha response.
+ * @param	str		$response	reCAPTCHA response.
  * @return	bool    True if verified, otherwise false
  */
 function epd_validate_recaptcha( $response )	{
+    $version   = epd_get_recaptcha_version();
 	$post_data = http_build_query( array(
         'secret'   => epd_get_google_recaptcha_secret_key(),
         'response' => $response,
@@ -78,7 +91,13 @@ function epd_validate_recaptcha( $response )	{
     $result   = json_decode( $response );
 
     if ( ! empty( $result ) && true == $result->success )	{
-		return $result->success;
+		$return = $result->success;
+
+        if ( 'v3' === $version )    {
+            $return = $result->action == 'submit_epd_form' && $result->score >= 0.5;
+        }
+
+        return $return;
     }
 
     return false;
@@ -167,7 +186,7 @@ function epd_get_notices( $notice = '', $notice_only = false )	{
 		),
 		'recaptcha' => array(
 			'class'  => 'error',
-			'notice' => __( 'reCaptcha validation error.', 'easy-plugin-demo' )
+			'notice' => __( 'reCAPTCHA validation error.', 'easy-plugin-demo' )
 		)
 	);
 
