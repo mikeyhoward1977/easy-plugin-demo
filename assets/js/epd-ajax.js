@@ -1,7 +1,7 @@
 var epd_vars;
 jQuery(document).ready(function ($) {
 
-    /* = reCaptcha V3
+    /* = reCAPTCHA V3
 	====================================================================================== */
     if ( $( '#epd-recaptcha-action' ).length ) {
         epd_recaptcha_V3();
@@ -54,7 +54,7 @@ jQuery(document).ready(function ($) {
 	});
 });
 
-/* = reCaptcha V3
+/* = reCAPTCHA V3
 ====================================================================================== */
 function epd_recaptcha_V3()  {
     var recaptcha_version  = epd_vars.recaptcha_version,

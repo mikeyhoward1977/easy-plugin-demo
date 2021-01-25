@@ -370,13 +370,13 @@ function epd_get_registered_settings() {
 					),
                     'recaptcha' => array(
                         'id'       => 'recaptcha',
-                        'name'     => __( 'reCaptcha Settings', 'easy-plugin-demo' ),
+                        'name'     => __( 'reCAPTCHA Settings', 'easy-plugin-demo' ),
                         'type'     => 'header'
                     ),
                     'recaptcha_version' => array(
                         'id'      => 'recaptcha_version',
-                        'name'    => __( 'reCaptcha Version', 'easy-plugin-demo' ),
-						'desc'    => __( 'Select reCaptcha version. Be sure to use the correct keys for the version you select.', 'easy-plugin-demo' ),
+                        'name'    => __( 'reCAPTCHA Version', 'easy-plugin-demo' ),
+						'desc'    => __( 'Select reCAPTCHA version. Be sure to use the correct keys for the version you select.', 'easy-plugin-demo' ),
 						'type'    => 'select',
                         'chosen'  => true,
 						'options' => array(

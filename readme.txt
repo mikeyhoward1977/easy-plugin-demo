@@ -308,7 +308,7 @@ Support is provided via the [WordPress.org support forums](https://wordpress.org
 
 **Monday, 20th August 2018**
 
-* **New**: Added Google reCaptcha. Insert your site/secret keys within EDP Settings
+* **New**: Added Google reCAPTCHA. Insert your site/secret keys within EDP Settings
 * **New**: Added option to force Search Engine Visibility setting for new sites
 * **New**: Added option to hide the Search Engine Visibility setting
 * **New**: Define a personal welcome panel to be displayed on new sites
